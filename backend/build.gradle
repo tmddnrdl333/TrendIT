@@ -75,10 +75,10 @@ processResources {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-websocket")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("org.springframework.boot:spring-boot-starter-websocket")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+//    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
     testImplementation("org.springframework.security:spring-security-test")
     annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -95,14 +95,14 @@ dependencies {
 
     annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
-    implementation("com.squareup.retrofit2:retrofit:2.7.1")
-    implementation("com.squareup.retrofit2:converter-jackson:2.7.1")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+//    implementation("com.squareup.retrofit2:retrofit:2.7.1")
+//    implementation("com.squareup.retrofit2:converter-jackson:2.7.1")
+//    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
 
-    implementation("com.google.guava:guava:29.0-jre")
-    annotationProcessor("com.google.guava:guava:29.0-jre")
+//    implementation("com.google.guava:guava:29.0-jre")
+//    annotationProcessor("com.google.guava:guava:29.0-jre")
 
-    testImplementation("com.jayway.jsonpath:json-path:2.4.0")
+//    testImplementation("com.jayway.jsonpath:json-path:2.4.0")
 
     implementation("com.auth0:java-jwt:3.10.3")
     
@@ -113,6 +113,7 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
 
     compile("javax.annotation:javax.annotation-api:1.2")
+    compile('org.hibernate.validator:hibernate-validator')
 
     implementation("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
