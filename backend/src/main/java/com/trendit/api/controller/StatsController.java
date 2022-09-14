@@ -34,14 +34,14 @@ public class StatsController {
         return ResponseEntity.status(200).body(NewsCountGetRes.of(200, "Success", todayNewsCount, totalNewsCount));
     }
 
-    @GetMapping("/bar-chart")
+    @GetMapping("/bar-chart/{type}/{val}")
     public ResponseEntity getBarChartData(@PathVariable String type, @PathVariable int val) {
         List<BarChartData> barChartDataList = statsService.getBarChartData(type, val);
 
         return ResponseEntity.status(200).body(BarChartGetRes.of(200, "Success", barChartDataList));
     }
 
-    @GetMapping("/line-chart")
+    @GetMapping("/line-chart/{type}/{keyword}")
     public ResponseEntity getLineChartData(@PathVariable String type, @PathVariable String keyword) {
         List<Integer> lineChartDataList = statsService.getLineChartData(type, keyword);
 
