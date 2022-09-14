@@ -1,9 +1,13 @@
 package com.trendit.db.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Company {
@@ -12,7 +16,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long companyId;
 
-    @Column(length = 30)
+    @Column(length = 30, nullable = false)
     String companyName;
 
     @Column(length = 50)
@@ -23,4 +27,7 @@ public class Company {
 
     @Column(length = 500)
     String companyLink;
+
+    @OneToOne(mappedBy = "keyword")
+    Keyword keyword;
 }
