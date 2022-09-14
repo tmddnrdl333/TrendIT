@@ -1,7 +1,7 @@
 package com.trendit.api.request;
 
 import io.swagger.annotations.ApiParam;
-import org.hibernate.validator.constraints.Range;
+import lombok.Setter;
 import com.trendit.db.entity.Board;
 import com.trendit.db.entity.Keyword;
 import lombok.Getter;
@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
+@Setter
 public class BoardPostReq {
     @ApiParam(value = "키워드 기본키", required = true)
     private long keywordId;
