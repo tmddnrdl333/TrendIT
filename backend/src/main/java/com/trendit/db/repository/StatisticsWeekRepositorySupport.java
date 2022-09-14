@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -34,5 +35,18 @@ public class StatisticsWeekRepositorySupport {
         }
 
         return barChartDataList;
+    }
+
+    public List<Integer> getWeeklyStatsPerKeyword(String keyword) {
+        List<Integer> lineChartDataList = jpaQueryFactory
+                .select(qStatisticsWeek.frequency)
+                .from(qStatisticsWeek)
+                .where(qStatisticsWeek.keyword.keyword.eq(keyword))
+                .orderBy(qStatisticsWeek.targetTime.desc())
+                .limit(5)
+                .fetch();
+
+        Collections.reverse(lineChartDataList);
+        return lineChartDataList;
     }
 }

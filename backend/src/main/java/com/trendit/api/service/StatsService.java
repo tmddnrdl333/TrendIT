@@ -51,4 +51,18 @@ public class StatsService {
         }
         return barChartDataList;
     }
+
+    public List<Integer> getLineChartData(String type, String keyword) {
+        if ("day".equals(type)) {
+            return statisticsDateRepositorySupport.getDailyStatsPerKeyword(keyword);
+        } else if ("week".equals(type)) {
+            return statisticsWeekRepositorySupport.getWeeklyStatsPerKeyword(keyword);
+        } else if ("month".equals(type)) {
+            return statisticsMonthRepositorySupport.getMonthlyStatsPerKeyword(keyword);
+        } else if ("year".equals(type)) {
+            return statisticsYearRepositorySupport.getYearlyStatsPerKeyword(keyword);
+        } else {
+            return null;
+        }
+    }
 }

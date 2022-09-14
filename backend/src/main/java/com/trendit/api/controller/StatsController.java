@@ -1,20 +1,18 @@
 package com.trendit.api.controller;
 
-import com.trendit.api.response.BaseRes;
+import com.trendit.api.response.BarChartGetRes;
+import com.trendit.api.response.LineChartGetRes;
 import com.trendit.api.response.NewsCountGetRes;
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.service.StatsService;
 import com.trendit.db.repository.NewsRepositorySupport;
-import com.trendit.db.repository.StatisticsDateRepositorySupport;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +38,13 @@ public class StatsController {
     public ResponseEntity getBarChartData(@PathVariable String type, @PathVariable int val) {
         List<BarChartData> barChartDataList = statsService.getBarChartData(type, val);
 
-        return ResponseEntity.status(200).body(BaseRes.of(200, "Success"));
+        return ResponseEntity.status(200).body(BarChartGetRes.of(200, "Success", barChartDataList));
+    }
+
+    @GetMapping("/line-chart")
+    public ResponseEntity getLineChartData(@PathVariable String type, @PathVariable String keyword) {
+        List<Integer> lineChartDataList = statsService.getLineChartData(type, keyword);
+
+        return ResponseEntity.status(200).body(LineChartGetRes.of(200, "Success", lineChartDataList));
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -34,5 +35,18 @@ public class StatisticsMonthRepositorySupport {
         }
 
         return barChartDataList;
+    }
+
+    public List<Integer> getMonthlyStatsPerKeyword(String keyword) {
+        List<Integer> lineChartDataList = jpaQueryFactory
+                .select(qStatisticsMonth.frequency)
+                .from(qStatisticsMonth)
+                .where(qStatisticsMonth.keyword.keyword.eq(keyword))
+                .orderBy(qStatisticsMonth.targetTime.desc())
+                .limit(12)
+                .fetch();
+
+        Collections.reverse(lineChartDataList);
+        return lineChartDataList;
     }
 }

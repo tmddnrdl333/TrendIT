@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -35,5 +36,19 @@ public class StatisticsDateRepositorySupport {
 
         return barChartDataList;
     }
+
+    public List<Integer> getDailyStatsPerKeyword(String keyword) {
+        List<Integer> lineChartDataList = jpaQueryFactory
+                .select(qStatisticsDate.frequency)
+                .from(qStatisticsDate)
+                .where(qStatisticsDate.keyword.keyword.eq(keyword))
+                .orderBy(qStatisticsDate.targetTime.desc())
+                .limit(7)
+                .fetch();
+
+        Collections.reverse(lineChartDataList);
+        return lineChartDataList;
+    }
+
 
 }
