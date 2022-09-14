@@ -1,10 +1,15 @@
 package com.trendit.db.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class StatisticsDate {
@@ -13,12 +18,10 @@ public class StatisticsDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long statisticsDateId;
 
-    int year;
+    @Column(nullable = false)
+    LocalDate targetTime;
 
-    int month;
-
-    int day;
-
+    @Column(nullable = false)
     int frequency;
 
     @ManyToOne(fetch = FetchType.LAZY)
