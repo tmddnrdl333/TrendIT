@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement.DEFAULT;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -91,12 +92,15 @@ public class Wordcount {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		String[] otherArgs = new GenericOptionsParser(conf,args).getRemainingArgs();
-		if ( otherArgs.length != 2 ) {
-			System.err.println("Usage: <in> <out>");
-			System.exit(2);
-		}
+		// if ( otherArgs.length != 2 ) {
+		// 	for(int i = 0; i < otherArgs.length; i++) {
+		// 		System.out.println("otherArgs[" + i + "] : "+ otherArgs[i]);
+		// 	}
+		// 	System.err.println("Usage: <in> <out>");
+		// 	System.exit(2);
+		// }
 		FileSystem hdfs = FileSystem.get(conf);
-		Path output = new Path(otherArgs[1]);
+		Path output = new Path(otherArgs[3]);
 		if (hdfs.exists(output))
 			hdfs.delete(output, true);
 
@@ -111,8 +115,8 @@ public class Wordcount {
 
 		job.setNumReduceTasks(2);
 
-		FileInputFormat.addInputPath(job,new Path(otherArgs[0]));
-		FileOutputFormat.setOutputPath(job,new Path(otherArgs[1]));
+		FileInputFormat.addInputPath(job,new Path(otherArgs[2]));
+		FileOutputFormat.setOutputPath(job,new Path(otherArgs[3]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1 );
 	}
 }
