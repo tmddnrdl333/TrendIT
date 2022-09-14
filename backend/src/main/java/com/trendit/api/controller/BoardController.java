@@ -1,6 +1,8 @@
 package com.trendit.api.controller;
 
+import com.trendit.api.exception.PasswordMisMatchException;
 import com.trendit.api.request.BoardPostReq;
+import com.trendit.api.request.BoardUpdateReq;
 import com.trendit.api.response.BaseRes;
 import com.trendit.api.service.BoardService;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -52,4 +55,35 @@ public class BoardController {
         return ResponseEntity.status(200).body(BaseRes.of(200, "글이 등록되었습니다"));
     }
 
+    @PutMapping
+    public ResponseEntity updateBoard(@Validated @RequestBody BoardUpdateReq boardUpdateReq) throws Exception {
+        try {
+            boardService.updateBoard(boardUpdateReq);
+        } catch (PasswordMisMatchException e1) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, e1.getMessage()));
+        } catch (NoSuchElementException e2) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));
+        } catch (NoSuchAlgorithmException e3) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
+        } catch (Exception e4) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
+        }
+        return ResponseEntity.status(200).body(BaseRes.of(200, "글이 수정되었습니다"));
+    }
+
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity deleteBoard(@PathVariable long boardId, @RequestHeader(value = "Authorization") String password) {
+        try {
+            boardService.deleteBoard(boardId, password);
+        } catch (PasswordMisMatchException e1) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, e1.getMessage()));
+        } catch (NoSuchElementException e2) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));
+        } catch (NoSuchAlgorithmException e3) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
+        } catch (Exception e4) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
+        }
+        return ResponseEntity.status(200).body(BaseRes.of(200, "글이 삭제되었습니다"));
+    }
 }

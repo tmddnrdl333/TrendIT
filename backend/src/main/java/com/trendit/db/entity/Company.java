@@ -28,6 +28,6 @@ public class Company {
     @Column(length = 500)
     String companyLink;
 
-    @OneToOne(mappedBy = "keyword")
+    @OneToOne(mappedBy = "company")
     Keyword keyword;
 }
