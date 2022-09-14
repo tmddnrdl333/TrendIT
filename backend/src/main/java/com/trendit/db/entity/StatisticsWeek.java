@@ -1,10 +1,14 @@
 package com.trendit.db.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class StatisticsWeek {
@@ -12,8 +16,10 @@ public class StatisticsWeek {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long statisticsWeekId;
 
-    LocalDate week; // 주의 첫 날
+    @Column(nullable = false)
+    LocalDate targetTime;
 
+    @Column(nullable = false)
     int frequency;
 
     @ManyToOne(fetch = FetchType.LAZY)

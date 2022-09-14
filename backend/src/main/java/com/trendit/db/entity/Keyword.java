@@ -1,11 +1,15 @@
 package com.trendit.db.entity;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Keyword {
@@ -17,7 +21,9 @@ public class Keyword {
     @Column(length = 20)
     String keyword;
 
-    boolean isCompany;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    Company company;
 
     @OneToMany(mappedBy = "keyword")
     List<KeywordHasNews> keywordHasNews = new ArrayList<>();

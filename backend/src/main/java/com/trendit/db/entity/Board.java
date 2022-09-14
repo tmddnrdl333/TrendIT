@@ -1,12 +1,12 @@
 package com.trendit.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Builder
@@ -17,16 +17,19 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long boardId;
 
-    @Column(length = 15)
+    @Column(length = 15, nullable = false)
     String userName;
 
-    @Column(length = 15)
+    @Column(length = 15, nullable = false)
     String password;
 
-    @Column(length = 300)
+    @Column(length = 300, nullable = false)
     String boardContent;
 
-    LocalDateTime lastUpdated;
+    @Column(nullable = false)
+    LocalDateTime createdDate;
+
+    LocalDateTime updatedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id")
