@@ -95,20 +95,22 @@ public class Wordcount {
 			System.err.println("Usage: <in> <out>");
 			System.exit(2);
 		}
+		FileSystem hdfs = FileSystem.get(conf);
+		Path output = new Path(otherArgs[1]);
+		if (hdfs.exists(output))
+			hdfs.delete(output, true);
+
 		Job job = new Job(conf,"word count");
 		job.setJarByClass(Wordcount.class);
 
-		// let hadoop know my map and reduce classes
 		job.setMapperClass(TokenizerMapper.class);
 		job.setReducerClass(IntSumReducer.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 
-		// set number of reduces
 		job.setNumReduceTasks(2);
 
-		// set input and output directories
 		FileInputFormat.addInputPath(job,new Path(otherArgs[0]));
 		FileOutputFormat.setOutputPath(job,new Path(otherArgs[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1 );
