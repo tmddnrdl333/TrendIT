@@ -30,7 +30,7 @@ public class StatisticsMonthRepositorySupport {
 
         for (Tuple tuple : tuples) {
             String keyword = tuple.get(qStatisticsMonth.keyword.keyword);
-            long frequency = tuple.get(qStatisticsMonth.keyword.count());
+            long frequency = tuple.get(qStatisticsMonth.frequency);
             barChartDataList.add(new BarChartData(keyword, frequency));
         }
 

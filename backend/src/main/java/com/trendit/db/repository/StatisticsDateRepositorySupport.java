@@ -30,7 +30,7 @@ public class StatisticsDateRepositorySupport {
 
         for (Tuple tuple : tuples) {
             String keyword = tuple.get(qStatisticsDate.keyword.keyword);
-            long frequency = tuple.get(qStatisticsDate.keyword.count());
+            long frequency = tuple.get(qStatisticsDate.frequency);
             barChartDataList.add(new BarChartData(keyword, frequency));
         }
 

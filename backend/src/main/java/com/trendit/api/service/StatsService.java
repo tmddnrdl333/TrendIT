@@ -1,6 +1,7 @@
 package com.trendit.api.service;
 
 import com.trendit.api.response.data.BarChartData;
+import com.trendit.common.exception.IllegalChartDataTypeException;
 import com.trendit.db.repository.StatisticsDateRepositorySupport;
 import com.trendit.db.repository.StatisticsMonthRepositorySupport;
 import com.trendit.db.repository.StatisticsWeekRepositorySupport;
@@ -19,7 +20,7 @@ public class StatsService {
     StatisticsDateRepositorySupport statisticsDateRepositorySupport;
     StatisticsWeekRepositorySupport statisticsWeekRepositorySupport;
 
-    public List<BarChartData> getBarChartData(String type, int val){
+    public List<BarChartData> getBarChartData(String type, int val) throws Exception{
         LocalDate targetTime = LocalDate.now();
         List<BarChartData> barChartDataList;
         if ("day".equals(type)) {
@@ -47,12 +48,12 @@ public class StatsService {
             barChartDataList = statisticsYearRepositorySupport.getYearlyStats(targetYear);
         } else {
             // error
-            return null;
+            throw new IllegalChartDataTypeException();
         }
         return barChartDataList;
     }
 
-    public List<Integer> getLineChartData(String type, String keyword) {
+    public List<Integer> getLineChartData(String type, String keyword) throws Exception {
         if ("day".equals(type)) {
             return statisticsDateRepositorySupport.getDailyStatsPerKeyword(keyword);
         } else if ("week".equals(type)) {
@@ -62,7 +63,7 @@ public class StatsService {
         } else if ("year".equals(type)) {
             return statisticsYearRepositorySupport.getYearlyStatsPerKeyword(keyword);
         } else {
-            return null;
+            throw new IllegalChartDataTypeException();
         }
     }
 }
