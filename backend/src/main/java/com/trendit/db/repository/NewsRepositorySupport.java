@@ -1,6 +1,7 @@
 package com.trendit.db.repository;
 
 import com.trendit.db.entity.News;
+import com.trendit.db.entity.QKeyword;
 import com.trendit.db.entity.QNews;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
