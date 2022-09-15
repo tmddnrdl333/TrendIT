@@ -6,6 +6,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
 applicaion.yml
 ssafy-web.log
 
@@ -39,3 +40,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+###queryDSL
+
+generated
