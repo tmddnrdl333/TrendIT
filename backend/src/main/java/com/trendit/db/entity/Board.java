@@ -1,5 +1,6 @@
 package com.trendit.db.entity;
 
+import com.trendit.api.response.data.BoardData;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -40,4 +41,14 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id")
     Keyword keyword;
+
+    public BoardData entityToDto() {
+        return BoardData.builder()
+                .boardId(this.getBoardId())
+                .userName(this.getUserName())
+                .boardContent(this.getBoardContent())
+                .createdDate(this.getCreatedDate())
+                .updatedDate(this.getUpdatedDate())
+                .build();
+    }
 }
