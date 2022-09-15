@@ -12,23 +12,24 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.trendit.api.service.NewsService;
+import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/news")
+@AllArgsConstructor
 public class NewsController {
 
-    @Autowired
-    NewsRepositorySupport newsRepositorySupport;
+    NewsService newsService;
 
+    @GetMapping("/latest")
     public ResponseEntity getLatestNews() {
-
-        List<News> data = newsRepositorySupport.getLatestNews();
-
+        List<News> data = newsService.getLatestNews();
         return ResponseEntity.status(200).body(LatestNewsGetRes.of(200, "Success", data));
     }
 

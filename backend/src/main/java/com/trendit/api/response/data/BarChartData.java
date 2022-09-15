@@ -2,10 +2,12 @@ package com.trendit.api.response.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
-public class NewsCountData {
-    long todayCount;
-    long totalCount;
+public class BarChartData {
+    String keyword;
+    long frequency;
 }
