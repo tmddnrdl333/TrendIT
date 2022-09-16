@@ -32,6 +32,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StatsController {
 
+    /* TODO 뭐지?*/
     NewsRepositorySupport newsRepositorySupport;
 
     StatsService statsService;

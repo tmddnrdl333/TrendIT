@@ -29,6 +29,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    /* TODO */
     @GetMapping
     public String test() {
         return "hello";
@@ -67,6 +68,7 @@ public class BoardController {
             @ApiResponse(code = 400, message = "입력 내용을 다시 확인해주세요"),
             @ApiResponse(code = 500, message = "오류가 발생했습니다")
     })
+    /* TODO: exception 제거 */
     public ResponseEntity updateBoard(@Validated @RequestBody BoardUpdateReq boardUpdateReq) throws Exception {
         try {
             boardService.updateBoard(boardUpdateReq);
@@ -112,6 +114,7 @@ public class BoardController {
             @ApiResponse(code = 400, message = "입력 내용을 다시 확인해주세요"),
             @ApiResponse(code = 500, message = "오류가 발생했습니다")
     })
+    /* TODO: BaseRes 통일하기 */
     public ResponseEntity<? extends BaseRes> getBoards(@PathVariable long keywordId) {
         List<BoardData> boardDataList;
         try {
@@ -122,6 +125,7 @@ public class BoardController {
             return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
         }
         for (BoardData boardData : boardDataList) {
+            /* TODO: 지우기 */
             System.out.println(boardData);
         }
         return ResponseEntity.status(200).body(BoardGetRes.of(200, "댓글 초기 100개 조회", boardDataList));

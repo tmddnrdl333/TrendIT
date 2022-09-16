@@ -41,6 +41,7 @@ public class NewsRepositorySupport {
         return totalNewsCount;
     }
 
+    /* TODO: LocalDate는 시간 순서대로 정렬이 되지 않음 */
     public List<News> getLatestNews() {
         List<News> latestNews = new ArrayList<>();
         latestNews = jpaQueryFactory
@@ -51,6 +52,7 @@ public class NewsRepositorySupport {
                 .fetch();
         return latestNews;
     }
+
     public List<News> getNewsByOptions(String keyword, String newsDate, String newsAgency, int page) {
         List<News> news = new ArrayList<>();
 

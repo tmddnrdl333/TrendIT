@@ -27,6 +27,7 @@ public class CompanyController {
             @ApiResponse(code=200, message = "리스트를 성공적으로 불러왔습니다.")
     })
     public ResponseEntity getCompanyList() {
+        /* TODO: 500 */
         List<Company> data = companyService.getCompanyList();
         return ResponseEntity.status(200).body(CompanyListGetRes.of(200, "Success", data));
     }

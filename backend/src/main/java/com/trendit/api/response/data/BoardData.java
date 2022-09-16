@@ -19,6 +19,7 @@ public class BoardData {
     LocalDateTime createdDate;
     LocalDateTime updatedDate;
 
+    /* TODO: noargsCon~로 바꾸기? */
     public BoardData() {
         super();
     }
