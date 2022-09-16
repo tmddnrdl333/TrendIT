@@ -46,7 +46,7 @@ public class NewsController {
                                            @RequestParam("page") int page) {
         List<News> news;
         try {
-            news = newsRepositorySupport.getNews(keyword, newsDate, newsAgency, page);
+            news = newsService.getNews(keyword, newsDate, newsAgency, page);
         } catch (NoSuchElementException e1) {
             e1.printStackTrace();
             return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));

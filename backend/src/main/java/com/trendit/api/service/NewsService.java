@@ -7,6 +7,9 @@ import com.trendit.db.repository.NewsRepositorySupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,5 +28,10 @@ public class NewsService {
     public List<News> getLatestNews() {
         List<News> data = newsRepositorySupport.getLatestNews();
         return data;
+    }
+
+    public List<News> getNews(String keyword, String newsDate, String newsAgency, int page) {
+        List<News> news = newsRepositorySupport.getNewsByOptions(keyword, newsDate, newsAgency, page);
+        return news;
     }
 }

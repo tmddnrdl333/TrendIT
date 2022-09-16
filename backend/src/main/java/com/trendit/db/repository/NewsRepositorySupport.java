@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -50,22 +51,18 @@ public class NewsRepositorySupport {
                 .fetch();
         return latestNews;
     }
-
-    public List<News> getNews(String keyword, String newsDate, String newsAgency, int page) {
+    public List<News> getNewsByOptions(String keyword, String newsDate, String newsAgency, int page) {
         List<News> news = new ArrayList<>();
-        String startDate = newsDate.substring(0,10);
-        String endDate = newsDate.substring(11);
-        LocalDate localStartDate = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
-        LocalDate localEndDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
 
         if (newsDate != null && newsAgency != null) {
+            List<LocalDate> parsedDate = parsingDate(newsDate);
             news = jpaQueryFactory
                     .select(qNews)
                     .from(qKeyword, qKeywordHasNews, qNews)
                     .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
                             qKeyword.keyword.eq(keyword),
-                            qNews.newsDate.between(localStartDate, localEndDate),
+                            qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)),
                             qNews.newsAgency.eq(newsAgency))
                     .orderBy(qNews.newsId.desc())
                     .offset(10 * (page - 1))
@@ -73,8 +70,63 @@ public class NewsRepositorySupport {
                     .fetch();
             return news;
         }
-        return news;
 
+        if (newsDate != null && newsAgency == null) {
+            List<LocalDate> parsedDate = parsingDate(newsDate);
+            news = jpaQueryFactory
+                    .select(qNews)
+                    .from(qKeyword, qKeywordHasNews, qNews)
+                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
+                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
+                            qKeyword.keyword.eq(keyword),
+                            qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)))
+                    .orderBy(qNews.newsId.desc())
+                    .offset(10 * (page - 1))
+                    .limit(10)
+                    .fetch();
+            return news;
+        }
+
+        if (newsDate == null && newsAgency != null) {
+            news = jpaQueryFactory
+                    .select(qNews)
+                    .from(qKeyword, qKeywordHasNews, qNews)
+                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
+                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
+                            qKeyword.keyword.eq(keyword),
+                            qNews.newsAgency.eq(newsAgency))
+                    .orderBy(qNews.newsId.desc())
+                    .offset(10 * (page - 1))
+                    .limit(10)
+                    .fetch();
+            return news;
+        }
+
+        if (newsDate == null && newsAgency == null) {
+            news = jpaQueryFactory
+                    .select(qNews)
+                    .from(qKeyword, qKeywordHasNews, qNews)
+                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
+                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
+                            qKeyword.keyword.eq(keyword))
+                    .orderBy(qNews.newsId.desc())
+                    .offset(10 * (page - 1))
+                    .limit(10)
+                    .fetch();
+            return news;
+        }
+        return news;
+    }
+
+    public List<LocalDate> parsingDate(String newsDate) {
+        List<LocalDate> parsedDate = new ArrayList<>();
+        String startDate = newsDate.substring(0,10);
+        String endDate = newsDate.substring(11);
+        LocalDate localStartDate = LocalDate.parse(startDate, DateTimeFormatter.ISO_DATE);
+        LocalDate localEndDate = LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE);
+        parsedDate.add(localStartDate);
+        parsedDate.add(localEndDate);
+        return parsedDate;
     }
 
 }
