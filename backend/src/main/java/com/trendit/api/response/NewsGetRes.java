@@ -1,6 +1,7 @@
 package com.trendit.api.response;
 
 
+import com.trendit.common.model.response.BaseRes;
 import com.trendit.db.entity.News;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +16,10 @@ public class NewsGetRes extends BaseRes {
 
     public static NewsGetRes of(int status, String msg, List<News> news) {
         NewsGetRes newsGetRes = new NewsGetRes();
-        newsGetRes.statusCode = status;
-        newsGetRes.message = msg;
+        newsGetRes.setStatusCode(status);
+        newsGetRes.setMessage(msg);
         newsGetRes.news = news;
+
         return newsGetRes;
     }
 }

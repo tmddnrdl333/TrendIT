@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @ResponseBody
 @ToString
 @Getter
@@ -18,12 +19,6 @@ public class BoardData {
     String boardContent;
     LocalDateTime createdDate;
     LocalDateTime updatedDate;
-
-    /* TODO: noargsCon~로 바꾸기? */
-    public BoardData() {
-        super();
-    }
-
 
     public static BoardData of(long boardId,
                                String userName,

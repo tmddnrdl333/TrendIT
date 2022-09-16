@@ -31,10 +31,6 @@ import java.util.List;
 @RequestMapping("/stats")
 @AllArgsConstructor
 public class StatsController {
-
-    /* TODO 뭐지?*/
-    NewsRepositorySupport newsRepositorySupport;
-
     StatsService statsService;
 
     NewsService newsService;
@@ -44,15 +40,27 @@ public class StatsController {
     @GetMapping("/news-count")
     @ApiOperation(value = "금일/전체 뉴스 개수 조회", notes = "오늘 수집한 뉴스 기사 수, 누적 기사 수를 조회합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "개수 조회에 성공했습니다.")
+            @ApiResponse(code = 200, message = "개수 조회에 성공했습니다."),
+            @ApiResponse(code = 500, message = "서버 에러 발생.")
     })
 
     public ResponseEntity getNewsCount() {
-        NewsCountData data = newsService.getNewsCountData();
+        NewsCountData data;
+        try {
+            data = newsService.getNewsCountData();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
+        }
+
         return ResponseEntity.status(200).body(NewsCountGetRes.of(200, "Success", data));
     }
 
     @GetMapping("/wordcloud/{type}")
+    @ApiOperation(value = "워드클라우드", notes = "워드클라우드에 들어갈 키워드, 키워드당 기사 하나씩")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 500, message = "서버 에러 발생.")
+    })
     public ResponseEntity getKeywordNews(@PathVariable String type) {
         List<KeywordNewsData> data = keywordService.getKeywordNews(type);
         return ResponseEntity.status(200).body(KeywordNewsGetRes.of(200, "Success", data));

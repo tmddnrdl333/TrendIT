@@ -27,8 +27,6 @@ public class BoardService {
 
     public void postBoard(BoardPostReq boardPostReq) throws NoSuchElementException, NoSuchAlgorithmException {
         // + 비밀번호 암호화
-        /* TODO: print 지우기 */
-        System.out.println(new SHA256().getHash(boardPostReq.getPassword()));
         boardPostReq.setPassword(new SHA256().getHash(boardPostReq.getPassword()));
         boardRepository.save(boardPostReq.dtoToEntity(
                 keywordRepository.findById(boardPostReq.getKeywordId()).get()
