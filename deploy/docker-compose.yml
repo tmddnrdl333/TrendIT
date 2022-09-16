@@ -1,0 +1,43 @@
+# docker-compose version
+version: "3.8"
+
+#container list
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    volumes:
+      # Mount cotainer drive to real drive
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      # network inside of a container
+      - app-network
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: trendit829
+      TZ: "Asia/Seoul"
+    privileged: true
+  trendit:
+    build:
+      context: ./
+    container_name: trendit
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: "Asia/Seoul"
+      # Spring application.properties DB
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/trendit?userUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true"
+      server.address: 0.0.0.0
+      ACCESS-KEY: <ACCESS-KEY>
+      SECRET-KEY: <SECRET-KEY>
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+networks:
+  app-network:
+    driver: bridge
