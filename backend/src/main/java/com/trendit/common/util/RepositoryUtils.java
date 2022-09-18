@@ -3,6 +3,7 @@ package com.trendit.common.util;
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.api.response.data.NewsData;
+import com.trendit.common.type.PeriodEnum;
 import com.trendit.db.entity.News;
 import org.springframework.stereotype.Component;
 
@@ -11,19 +12,8 @@ import java.util.List;
 
 @Component
 public class RepositoryUtils {
-    public String buildKeywordNewsQuery(String type) {
-        String targetEntity;
-        if ("day".equals(type)) {
-            targetEntity = "StatisticsDate";
-        } else if ("week".equals(type)) {
-            targetEntity = "StatisticsWeek";
-        } else if ("month".equals(type)) {
-            targetEntity = "StatisticsMonth";
-        } else if ("year".equals(type)) {
-            targetEntity = "StatisticsYear";
-        } else {
-            return null;
-        }
+    public String buildKeywordNewsQuery(PeriodEnum type) {
+        String targetEntity = type.getTargetEntity();
 
         StringBuffer queryBuffer = new StringBuffer("select s.frequency, k.keyword, n from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
@@ -31,7 +21,7 @@ public class RepositoryUtils {
         queryBuffer.append("join s.keyword k ");
         queryBuffer.append("join k.keywordHasNews kn ");
         queryBuffer.append("join kn.news n ");
-        queryBuffer.append("where s.targetTime = :yesterday ");
+        queryBuffer.append("where s.targetTime = :recentTime ");
         queryBuffer.append("order by s.frequency desc");
 
         String query = queryBuffer.toString();
@@ -54,19 +44,8 @@ public class RepositoryUtils {
         return data;
     }
 
-    public String buildFrequencyStatsQuery(String type) {
-        String targetEntity;
-        if ("day".equals(type)) {
-            targetEntity = "StatisticsDate";
-        } else if ("week".equals(type)) {
-            targetEntity = "StatisticsWeek";
-        } else if ("month".equals(type)) {
-            targetEntity = "StatisticsMonth";
-        } else if ("year".equals(type)) {
-            targetEntity = "StatisticsYear";
-        } else {
-            return null;
-        }
+    public String buildFrequencyStatsQuery(PeriodEnum type) {
+        String targetEntity = type.getTargetEntity();
 
         StringBuffer queryBuffer = new StringBuffer("select s.keyword.keyword, s.frequency from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
@@ -91,19 +70,8 @@ public class RepositoryUtils {
         return data;
     }
 
-    public String buildFrequencyStatsPerKeywordQuery(String type) {
-        String targetEntity;
-        if ("day".equals(type)) {
-            targetEntity = "StatisticsDate";
-        } else if ("week".equals(type)) {
-            targetEntity = "StatisticsWeek";
-        } else if ("month".equals(type)) {
-            targetEntity = "StatisticsMonth";
-        } else if ("year".equals(type)) {
-            targetEntity = "StatisticsYear";
-        } else {
-            return null;
-        }
+    public String buildFrequencyStatsPerKeywordQuery(PeriodEnum type) {
+        String targetEntity = type.getTargetEntity();
 
         StringBuffer queryBuffer = new StringBuffer("select s.frequency from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"

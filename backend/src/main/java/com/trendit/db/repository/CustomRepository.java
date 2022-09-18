@@ -2,6 +2,7 @@ package com.trendit.db.repository;
 
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.response.data.KeywordNewsData;
+import com.trendit.common.type.PeriodEnum;
 import com.trendit.common.util.RepositoryUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,13 +21,13 @@ public class CustomRepository {
 
     private final RepositoryUtils repositoryUtils;
 
-    public List<KeywordNewsData> getKeywordNews(String type) {
-        LocalDate yesterday = LocalDate.now().minusDays(1);
+    public List<KeywordNewsData> getKeywordNews(PeriodEnum type) {
+        LocalDate recentTime = type.getRecentTime(); // type == day일 경우 어제, week일경우 이번주의 첫날, month일경우 이번달의 첫날, year일 경우 이번 해의 첫날
         String query = repositoryUtils.buildKeywordNewsQuery(type);
 
         List<Object[]> list = (List<Object[]>) entityManager
                 .createQuery(query)
-                .setParameter("yesterday", yesterday)
+                .setParameter("recentTime", recentTime)
                 .setMaxResults(30)
                 .getResultList();
 
@@ -34,7 +35,7 @@ public class CustomRepository {
     }
 
 
-    public List<BarChartData> getFrequencyStats(String type, LocalDate date) {
+    public List<BarChartData> getFrequencyStats(PeriodEnum type, LocalDate date) {
         String query = repositoryUtils.buildFrequencyStatsQuery(type);
 
         List<Object[]> list = (List<Object[]>) entityManager
@@ -47,8 +48,10 @@ public class CustomRepository {
     }
 
 
-    public List<Integer> getFrequencyStatsPerKeyword(String type, String keyword, int limitNum) {
+    public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, String keyword) {
         String query = repositoryUtils.buildFrequencyStatsPerKeywordQuery(type);
+
+        int limitNum = type.getDateConstant();
 
         List<Integer> list = entityManager
                 .createQuery(query)
