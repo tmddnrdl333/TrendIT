@@ -61,7 +61,7 @@ public class NewsRepositorySupport {
     }
 
     private BooleanExpression eqNewsDate(String newsDate) {
-        if (StringUtils.isEmpty((newsDate))) {
+        if (StringUtils.isEmpty(newsDate)) {
             return null;
         }
         List<LocalDate> parsedDate = parsingDate(newsDate);
