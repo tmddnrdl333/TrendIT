@@ -3,6 +3,7 @@ package com.trendit.db.repository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.trendit.db.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class NewsRepositorySupport {
 
-    @Autowired
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
     QNews qNews = QNews.news;
     QKeyword qKeyword = QKeyword.keyword1;
     QKeywordHasNews qKeywordHasNews = QKeywordHasNews.keywordHasNews;
