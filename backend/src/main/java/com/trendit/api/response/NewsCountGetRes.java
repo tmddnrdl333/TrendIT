@@ -3,7 +3,6 @@ package com.trendit.api.response;
 
 import com.trendit.api.response.data.NewsCountData;
 import com.trendit.common.model.response.BaseRes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

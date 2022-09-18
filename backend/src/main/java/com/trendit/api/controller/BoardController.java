@@ -7,7 +7,6 @@ import com.trendit.api.response.BoardGetRes;
 import com.trendit.api.response.data.BoardData;
 import com.trendit.api.service.BoardService;
 import com.trendit.common.model.response.BaseRes;
-import com.trendit.db.entity.Board;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -18,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 

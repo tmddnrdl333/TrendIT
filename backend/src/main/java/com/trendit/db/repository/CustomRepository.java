@@ -1,20 +1,14 @@
 package com.trendit.db.repository;
 
-import com.querydsl.core.Tuple;
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.response.data.KeywordNewsData;
-import com.trendit.api.response.data.NewsData;
 import com.trendit.common.util.RepositoryUtils;
-import com.trendit.db.entity.News;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

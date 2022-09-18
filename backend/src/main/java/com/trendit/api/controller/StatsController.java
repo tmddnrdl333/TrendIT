@@ -7,7 +7,6 @@ import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.service.StatsService;
 import com.trendit.common.exception.IllegalChartDataTypeException;
 import com.trendit.common.model.response.BaseRes;
-import com.trendit.db.repository.NewsRepositorySupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

@@ -29,6 +29,7 @@ public class KeywordNewsRepositorySupport {
     /*
       TODO
       day, week, month, year 분기 해주삼
+      -> CustomRepository.getKeywordNews로 변경
      */
 
     public List<KeywordNewsData> getKeywordNews(String type) {
