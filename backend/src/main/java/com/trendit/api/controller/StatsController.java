@@ -81,7 +81,7 @@ public class StatsController {
             @ApiParam(value = "val: 그래프의 슬라이더의 값을 그대로 입력," +
                     "type = day이고 val = 1이면 6일 전, 7이면 오늘", required = true)
             @PathVariable int val) {
-        List<BarChartData> barChartDataList = new ArrayList<>();
+        List<BarChartData> barChartDataList;
         try {
             barChartDataList = statsService.getBarChartData(type, val);
         } catch (Exception e) {
