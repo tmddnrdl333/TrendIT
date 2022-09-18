@@ -1,16 +1,15 @@
 package com.trendit.db.repository;
 
-import aj.org.objectweb.asm.Label;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.trendit.db.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -53,11 +52,42 @@ public class NewsRepositorySupport {
         return latestNews;
     }
 
+
+    private BooleanExpression eqNewsAgency(String newsAgency) {
+        if (StringUtils.isEmpty(newsAgency)) {
+            return null;
+        }
+        return qNews.newsAgency.eq(newsAgency);
+    }
+
+    private BooleanExpression eqNewsDate(String newsDate) {
+        if (StringUtils.isEmpty((newsDate))) {
+            return null;
+        }
+        List<LocalDate> parsedDate = parsingDate(newsDate);
+        return qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1));
+    }
+
     public List<News> getNewsByOptions(String keyword, String newsDate, String newsAgency, int page) {
         List<News> news = new ArrayList<>();
 
+//        List<News> news = jpaQueryFactory
+//                .select(qNews)
+//                .from(qKeyword, qKeywordHasNews, qNews)
+//                .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
+//                        qKeywordHasNews.news.newsId.eq(qNews.newsId),
+//                        qKeyword.keyword.eq(keyword),
+//                        eqNewsAgency(newsAgency),
+//                        eqNewsDate(newsDate))
+//                .orderBy(qNews.newsId.desc())
+//                .offset(10 * (page - 1))
+//                .limit(10)
+//                .fetch();
+
         if (newsDate != null && newsAgency != null) {
             List<LocalDate> parsedDate = parsingDate(newsDate);
+
+
             news = jpaQueryFactory
                     .select(qNews)
                     .from(qKeyword, qKeywordHasNews, qNews)
