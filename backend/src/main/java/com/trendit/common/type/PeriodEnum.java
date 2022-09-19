@@ -17,13 +17,13 @@ public enum PeriodEnum {
     private final int dateConstant;
     private final String targetEntity;
 
-    private int offset(int val) {
-        return dateConstant - val;
-    }
+//    private int offset(int val) {
+//        return dateConstant - val;
+//    }
 
     public LocalDate getTargetDate(int time) {
         LocalDate targetTime = LocalDate.now();
-        int timeOffset = offset(time);
+        int timeOffset = time;
         if (this == day) {
             return targetTime.minusDays(timeOffset);
         } else if (this == week) {
