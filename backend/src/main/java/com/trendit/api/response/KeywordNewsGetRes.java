@@ -1,6 +1,5 @@
 package com.trendit.api.response;
 
-import com.querydsl.core.Tuple;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.common.model.response.BaseRes;
 import lombok.Getter;

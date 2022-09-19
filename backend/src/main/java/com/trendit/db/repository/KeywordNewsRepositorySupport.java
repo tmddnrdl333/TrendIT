@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.api.response.data.NewsData;
 import com.trendit.db.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class KeywordNewsRepositorySupport {
 
-    @Autowired
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     QStatisticsDate qStatisticsDate = QStatisticsDate.statisticsDate;
 
@@ -29,6 +29,7 @@ public class KeywordNewsRepositorySupport {
     /*
       TODO
       day, week, month, year 분기 해주삼
+      -> CustomRepository.getKeywordNews로 변경, 변경 후 해당 메서드에 반영함
      */
 
     public List<KeywordNewsData> getKeywordNews(String type) {
