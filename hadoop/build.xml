@@ -10,7 +10,6 @@
   <property name="build.encoding" value="ISO-8859-1"/>
 
   <property name="lib.dir" value="/home/hadoop/hadoop/share/hadoop/"/>
-  <property name="komoran.dir" value="/home/hadoop/KOMORAN/"/>
 
   <property name="works.dir" value="${basedir}/src"/>
   <property name="build.dir" value="${basedir}/build"/>
@@ -29,9 +28,6 @@
   <path id="classpath">
     <fileset dir="${lib.dir}">
       <include name="**/*.jar" />
-    </fileset>
-    <fileset dir="${komoran.dir}">
-      <include name="KOMORAN-3.3.4.jar" />
     </fileset>
   </path>
 
