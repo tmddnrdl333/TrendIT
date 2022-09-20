@@ -1,25 +1,26 @@
 <template>
-  <q-page class="flex flex-center">
-    <!-- 메인 페이지에 넣을 컴포넌트들을 채워주삼 -->
-    <api-test />
-  </q-page>
+  <div class="q-pa-xl">
+    <MainBarChart />
+    <br />
+    <KeywordLineChart :keyword="keyword" />
+    <br />
+    <CompanyBarChart />
+  </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import ApiTest from "../components/test/ApiTest.vue";
-
-export default defineComponent({
-  name: "TestView",
-  components: {
-    ApiTest,
-  },
-  data() {
+import { ref } from "vue";
+import MainBarChart from "../components/main/MainBarChart.vue";
+import CompanyBarChart from "../components/main/CompanyBarChart.vue";
+import KeywordLineChart from "src/components/main/KeywordLineChart.vue";
+export default {
+  components: { MainBarChart, CompanyBarChart, KeywordLineChart },
+  setup() {
+    const keyword = ref("카카오");
     return {
-      sampleData: "",
+      keyword,
     };
   },
-  setup() {},
   created() {},
   mounted() {},
   unmounted() {},
