@@ -8,5 +8,5 @@ def morphological_analysis(data) :
     for item in data :
         pos = komoran.nouns(item[0])
         for keyword in pos :
-            morpho_analysis_result.append(tuple(keyword, item[1]))
+            morpho_analysis_result.append(tuple([keyword, item[1]]))
     return morpho_analysis_result

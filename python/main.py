@@ -2,7 +2,7 @@ from fastapi import FastAPI
 
 import crawler
 import db_util as db
-import keyword
+import keyword_processing
 import morphological_analysis as morph
 
 app = FastAPI()
@@ -13,7 +13,7 @@ def run(date: str):
     db.insert_news(crawler.execute_crawler())
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(start_date,end_date))
-    keyword.save_as_file(analysis_result)
+    keyword_processing.save_as_file(analysis_result)
     ## ssh 접속 및 분석
     # 파일 전송, (hadoop wordcount)분석, 결과 파일 받아야 함
 
