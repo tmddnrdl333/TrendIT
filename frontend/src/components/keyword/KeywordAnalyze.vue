@@ -1,12 +1,12 @@
 <template>
-  <div class="keyword-search q-pa-lg">
-    <div>키워드 검색</div>
+  <div class="keyword-analyze q-pa-lg">
+    <div>키워드 분석</div>
   </div>
 </template>
 
 <style scoped>
-.keyword-search {
-  height: 180px;
+.keyword-analyze {
+  height: 495px;
   width: 1200px;
   background-color: #ffffff;
   margin-top: 10px;
