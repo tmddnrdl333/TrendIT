@@ -1,7 +1,20 @@
-## pymysql 설치
+## Selenium 설치
+
+```bash
+pip install selenium
+pip install webdriver-manager
+```
+
+## PyMySQL 설치
 
 ```bash
 pip install pymysql
+```
+
+## FastAPI 설치
+
+```bash
+pip install fastapi
 ```
 
 ## KoNLPy 설치
