@@ -7,6 +7,7 @@ import CompanyView from "../pages/CompanyView.vue";
 import NewsView from "../pages/NewsView.vue";
 import AboutView from "../pages/AboutView.vue";
 import TestView from "../pages/TestView.vue";
+import TestPageView from "../pages/TestPageView.vue";
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
       {
         path: "test",
         component: TestView,
+      },
+      {
+        path: "test2",
+        component: TestPageView,
       },
     ],
   },

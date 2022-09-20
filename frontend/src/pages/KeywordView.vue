@@ -1,9 +1,25 @@
 <template>
-  <div></div>
+  <q-page class="flex flex-center">
+    <keyword-search />
+    <keyword-analyze />
+    <keyword-analyze-result />
+  </q-page>
 </template>
+
 <script>
-export default {
-  components: {},
+import { defineComponent } from "vue";
+import KeywordSearch from "../components/keyword/KeywordSearch.vue";
+import KeywordAnalyze from "../components/keyword/KeywordAnalyze.vue";
+import KeywordAnalyzeResult from "../components/keyword/KeywordAnalyzeResult.vue";
+
+export default defineComponent({
+  name: "KeywordView",
+  components: {
+    KeywordSearch,
+    KeywordAnalyze,
+    KeywordAnalyzeResult,
+  },
+
   data() {
     return {
       sampleData: "",
@@ -14,5 +30,5 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {},
-};
+});
 </script>

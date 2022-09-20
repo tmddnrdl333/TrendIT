@@ -7,6 +7,7 @@
     <CompanyBarChart />
   </div>
 </template>
+
 <script>
 import { ref } from "vue";
 import MainBarChart from "../components/main/MainBarChart.vue";
@@ -24,5 +25,5 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {},
-};
+});
 </script>

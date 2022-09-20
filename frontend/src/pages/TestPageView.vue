@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import KeywordSearch from "../components/keyword_analyze/KeywordSearch.vue";
+import KeywordSearch from "../components/keyword/KeywordSearch.vue";
 
 export default defineComponent({
   name: "TestPageView",
