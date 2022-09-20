@@ -1,11 +1,11 @@
 <template>
-  <div class="sub-news q-pa-lg">
-    <div>서브뉴스</div>
+  <div class="company-list q-pa-lg">
+    <div>기업 리스트</div>
   </div>
 </template>
 
 <style scoped>
-.sub-news {
+.company-list {
   height: 1200px;
   width: 1200px;
   background-color: #ffffff;
