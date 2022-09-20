@@ -1,6 +1,6 @@
 import pymysql
 
-def excute_select(conn, sql, data) :
+def execute_select(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
@@ -15,7 +15,7 @@ def excute_select(conn, sql, data) :
     conn.close()
     return result
 
-def excute_insert_many(conn, sql, data) :
+def execute_insert_many(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
@@ -32,20 +32,26 @@ def excute_insert_many(conn, sql, data) :
 # data = [(headline, img_link, news_agency, news_content, news_date, news_link),
 #         (headline, img_link, news_agency, news_content, news_date, news_link),
 #         (headline, img_link, news_agency, news_content, news_date, news_link)]
-def insert_news(data) :
+def insert_news(data):
     sql = """INSERT INTO `news`(headline, img_link, news_agency, news_content, news_date, news_link) VALUES (%s, %s, %s, %s, %s, %s);"""
-    excute_insert_many(sql, data)
-    
+    execute_insert_many(sql, data)
+
 # usage
 # date = "2022-01-01"
-def select_news(date) :
-    sql = """SELECT headline, id from `news`(headline, img_link, news_agency, news_content, news_date, news_link) VALUES (%s, %s, %s, %s, %s, %s);"""
-    excute_select(sql, date)
+def select_news(start_date, end_date):
+    sql = """SELECT headline, news_id from `news` WHERE news_date >= %s and news_date <= %s ORDER BY news_id;"""
+    return execute_select(sql, (start_date, end_date))
 
 # usage
 # data = [(keyword_id, news_id),
 #         (keyword_id, news_id),
 #         (keyword_id, news_id)]
-def insert_keyword_has_news(data) :
+def insert_keyword_has_news(data):
     sql = """INSERT INTO `keyword_has_news`(keyword_id, news_id) VALUES (%s, %s);"""
-    excute_insert_many(sql, data)
+    execute_insert_many(sql, data)
+
+# usage
+# keyword = "keyword"
+def is_keyword(keyword):
+    sql = """SELECT keyword_id from `keyword` WHERE keyword = %s;"""
+    return execute_select(sql, keyword)

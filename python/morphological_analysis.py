@@ -9,7 +9,7 @@ def morphological_analysis(data) :
         pos = komoran.nouns(item[0])
         for keyword in pos :
             morpho_analysis_result.append(keyword, item[1])
-
+    return morpho_analysis_result
 
 ## 키워드 테이블에 키워드 저장되어 있는지 확인
 ## 키워드는 하루 기준 일정 빈도 이상 등장한 키워드
