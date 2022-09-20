@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" class="background-color">
     <q-header elevated>
       <LayoutHeader />
     </q-header>
@@ -27,3 +27,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.background-color {
+  background-color: #d9d9d9;
+}
+</style>
