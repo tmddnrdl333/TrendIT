@@ -10,9 +10,9 @@
 
 <script>
 import { ref } from "vue";
-import MainBarChart from "../components/main/MainBarChart.vue";
-import CompanyBarChart from "../components/main/CompanyBarChart.vue";
-import KeywordLineChart from "src/components/main/KeywordLineChart.vue";
+import MainBarChart from "../components/charts/MainBarChart.vue";
+import CompanyBarChart from "../components/charts/CompanyBarChart.vue";
+import KeywordLineChart from "src/components/charts/KeywordLineChart.vue";
 export default {
   components: { MainBarChart, CompanyBarChart, KeywordLineChart },
   setup() {
@@ -25,5 +25,5 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {},
-});
+};
 </script>
