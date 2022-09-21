@@ -5,34 +5,33 @@ import com.trendit.common.model.response.BaseRes;
 import com.trendit.db.entity.News;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 public class LatestNewsGetRes extends BaseRes {
 
-    List<NewsData> data;
+    Page<NewsData> data;
 
-    public static LatestNewsGetRes of(int statusCode, String msg, List<News> data) {
+    public static LatestNewsGetRes of(int statusCode, String msg, Page<News> newsPage) {
         LatestNewsGetRes latestNewsGetRes = new LatestNewsGetRes();
         latestNewsGetRes.setStatusCode(statusCode);
         latestNewsGetRes.setMessage(msg);
-        latestNewsGetRes.setData(new ArrayList<>());
-        for (News news : data) {
-            latestNewsGetRes.getData()
-                    .add(NewsData.builder()
-                            .newsId(news.getNewsId())
-                            .headline(news.getHeadline())
-                            .newsContent(news.getNewsContent())
-                            .newsDate(news.getNewsDate())
-                            .newsAgency(news.getNewsAgency())
-                            .newsLink(news.getNewsLink())
-                            .imgLink(news.getImgLink())
-                            .build()
-                    );
-        }
+
+        latestNewsGetRes.setData(
+                newsPage.map(m -> NewsData
+                        .builder()
+                        .newsId(m.getNewsId())
+                        .headline(m.getHeadline())
+                        .imgLink(m.getImgLink())
+                        .newsAgency(m.getNewsAgency())
+                        .newsContent(m.getNewsContent())
+                        .newsDate(m.getNewsDate())
+                        .newsLink(m.getNewsLink())
+                        .build())
+        );
+
         return latestNewsGetRes;
     }
 }
