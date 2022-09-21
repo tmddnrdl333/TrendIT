@@ -22,6 +22,7 @@ public class RepositoryUtils {
         queryBuffer.append("join k.keywordHasNews kn ");
         queryBuffer.append("join kn.news n ");
         queryBuffer.append("where s.targetTime = :recentTime ");
+        queryBuffer.append("and n.newsId in (select max(n.newsId) from KeywordHasNews kn join kn.news n group by kn.keyword.keywordId) ");
         queryBuffer.append("order by s.frequency desc");
 
 //        SELECT s.frequency, k.keyword, n.news_id, n.headline FROM statistics_date as s JOIN keyword as k ON s.keyword_id = k.keyword_id
