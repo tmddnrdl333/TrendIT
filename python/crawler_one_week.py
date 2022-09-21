@@ -1,7 +1,3 @@
-import os
-import time
-from datetime import datetime, timedelta
-import json
 import pymysql
 from selenium import webdriver
 from selenium.webdriver.common.by import By
