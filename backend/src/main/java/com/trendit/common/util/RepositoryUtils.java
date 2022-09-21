@@ -24,6 +24,11 @@ public class RepositoryUtils {
         queryBuffer.append("where s.targetTime = :recentTime ");
         queryBuffer.append("order by s.frequency desc");
 
+//        SELECT s.frequency, k.keyword, n.news_id, n.headline FROM statistics_date as s JOIN keyword as k ON s.keyword_id = k.keyword_id
+//        join (SELECT kn.keyword_id, max(kn.news_id) as recent_news_id from keyword_has_news kn group by keyword_id) recent_news on s.keyword_id = recent_news.keyword_id
+//        JOIN news as n on n.news_id = recent_news.recent_news_id
+//        where s.target_time = '2022-09-20' ORDER BY s.frequency DESC;
+
         String query = queryBuffer.toString();
         return query;
     }
