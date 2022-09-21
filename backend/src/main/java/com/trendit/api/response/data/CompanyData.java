@@ -15,5 +15,4 @@ public class CompanyData {
     String companyCategory;
     String companyMainItem;
     String companyLink;
-    Keyword keyword;
 }

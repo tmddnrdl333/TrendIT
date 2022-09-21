@@ -28,11 +28,10 @@ public class CompanyListGetRes extends BaseRes {
                             .companyCategory(company.getCompanyCategory())
                             .companyMainItem(company.getCompanyMainItem())
                             .companyLink(company.getCompanyLink())
-                            .keyword(company.getKeyword())
                             .build()
                     );
         }
-        System.out.println(companyListGetRes.data.get(0).getCompanyName());
+
         return companyListGetRes;
     }
 }
