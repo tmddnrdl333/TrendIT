@@ -2,13 +2,8 @@ import MainLayout from "../layouts/MainLayout.vue";
 
 import MainView from "../pages/MainView.vue";
 import ErrorView from "../pages/ErrorView.vue";
-import WordCloudVue from "src/components/main/WordCloud.vue";
 
 const routes = [
-  {
-    path: "/dev",
-    component: WordCloudVue,
-  },
   {
     path: "/",
     component: MainLayout,
