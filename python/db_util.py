@@ -38,9 +38,9 @@ def insert_news(data):
 
 # usage
 # date = "2022-01-01"
-def select_news(start_date, end_date):
-    sql = """SELECT headline, news_id from `news` WHERE news_date >= %s and news_date <= %s ORDER BY news_id;"""
-    return execute_select(sql, (start_date, end_date))
+def select_news(date):
+    sql = """SELECT headline, news_id from `news` WHERE news_date = %s ORDER BY news_id;"""
+    return execute_select(sql, date)
 
 # usage
 # keyword = "keyword"
