@@ -1,25 +1,18 @@
 <template>
-  <q-card class="q-pa-md" style="width: 500px">
-    <q-card-section> Keyword Line Chart... </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <!-- TYPE -->
-      <div class="text-center">
-        <q-btn-toggle
-          v-model="type"
-          toggle-color="primary"
-          :options="[
-            { label: '일별', value: 'day' },
-            { label: '주별', value: 'week' },
-            { label: '월별', value: 'month' },
-            { label: '연도별', value: 'year' },
-          ]"
-        />
-      </div>
-      <!-- CHART -->
-      <canvas id="myChart" width="400" height="400"></canvas>
-    </q-card-section>
-  </q-card>
+  <div class="chart-container text-center">
+    <q-btn-toggle
+      v-model="type"
+      toggle-color="primary"
+      :options="[
+        { label: '일별', value: 'day' },
+        { label: '주별', value: 'week' },
+        { label: '월별', value: 'month' },
+        { label: '연도별', value: 'year' },
+      ]"
+    />
+    <!-- CHART -->
+    <canvas id="myChart" class="chart" width="400" height="250"></canvas>
+  </div>
 </template>
 
 <script>
@@ -117,3 +110,17 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped>
+.chart {
+  margin: 10px auto;
+  /* test */
+  border: 1px red solid;
+}
+.chart-container {
+  width: 450px;
+  height: 300px;
+  /* test */
+  border: 1px pink solid;
+}
+</style>

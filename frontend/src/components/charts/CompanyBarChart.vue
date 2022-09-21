@@ -1,31 +1,24 @@
 <template>
-  <q-card class="q-pa-md" style="width: 500px">
-    <q-card-section> Company Bar Chart... </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <!-- TYPE -->
-      <div class="text-center">
-        <q-btn-toggle
-          v-model="type"
-          toggle-color="primary"
-          :options="[
-            { label: '일별', value: 'day' },
-            { label: '주별', value: 'week' },
-            { label: '월별', value: 'month' },
-            { label: '연도별', value: 'year' },
-          ]"
-        />
-      </div>
-      <!-- CHART -->
-      <ChartComp
-        v-if="loaded"
-        :chart-data="chartData"
-        :chart-options="chartOptions"
-        class="chart"
-      />
-      <div v-else class="chart">그래프를 표시할 수 없습니다.</div>
-    </q-card-section>
-  </q-card>
+  <div class="chart-container text-center">
+    <q-btn-toggle
+      v-model="type"
+      toggle-color="primary"
+      :options="[
+        { label: '일별', value: 'day' },
+        { label: '주별', value: 'week' },
+        { label: '월별', value: 'month' },
+        { label: '연도별', value: 'year' },
+      ]"
+    />
+    <!-- CHART -->
+    <ChartComp
+      v-if="loaded"
+      :chart-data="chartData"
+      :chart-options="chartOptions"
+      class="chart"
+    />
+    <div v-else class="chart">그래프를 표시할 수 없습니다.</div>
+  </div>
 </template>
 
 <script>
@@ -148,6 +141,15 @@ export default {
 <style scoped>
 .chart {
   width: 400px;
-  height: 400px;
+  height: 250px;
+  margin: 10px auto;
+  /* test */
+  border: 1px red solid;
+}
+.chart-container {
+  width: 450px;
+  height: 300px;
+  /* test */
+  border: 1px pink solid;
 }
 </style>

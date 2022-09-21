@@ -1,45 +1,39 @@
 <template>
-  <q-card class="q-pa-md" style="width: 500px">
-    <q-card-section> Main Bar Chart... </q-card-section>
-    <q-separator />
-    <q-card-section>
-      <!-- TYPE -->
-      <div class="text-center">
-        <q-btn-toggle
-          v-model="type"
-          toggle-color="primary"
-          :options="[
-            { label: '일별', value: 'day' },
-            { label: '주별', value: 'week' },
-            { label: '월별', value: 'month' },
-            { label: '연도별', value: 'year' },
-          ]"
-        />
-      </div>
-      <!-- CHART -->
-      <ChartComp
-        v-if="loaded"
-        :chart-data="chartData"
-        :chart-options="chartOptions"
-        class="chart"
+  <div class="chart-container text-center">
+    <q-btn-toggle
+      v-model="type"
+      toggle-color="primary"
+      :options="[
+        { label: '일별', value: 'day' },
+        { label: '주별', value: 'week' },
+        { label: '월별', value: 'month' },
+        { label: '연도별', value: 'year' },
+      ]"
+    />
+    <!-- CHART -->
+    <ChartComp
+      v-if="loaded"
+      :chart-data="chartData"
+      :chart-options="chartOptions"
+      class="chart"
+    />
+    <div v-else class="chart">그래프를 표시할 수 없습니다.</div>
+    <!-- SLIDE -->
+    <div class="text-center">
+      <q-slider
+        class="slider"
+        reverse
+        v-model="slide"
+        :min="s_min"
+        :max="s_max"
+        markers
+        :marker-labels="markers"
+        color="blue-10"
+        inner-track-color="blue-2"
+        selection-color="blue-2"
       />
-      <div v-else class="chart">그래프를 표시할 수 없습니다.</div>
-      <!-- SLIDE -->
-      <div class="text-center">
-        <q-slider
-          reverse
-          v-model="slide"
-          :min="s_min"
-          :max="s_max"
-          markers
-          :marker-labels="markers"
-          color="blue-10"
-          inner-track-color="blue-2"
-          selection-color="blue-2"
-        />
-      </div>
-    </q-card-section>
-  </q-card>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -225,8 +219,20 @@ export default {
 </script>
 
 <style scoped>
+.slider {
+  width: 90%;
+}
 .chart {
   width: 400px;
-  height: 400px;
+  height: 250px;
+  margin: 10px auto;
+  /* test */
+  border: 1px red solid;
+}
+.chart-container {
+  width: 450px;
+  height: 350px;
+  /* test */
+  border: 1px pink solid;
 }
 </style>
