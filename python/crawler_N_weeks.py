@@ -1,16 +1,15 @@
-import os
+import pymysql
 import time
 from datetime import datetime, timedelta
-import json
-import pymysql
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 ## DB 세팅 
@@ -24,21 +23,25 @@ cursor = conn.cursor(pymysql.cursors.DictCursor)
 
 URL = 'https://www.bigkinds.or.kr/v2/news/index.do'
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+# 크롬 웹드라이버 생성
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--window-size=1920,1080')
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 driver.implicitly_wait(20)
 driver.get(URL)
-
 wait = WebDriverWait(driver, 20)
 
-begin_date = '2022-06-19'
-end_date = '2022-06-25'
+begin_date = '1999-03-07'
+end_date = '1999-03-13'
 date_format = '%Y-%m-%d'
 
-for i in range(10):
-    ## time.sleep(3)
+for i in range(100):
     ## 기간
-    period = driver.find_element(by=By.XPATH, value='//*[@id="collapse-step-1-body"]/div[3]/div/div[1]/div[1]/a')
-    period.click()
+    if i < 2 :
+        period = driver.find_element(by=By.XPATH, value='//*[@id="collapse-step-1-body"]/div[3]/div/div[1]/div[1]/a')
+        period.click()
+    
     begin = driver.find_element(by=By.XPATH, value='//*[@id="search-begin-date"]')
     begin.send_keys(Keys.BACKSPACE * 10)
     begin.send_keys(begin_date)
@@ -65,6 +68,7 @@ for i in range(10):
     apply.click()
 
     ## 총 페이지, 시작 페이지 설정
+    time.sleep(2)
     wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="news-results-tab"]')))
     last_page = int(driver.find_element(by=By.XPATH, value='//*[@id="news-results-tab"]/div[1]/div[2]/div/div/div/div/div[3]/div/b').text)
     paging = driver.find_element(by=By.XPATH, value='//*[@id="paging_news_result"]')
