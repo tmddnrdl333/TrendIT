@@ -1,6 +1,3 @@
-# import time
-# from datetime import datetime, timedelta
-# import json
 import pymysql
 from selenium import webdriver
 from selenium.webdriver import ActionChains
@@ -45,7 +42,7 @@ def crawl_data(driver, wait, begin_date, end_date):
     wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="news-results-tab"]')))
     last_page = int(driver.find_element(by=By.XPATH, value='//*[@id="news-results-tab"]/div[1]/div[2]/div/div/div/div/div[3]/div/b').text)
     paging = driver.find_element(by=By.XPATH, value='//*[@id="paging_news_result"]')
-    cur_page = 41
+    cur_page = 1
     paging.send_keys(Keys.BACKSPACE)
     paging.send_keys(cur_page)
     paging.send_keys(Keys.ENTER)

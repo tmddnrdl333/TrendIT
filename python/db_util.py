@@ -43,15 +43,28 @@ def select_news(start_date, end_date):
     return execute_select(sql, (start_date, end_date))
 
 # usage
+# keyword = "keyword"
+def is_keyword(keyword):
+    sql = """SELECT keyword_id from `keyword` WHERE keyword = %s;"""
+    return execute_select(sql, keyword)
+
+# usage
+# keywords = [keyword, keyword, keyword]
+def insert_keyword(keywords) :
+    sql = """INSERT INTO `keyword`(keyword) VALUES (%s)"""
+    execute_insert_many(sql, list(keywords))
+
+# usage
+# data = [(keyword_id, frequency, year, month, day),
+#         (keyword_id, frequency, year, month, day)]
+def insert_statistics_date(data) :
+    sql = """INSERT INTO `statistics_date`(keyword_id, frequeny, year, month, day) VALUES (%s, %s, %s, %s, %s)"""
+    execute_insert_many(sql, data)
+
+# usage
 # data = [(keyword_id, news_id),
 #         (keyword_id, news_id),
 #         (keyword_id, news_id)]
 def insert_keyword_has_news(data):
     sql = """INSERT INTO `keyword_has_news`(keyword_id, news_id) VALUES (%s, %s);"""
     execute_insert_many(sql, data)
-
-# usage
-# keyword = "keyword"
-def is_keyword(keyword):
-    sql = """SELECT keyword_id from `keyword` WHERE keyword = %s;"""
-    return execute_select(sql, keyword)
