@@ -16,6 +16,8 @@
         v-if="loaded"
         :chart-data="chartData"
         :chart-options="chartOptions"
+        :width="800"
+        :height="250"
         class="chart"
       />
       <div v-else class="chart" style="border: 1px red solid">
@@ -103,7 +105,7 @@ export default {
   methods: {
     async loadChartData() {
       await companyChartApi(
-        { type: this.type, val: this.slide },
+        this.type,
         (response) => {
           this.response = response.data;
           this.data_list = response.data.data;

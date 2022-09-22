@@ -12,7 +12,9 @@
         ]"
       />
       <!-- CHART -->
-      <canvas id="myChart" class="chart" width="400" height="250"></canvas>
+      <div id="chartbox">
+        <!-- <canvas id="myChart" class="chart" width="400" height="250" /> -->
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -29,9 +31,6 @@ export default {
       default: null,
     },
   },
-  async mounted() {
-    this.drawChart();
-  },
   setup() {
     const data_list = ref(null);
     const type = ref("day");
@@ -41,8 +40,8 @@ export default {
       type,
     };
   },
-  created() {
-    this.loadChartData();
+  async mounted() {
+    await this.drawChart();
   },
   methods: {
     async loadChartData() {
@@ -55,6 +54,20 @@ export default {
       );
     },
     async drawChart() {
+      try {
+        const ctx = document.getElementById("myChart");
+        ctx.parentNode.removeChild(ctx);
+      } catch (e) {
+        // console.warn(e);
+      }
+      const parent = document.getElementById("chartbox");
+      const canvas = document.createElement("canvas");
+      canvas.setAttribute("id", "myChart");
+      canvas.setAttribute("class", "chart");
+      canvas.setAttribute("width", "400");
+      canvas.setAttribute("height", "250");
+      parent.appendChild(canvas);
+
       const ctx = document.getElementById("myChart");
 
       // this.data_list에 response를 채워줌
@@ -63,6 +76,7 @@ export default {
       /*
         TODO: labels를 배열로 반환해주는 함수를 따로 만들어야 할듯
       */
+      // 여기부터 ~
       let labels = [];
       for (let i = 6; i >= 0; i--) {
         let date_val = new Date();
@@ -70,6 +84,8 @@ export default {
         let date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
         labels.push(date_label);
       }
+      // ~ 여기까지를 함수화
+
       let data_array = [];
       this.data_list.forEach((item) => {
         data_array.push(item);
