@@ -1,10 +1,14 @@
 package com.trendit.db.repository;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.trendit.db.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -40,17 +44,18 @@ public class NewsRepositorySupport {
         return totalNewsCount;
     }
 
-    /* TODO: LocalDate는 시간 순서대로 정렬이 되지 않음 */
-    public List<News> getLatestNews() {
-        List<News> latestNews = new ArrayList<>();
-        latestNews = jpaQueryFactory
+    public Page<News> getLatestNews(String newsAgency, Pageable pageable) {
+        QueryResults<News> latestNews = jpaQueryFactory
                 .select(qNews)
                 .from(qNews)
-                .limit(10) // 한 페이지만 보여주는 건지? 보여주는 개수 변수로 바꿀지?
-                .orderBy(qNews.newsDate.desc())
-                .fetch();
-        return latestNews;
+                .where(eqNewsAgency(newsAgency))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qNews.newsId.desc())
+                .fetchResults();
+        return new PageImpl<>(latestNews.getResults(), pageable, latestNews.getTotal());
     }
+
 
 
     private BooleanExpression eqNewsAgency(String newsAgency) {

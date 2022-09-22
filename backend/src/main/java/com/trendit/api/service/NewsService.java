@@ -4,6 +4,8 @@ import com.trendit.api.response.data.NewsCountData;
 import com.trendit.db.entity.News;
 import com.trendit.db.repository.NewsRepositorySupport;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class NewsService {
         return data;
     }
 
-    public List<News> getLatestNews() {
-        List<News> data = newsRepositorySupport.getLatestNews();
+    public Page<News> getLatestNews(String newsAgency, Pageable pageable) {
+        Page<News> data = newsRepositorySupport.getLatestNews(newsAgency, pageable);
         return data;
     }
 
