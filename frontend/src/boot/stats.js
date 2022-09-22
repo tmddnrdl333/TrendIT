@@ -22,4 +22,8 @@ async function keywordChartApi(param, success, fail) {
     .catch(fail);
 }
 
-export { mainChartApi, companyChartApi, keywordChartApi };
+async function getNewsCollectData(success, fail) {
+  await api.get("/stats/news-count").then(success).catch(fail);
+}
+
+export { mainChartApi, companyChartApi, keywordChartApi, getNewsCollectData };

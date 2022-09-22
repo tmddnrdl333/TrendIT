@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-xl">
-    <MainBarChart />
+    <main-bar-chart />
     <br />
-    <KeywordLineChart :keyword="keyword" />
+    <keyword-line-chart :keyword="keyword" />
     <br />
-    <CompanyBarChart />
+    <company-bar-chart />
   </div>
 </template>
 
