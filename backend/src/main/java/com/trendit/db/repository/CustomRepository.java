@@ -35,8 +35,8 @@ public class CustomRepository {
     }
 
 
-    public List<BarChartData> getFrequencyStats(PeriodEnum type, LocalDate date) {
-        String query = repositoryUtils.buildFrequencyStatsQuery(type);
+    public List<BarChartData> getFrequencyStats(PeriodEnum type, LocalDate date, boolean isCompany) {
+        String query = repositoryUtils.buildFrequencyStatsQuery(type, isCompany);
 
         List<Object[]> list = (List<Object[]>) entityManager
                 .createQuery(query)

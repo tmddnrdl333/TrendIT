@@ -7,6 +7,8 @@ import com.trendit.db.entity.News;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.trendit.api.service.NewsService;
@@ -23,8 +25,8 @@ public class NewsController {
     NewsService newsService;
 
     @GetMapping("/latest")
-    public ResponseEntity getLatestNews() {
-        List<News> data = newsService.getLatestNews();
+    public ResponseEntity getLatestNews(String newsAgency, Pageable pageable) {
+        Page<News> data = newsService.getLatestNews(newsAgency, pageable);
         return ResponseEntity.status(200).body(LatestNewsGetRes.of(200, "Success", data));
     }
 
