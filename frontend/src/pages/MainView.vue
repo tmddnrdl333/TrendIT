@@ -1,24 +1,29 @@
 <template>
-  <q-page class="flex flex-center">
-    <!-- 메인 페이지에 넣을 컴포넌트들을 채워주삼 -->
-    <today-trend />
-    <today-issue />
-    <trend-rank />
-  </q-page>
+  <div class="main__page__layout">
+    <suspense>
+      <main-intro></main-intro>
+    </suspense>
+    <word-cloud-and-rank></word-cloud-and-rank>
+    <today-news></today-news>
+  </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import TodayTrend from "../components/main/TodayTrend.vue";
-import TodayIssue from "../components/main/TodayIssue.vue";
-import TrendRank from "../components/main/TrendRank.vue";
+import MainIntro from "src/components/main/MainIntro.vue";
+import WordCloudAndRank from "src/components/main/WordCloudAndRank.vue";
+import TodayNews from "src/components/main/TodayNews.vue";
 
 export default defineComponent({
   name: "MainView",
-  components: {
-    TodayTrend,
-    TodayIssue,
-    TrendRank,
-  },
+  components: { WordCloudAndRank, TodayNews, MainIntro },
 });
 </script>
+
+<style scoped>
+.main__page__layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
