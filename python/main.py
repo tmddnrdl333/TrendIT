@@ -20,7 +20,7 @@ def run(date: str):
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
-    keyword_processing.save_as_file(analysis_result)
+    keyproc.save_as_file(analysis_result, date)
 
     ## ssh 접속 및 분석
     # 파일 전송, (hadoop wordcount)분석, 결과 파일 받아야 함
