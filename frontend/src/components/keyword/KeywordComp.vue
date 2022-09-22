@@ -50,6 +50,34 @@
     </q-card>
     <q-card class="keyword-analyze-result q-pa-lg">
       <div>키워드 분석 결과</div>
+      <q-separator inset />
+      <div class="flex q-pa-lg justify-around">
+        <!-- TODO: img중앙정렬, 글자 폰트 적용 후 위치 조정 -->
+        <template v-for="(item, index) of result" :key="index">
+          <q-card class="news-card q-my-md">
+            <div style="height: 150px; overflow: hidden; padding: auto">
+              <template v-if="item.imgLink">
+                <!-- q-img에 fit이 있던데 잘 안된다... -->
+                <q-img :src="item.imgLink" :alt="item.headline" />
+              </template>
+              <template v-else>
+                <div class="row justify-center">(No Image)</div>
+              </template>
+            </div>
+            <q-card-section class="flex column">
+              <div>{{ item.headline }}</div>
+              <div>{{ item.newsContent }}</div>
+              <div class="q-mt-lg">
+                {{ item.newsAgency }} {{ item.newsDate }}
+              </div>
+              <!-- {{item.newsLink}} -->
+            </q-card-section>
+          </q-card>
+        </template>
+      </div>
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination v-model="page" :max="5" input />
+      </div>
     </q-card>
   </div>
 </template>
@@ -66,11 +94,9 @@ export default {
       dialog: ref(false),
       date_range: ref({ from: "", to: "" }),
       page: ref(1),
-      /*
-        TODO:
-        result를 vuex로 넣거나, search를 vuex로 넣어서 거기서 api를 쓴 후 결과를 KeywordAnalyzeResult.vue 컴포넌트에서 받아서 목록을 출력해준다.
-      */
-      result: ref({}),
+      page_max: ref(null),
+
+      result: ref([]),
     };
   },
   mounted() {
@@ -108,12 +134,17 @@ export default {
     },
   },
   components: { KeywordLineChart },
+  watch: {
+    page: function () {
+      this.doSearch();
+    },
+  },
 };
 </script>
 
 <style scoped>
+/* 1 */
 .keyword-search {
-  height: 180px;
   width: 1200px;
   margin: 15px 0px;
 }
@@ -124,14 +155,26 @@ export default {
   width: 500px;
 }
 
+/* 2 */
 .keyword-analyze {
   width: 1200px;
   margin: 15px 0px;
 }
 
+/* 3 */
 .keyword-analyze-result {
-  height: 1430px;
+  /* TODO: "키워드 분석" 글자 폰트, 사이즈, 패딩 마진 등 결정 후 고정된 높이 줘야 할듯 */
+  /* height: 1112px; */
   width: 1200px;
   margin: 15px 0px;
+}
+
+.news-card {
+  height: 270px;
+  width: 230px;
+  padding: 0px;
+}
+.card-img {
+  width: 100%;
 }
 </style>
