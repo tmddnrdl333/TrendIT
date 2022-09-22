@@ -1,3 +1,4 @@
 .idea
 keywords
 __pycache__
+*.pem
