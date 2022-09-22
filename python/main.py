@@ -9,14 +9,14 @@ import subprocess
 app = FastAPI()
 
 hadoop_mutex = 1
-path = "/code/"
+reducer = 2
 
 @app.get("/internal/run/{date}")
 def run(date: str):
     global hadoop_mutex
 
     ## 크롤러 실행 및 데이터 DB에 추가
-    db.insert_news(crawler.execute_crawler())
+    db.insert_news(crawler.execute_crawler(date))
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
@@ -28,11 +28,11 @@ def run(date: str):
 
     while (hadoop_mutex == 0): pass
     hadoop_mutex = 0
-    result = subprocess.call(['sh', path + 'script.sh'])
+    result = subprocess.call(['sh', '/code/script.sh'])
     hadoop_mutex = 1
     if (result != 0):
         raise HTTPException(status_code=500, detail="Failed")
-    hadoop_result = keyproc.get_hadoop_result(path)
+    hadoop_result = keyproc.get_hadoop_result(reducer)
 
     ## 키워드 판별 및 DB에 데이터 추가
     keywords = keyproc.extract_keyword(hadoop_result)

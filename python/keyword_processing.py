@@ -12,7 +12,7 @@ def save_as_file(data) :
     f.close()
 
 
-def get_hadoop_result(path, reducer) :
+def get_hadoop_result(reducer) :
     hadoop_result = []
     for i in range(reducer) :
         f = open("keywords_output/" + "output"+reducer+".txt", 'r')

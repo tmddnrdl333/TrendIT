@@ -70,7 +70,7 @@ def crawl_data(driver, wait, begin_date, end_date):
 
     return data
 
-def execute_crawler() :
+def execute_crawler(date) :
     URL = 'https://www.bigkinds.or.kr/v2/news/index.do'
 
     # 크롬 웹드라이버 생성
@@ -83,6 +83,6 @@ def execute_crawler() :
     wait = WebDriverWait(driver, 20)
 
     # 크롤링 실행
-    data = crawl_data(driver, wait, "2018-01-01", "2018-01-01")
+    data = crawl_data(driver, wait, date, date)
     driver.quit()
     return data
