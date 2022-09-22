@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  internal:
+    image: internal:latest
+    ports:
+      - 9090:9090

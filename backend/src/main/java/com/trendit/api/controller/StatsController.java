@@ -7,7 +7,7 @@ import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.service.StatsService;
 import com.trendit.common.exception.IllegalChartDataTypeException;
 import com.trendit.common.model.response.BaseRes;
-import com.trendit.db.repository.NewsRepositorySupport;
+import com.trendit.common.type.PeriodEnum;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,15 +25,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/stats")
 @AllArgsConstructor
 public class StatsController {
-
-    NewsRepositorySupport newsRepositorySupport;
-
     StatsService statsService;
 
     NewsService newsService;
@@ -43,16 +41,29 @@ public class StatsController {
     @GetMapping("/news-count")
     @ApiOperation(value = "금일/전체 뉴스 개수 조회", notes = "오늘 수집한 뉴스 기사 수, 누적 기사 수를 조회합니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "개수 조회에 성공했습니다.")
+            @ApiResponse(code = 200, message = "개수 조회에 성공했습니다."),
+            @ApiResponse(code = 500, message = "서버 에러 발생.")
     })
 
     public ResponseEntity getNewsCount() {
-        NewsCountData data = newsService.getNewsCountData();
+        NewsCountData data;
+        try {
+            data = newsService.getNewsCountData();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
+        }
+
         return ResponseEntity.status(200).body(NewsCountGetRes.of(200, "Success", data));
     }
 
     @GetMapping("/wordcloud/{type}")
-    public ResponseEntity getKeywordNews(@PathVariable String type) {
+    @ApiOperation(value = "워드클라우드", notes = "워드클라우드에 들어갈 키워드, 키워드당 기사 하나씩")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "서버 에러 발생.")
+    })
+    public ResponseEntity getKeywordNews(@PathVariable PeriodEnum type) {
         List<KeywordNewsData> data = keywordService.getKeywordNews(type);
         return ResponseEntity.status(200).body(KeywordNewsGetRes.of(200, "Success", data));
     }
@@ -66,15 +77,13 @@ public class StatsController {
     })
     public ResponseEntity getBarChartData(
             @ApiParam(value = "type: day/week/month/year", required = true)
-            @PathVariable String type,
+            @PathVariable PeriodEnum type,
             @ApiParam(value = "val: 그래프의 슬라이더의 값을 그대로 입력," +
                     "type = day이고 val = 1이면 6일 전, 7이면 오늘", required = true)
             @PathVariable int val) {
         List<BarChartData> barChartDataList;
         try {
             barChartDataList = statsService.getBarChartData(type, val);
-        } catch (IllegalChartDataTypeException e) {
-            return ResponseEntity.status(400).body(BaseRes.of(400, "Bad Request"));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
@@ -92,15 +101,13 @@ public class StatsController {
     })
     public ResponseEntity getLineChartData(
             @ApiParam(value = "type: day/week/month/year", required = true)
-            @PathVariable String type,
+            @PathVariable PeriodEnum type,
             @ApiParam(value = "keyword : 키워드 입력", required = true)
             @PathVariable String keyword) {
 
         List<Integer> lineChartDataList;
         try {
             lineChartDataList = statsService.getLineChartData(type, keyword);
-        } catch (IllegalChartDataTypeException e) {
-            return ResponseEntity.status(400).body(BaseRes.of(400, "Bad Request"));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));

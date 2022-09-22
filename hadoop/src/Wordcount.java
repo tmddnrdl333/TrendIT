@@ -18,89 +18,46 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
-import kr.co.shineware.nlp.komoran.core.Komoran;
-import kr.co.shineware.nlp.komoran.model.KomoranResult;
-import kr.co.shineware.nlp.komoran.model.Token;
-
 public class Wordcount {
-	/* 
-	Object, Text : input key-value pair type (always same (to get a line of input file))
-	Text, IntWritable : output key-value pair type
-	*/
-	public static class TokenizerMapper
-			extends Mapper<Object,Text,Text,IntWritable> {
+	public static class TokenizerMapper	extends Mapper<Object,Text,Text,IntWritable> {
 
-		// variable declairations
 		private final static IntWritable one = new IntWritable(1);
 		private Text word = new Text();
 
-		// map function (Context -> fixed parameter)
-		public void map(Object key, Text value, Context context)
-				throws IOException, InterruptedException {
-
-			Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
-			// TODO : add user dictionary
-			String sourceStr = value.toString();
-			KomoranResult resultList = komoran.analyze(sourceStr);
-			List<Token> tokenList = resultList.getTokenList();
-			for(Token token : tokenList) {
-				if(token.getPos().equals("NNP") || token.getPos().equals("NNG")) {
-					word.set(token.getMorph());
-					context.write(word, one);
-				}
-			}
-
-			/*
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 			StringTokenizer itr = new StringTokenizer(value.toString());
 			while ( itr.hasMoreTokens() ) {
 				word.set(itr.nextToken());
-
-				// emit a key-value pair
 				context.write(word,one);
 			}
-			*/
 		}
 	}
 
-	/*
-	Text, IntWritable : input key type and the value type of input value list
-	Text, IntWritable : output key-value pair type
-	*/
-	public static class IntSumReducer
-			extends Reducer<Text,IntWritable,Text,IntWritable> {
+	public static class IntSumReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
 
-		// variables
 		private IntWritable result = new IntWritable();
 
-		// key : a disticnt word
-		// values :  Iterable type (data list)
-		public void reduce(Text key, Iterable<IntWritable> values, Context context) 
-				throws IOException, InterruptedException {
-
+		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 			int sum = 0;
-			for ( IntWritable val : values ) {
+			for ( IntWritable val : values ) 
 				sum += val.get();
-			}
 			result.set(sum);
 			context.write(key,result);
 		}
 	}
 
-
-	/* Main function */
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		String[] otherArgs = new GenericOptionsParser(conf,args).getRemainingArgs();
-		// if ( otherArgs.length != 2 ) {
-		// 	for(int i = 0; i < otherArgs.length; i++) {
-		// 		System.out.println("otherArgs[" + i + "] : "+ otherArgs[i]);
-		// 	}
-		// 	System.err.println("Usage: <in> <out>");
-		// 	System.exit(2);
-		// }
+		if ( otherArgs.length != 2 ) {
+			for(int i = 0; i < otherArgs.length; i++) {
+				System.out.println("otherArgs[" + i + "] : "+ otherArgs[i]);
+			}
+			System.err.println("Usage: <in> <out>");
+			System.exit(2);
+		}
 		FileSystem hdfs = FileSystem.get(conf);
-		Path output = new Path(otherArgs[3]);
+		Path output = new Path(otherArgs[1]);
 		if (hdfs.exists(output))
 			hdfs.delete(output, true);
 
@@ -115,8 +72,8 @@ public class Wordcount {
 
 		job.setNumReduceTasks(2);
 
-		FileInputFormat.addInputPath(job,new Path(otherArgs[2]));
-		FileOutputFormat.setOutputPath(job,new Path(otherArgs[3]));
+		FileInputFormat.addInputPath(job,new Path(otherArgs[0]));
+		FileOutputFormat.setOutputPath(job,new Path(otherArgs[1]));
 		System.exit(job.waitForCompletion(true) ? 0 : 1 );
 	}
 }

@@ -4,24 +4,24 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.trendit.db.entity.Board;
 import com.trendit.db.entity.QBoard;
 import com.trendit.db.entity.QKeyword;
-import com.trendit.db.entity.QNews;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class BoardRepositorySupport {
+
+    private final JPAQueryFactory jpaQueryFactory;
 
     QBoard qBoard = QBoard.board;
     QKeyword qKeyword = QKeyword.keyword1;
-    @Autowired
-    private JPAQueryFactory jpaQueryFactory;
+
 
     public List<Board> getFirstBoardsAboutKeyword(long keywordId) {  // 처음 댓글 100개 가져오기
-        List<Board> boardsAboutKeyword = new ArrayList<>();
-        boardsAboutKeyword = jpaQueryFactory
+        List<Board> boardsAboutKeyword =
+                jpaQueryFactory
                 .select(qBoard)
                 .from(qBoard)
                 .limit(100)
@@ -33,8 +33,8 @@ public class BoardRepositorySupport {
     }
 
     public List<Board> getBoardsAboutKeyword(long keywordId, long boardId) {  // 스크롤 올리고 이후 댓글 100개 가져오기
-        List<Board> boardsAboutKeyword = new ArrayList<>();
-        boardsAboutKeyword = jpaQueryFactory
+        List<Board> boardsAboutKeyword =
+                jpaQueryFactory
                 .select(qBoard)
                 .from(qBoard)
                 .limit(100)
