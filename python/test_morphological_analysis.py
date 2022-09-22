@@ -21,4 +21,4 @@ print(text)
 
 analysis_result = morph.morphological_analysis(text)
 print(analysis_result)
-keyproc.save_as_file(analysis_result, "2022-09-20")
+keyproc.save_as_file(analysis_result)

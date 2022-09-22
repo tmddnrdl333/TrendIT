@@ -49,7 +49,7 @@ def is_keyword(keyword):
     return execute_select(sql, keyword)
 
 # usage
-# keywords = [keyword, keyword, keyword]
+# keywords_input = [keyword, keyword, keyword]
 def insert_keyword(keywords) :
     sql = """INSERT INTO `keyword`(keyword) VALUES (%s)"""
     execute_insert_many(sql, list(keywords))

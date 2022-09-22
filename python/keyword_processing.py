@@ -4,17 +4,26 @@ KEYWORD_COUNT_STANDARD = 10
 
 
 # output = keyword keyword keyword...
-def save_as_file(data, date) :
-    filename = date + "_keywords.txt"
-    f = open("./keywords/"+filename, 'w', encoding='utf8')
+def save_as_file(data) :
+    filename = "keywords.txt"
+    f = open("keywords_input/"+filename, 'w', encoding='utf8')
     for line in data :
         f.write(line[0] + " ")
     f.close()
 
 
-def hadoop_result_from_file(data) :
-    f = open("")
-    f.close()
+def get_hadoop_result(path, reducer) :
+    hadoop_result = []
+    for i in range(reducer) :
+        f = open("keywords_output/" + "output"+reducer+".txt", 'r')
+        while True:
+            line = f.readline()
+            if not line: break
+            line_split = line.split()
+            hadoop_result.append(tuple(str(line_split[0]), int(line_split[1])))
+        f.close()
+    return hadoop_result
+
 
 # hadoop_result = [(keyword, count), (keyword, count), (keyword, count)]
 # analysis_result = [(keyword, news_id), (keyword, news_id), (keyword, news_id)]
@@ -24,7 +33,7 @@ def extract_keyword(hadoop_result) :
         # 키워드 등록 여부 확인
         keyword_id = db.is_keyword(item[0])
         # 등록되지 않은 단어 
-        if keyword_id == null :
+        if keyword_id is None:
             # 키워드 조건 확인
             if item[1] >= KEYWORD_COUNT_STANDARD :  
                 # 영단어 중복 없애기 위해 대문자 데이터만 삽입
