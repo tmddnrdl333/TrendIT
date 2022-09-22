@@ -16,7 +16,7 @@ import KeywordLineChart from "src/components/charts/KeywordLineChart.vue";
 export default {
   components: { MainBarChart, CompanyBarChart, KeywordLineChart },
   setup() {
-    const keyword = ref("카카오");
+    const keyword = ref("키워드1");
     return {
       keyword,
     };
