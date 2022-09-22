@@ -1,9 +1,13 @@
 <template>
-  <div class="company-graph q-pa-lg">
-    <div>기업별 뉴스분석</div>
+  <q-card class="company-graph q-pa-lg">
+    <q-card-section>
+      <div>기업별 뉴스분석</div>
+    </q-card-section>
     <q-separator inset />
-    <CompanyBarChart />
-  </div>
+    <q-card-section class="row justify-center">
+      <company-bar-chart />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
