@@ -1,11 +1,13 @@
 <template>
-  <div class="company-list q-pa-lg">
-    <div>기업 리스트</div>
+  <q-card class="company-list q-pa-lg">
+    <q-card-section>
+      <div>기업 리스트</div>
 
-    <!-- 검색창 -->
-    <div class="q-px-md">
-      <q-skeleton type="rect" class="q-ma-md" width="800px" height="40px" />
-    </div>
+      <!-- 검색창 -->
+      <div class="row justify-center">
+        <q-skeleton type="rect" class="q-ma-md" width="800px" height="40px" />
+      </div>
+    </q-card-section>
     <q-separator inset />
     <div class="flex q-pa-lg justify-around">
       <template v-for="(item, index) of company_list" :key="index">
@@ -26,7 +28,7 @@
     <div class="q-pa-lg flex flex-center">
       <q-pagination v-model="current" :max="5" input />
     </div>
-  </div>
+  </q-card>
 </template>
 
 <script>

@@ -8,8 +8,8 @@
     :plugins="plugins"
     :css-classes="cssClasses"
     :styles="myStyles"
-    :width="300"
-    :height="height"
+    :width="400"
+    :height="250"
   />
 </template>
 
@@ -82,11 +82,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 200,
+      default: 400,
     },
     height: {
       type: Number,
-      default: 0,
+      default: 250,
     },
     cssClasses: {
       default: "",

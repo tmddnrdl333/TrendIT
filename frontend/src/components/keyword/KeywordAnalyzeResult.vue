@@ -1,15 +1,13 @@
 <template>
-  <div class="keyword-analyze-result q-pa-lg">
+  <q-card class="keyword-analyze-result q-pa-lg">
     <div>키워드 분석 결과</div>
-  </div>
+  </q-card>
 </template>
 
 <style scoped>
 .keyword-analyze-result {
   height: 1430px;
   width: 1200px;
-  background-color: #ffffff;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 15px 0px;
 }
 </style>

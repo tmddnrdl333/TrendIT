@@ -1,39 +1,43 @@
 <template>
-  <div class="chart-container text-center">
-    <q-btn-toggle
-      v-model="type"
-      toggle-color="primary"
-      :options="[
-        { label: '일별', value: 'day' },
-        { label: '주별', value: 'week' },
-        { label: '월별', value: 'month' },
-        { label: '연도별', value: 'year' },
-      ]"
-    />
-    <!-- CHART -->
-    <ChartComp
-      v-if="loaded"
-      :chart-data="chartData"
-      :chart-options="chartOptions"
-      class="chart"
-    />
-    <div v-else class="chart">그래프를 표시할 수 없습니다.</div>
-    <!-- SLIDE -->
-    <div class="text-center">
-      <q-slider
-        class="slider"
-        reverse
-        v-model="slide"
-        :min="s_min"
-        :max="s_max"
-        markers
-        :marker-labels="markers"
-        color="blue-10"
-        inner-track-color="blue-2"
-        selection-color="blue-2"
+  <q-card class="chart-container text-center">
+    <q-card-section>
+      <q-btn-toggle
+        v-model="type"
+        toggle-color="primary"
+        :options="[
+          { label: '일별', value: 'day' },
+          { label: '주별', value: 'week' },
+          { label: '월별', value: 'month' },
+          { label: '연도별', value: 'year' },
+        ]"
       />
-    </div>
-  </div>
+      <!-- CHART -->
+      <ChartComp
+        v-if="loaded"
+        :chart-data="chartData"
+        :chart-options="chartOptions"
+        class="chart"
+      />
+      <div v-else class="chart" style="border: 1px red solid">
+        그래프를 표시할 수 없습니다.
+      </div>
+      <!-- SLIDE -->
+      <div class="text-center">
+        <q-slider
+          class="slider"
+          reverse
+          v-model="slide"
+          :min="s_min"
+          :max="s_max"
+          markers
+          :marker-labels="markers"
+          color="blue-10"
+          inner-track-color="blue-2"
+          selection-color="blue-2"
+        />
+      </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
@@ -227,12 +231,10 @@ export default {
   height: 250px;
   margin: 10px auto;
   /* test */
-  border: 1px red solid;
 }
 .chart-container {
+  padding: 5px;
   width: 450px;
-  height: 350px;
   /* test */
-  border: 1px pink solid;
 }
 </style>
