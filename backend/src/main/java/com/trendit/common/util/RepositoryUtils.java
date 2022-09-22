@@ -44,12 +44,15 @@ public class RepositoryUtils {
         return data;
     }
 
-    public String buildFrequencyStatsQuery(PeriodEnum type) {
+    public String buildFrequencyStatsQuery(PeriodEnum type, boolean isCompany) {
         String targetEntity = type.getTargetEntity();
 
         StringBuffer queryBuffer = new StringBuffer("select s.keyword.keyword, s.frequency from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
         queryBuffer.append(" s ");
+        if (isCompany) {
+            queryBuffer.append("join s.keyword k join k.company c on k.company.companyId = c.companyId ");
+        }
         queryBuffer.append("where s.targetTime = :date ");
         queryBuffer.append("order by s.frequency desc");
 

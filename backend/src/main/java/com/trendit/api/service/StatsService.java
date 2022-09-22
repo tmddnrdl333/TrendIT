@@ -14,9 +14,9 @@ import java.util.List;
 public class StatsService {
     CustomRepository customRepository;
 
-    public List<BarChartData> getBarChartData(PeriodEnum type, int val) {
+    public List<BarChartData> getBarChartData(PeriodEnum type, int val, boolean isCompany) {
         LocalDate targetTime = type.getTargetDate(val);
-        return customRepository.getFrequencyStats(type, targetTime);
+        return customRepository.getFrequencyStats(type, targetTime, isCompany);
     }
 
     public List<Integer> getLineChartData(PeriodEnum type, String keyword) {

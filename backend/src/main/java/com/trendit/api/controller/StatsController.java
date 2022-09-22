@@ -83,7 +83,7 @@ public class StatsController {
             @PathVariable int val) {
         List<BarChartData> barChartDataList;
         try {
-            barChartDataList = statsService.getBarChartData(type, val);
+            barChartDataList = statsService.getBarChartData(type, val, false);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
@@ -91,6 +91,29 @@ public class StatsController {
 
         return ResponseEntity.status(200).body(BarChartGetRes.of(200, "Success", barChartDataList));
     }
+
+
+    @GetMapping("/bar-chart/company/{type}")
+    @ApiOperation(value = "회사 화면 bar-chart 생성에 필요한 데이터")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "서버 오류 발생.")
+    })
+    public ResponseEntity getCompanyBarChartData(
+            @ApiParam(value = "type: day/week/month/year", required = true)
+            @PathVariable PeriodEnum type) {
+        List<BarChartData> barChartDataList;
+        try {
+            barChartDataList = statsService.getBarChartData(type, 0, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
+        }
+
+        return ResponseEntity.status(200).body(BarChartGetRes.of(200, "Success", barChartDataList));
+    }
+
 
     @GetMapping("/line-chart/{type}/{keyword}")
     @ApiOperation(value = "line-chart 생성에 필요한 데이터")
