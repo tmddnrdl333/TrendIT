@@ -1,11 +1,10 @@
-import db_util as db
+from app import db_util as db
 
 KEYWORD_COUNT_STANDARD = 10
 
-
 # output = keyword keyword keyword...
 def save_as_file(data) :
-    filename = "keywords.txt"
+    filename = "keyword_input.in"
     f = open("keywords_input/"+filename, 'w', encoding='utf8')
     for line in data :
         f.write(line[0] + " ")
@@ -15,12 +14,12 @@ def save_as_file(data) :
 def get_hadoop_result(reducer) :
     hadoop_result = []
     for i in range(reducer) :
-        f = open("keywords_output/" + "output"+reducer+".txt", 'r')
+        f = open("keywords_output/" + "keyword_output" + str(i+1) + ".out", 'r')
         while True:
             line = f.readline()
             if not line: break
             line_split = line.split()
-            hadoop_result.append(tuple(str(line_split[0]), int(line_split[1])))
+            hadoop_result.append(tuple([str(line_split[0]), int(line_split[1])]))
         f.close()
     return hadoop_result
 

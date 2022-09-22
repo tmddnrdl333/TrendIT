@@ -1,9 +1,6 @@
 from fastapi import FastAPI, HTTPException
 
-import crawler
-import db_util as db
-import keyword_processing as keyproc
-import morphological_analysis as morph
+from app import keyword_processing as keyproc, crawler, db_util as db, morphological_analysis as morph
 import subprocess
 
 app = FastAPI()
@@ -16,16 +13,13 @@ def run(date: str):
     global hadoop_mutex
 
     ## 크롤러 실행 및 데이터 DB에 추가
-    db.insert_news(crawler.execute_crawler(date))
+    # db.insert_news(crawler.execute_crawler(date))
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
     keyproc.save_as_file(analysis_result)
 
     ## ssh 접속 및 분석
-    # 파일 전송, (hadoop wordcount)분석, 결과 파일 받아야 함
-    # 결과 파일은 hadoop_result = [(keyword, count), (keyword, count), (keyword, count)] 형태로 변경해서 넘겨야 함
-
     while (hadoop_mutex == 0): pass
     hadoop_mutex = 0
     result = subprocess.call(['sh', '/code/script.sh'])

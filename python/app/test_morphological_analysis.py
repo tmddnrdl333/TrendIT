@@ -4,8 +4,7 @@ text : keyword has news 테이블에 들어갈 내용
 file : hadoop wordcount 처리용
 """
 
-import keyword_processing as keyproc
-import morphological_analysis as morph
+from app import keyword_processing as keyproc, morphological_analysis as morph
 
 i = 1
 text = []

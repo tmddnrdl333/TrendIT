@@ -4,7 +4,8 @@ def execute_select(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
-        host="localhost",
+        host="172.26.2.161",
+        port=32000,
         db="trendit",
         charset='utf8'
     )
@@ -19,7 +20,8 @@ def execute_insert_many(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
-        host="localhost",
+        host="172.26.2.161",
+        port=32000,
         db="trendit",
         charset='utf8'
     )
