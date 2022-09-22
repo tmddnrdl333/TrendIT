@@ -44,3 +44,8 @@ out/
 ###queryDSL
 
 generated
+
+
+### secrets
+
+application-secret.properties
