@@ -46,7 +46,7 @@
 <script>
 import { defineComponent } from "vue";
 import { matCalendarMonth } from "@quasar/extras/material-icons";
-import { dateNewsAgencySearchApi } from "boot/dateNewsAgencySearch.js";
+import { dateNewsAgencySearchApi } from "boot/news.js";
 
 import { ref } from "vue";
 

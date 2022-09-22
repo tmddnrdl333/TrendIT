@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getNewsCollectData } from "boot/mainAxios.js";
+import { getNewsCollectData } from "boot/stats.js";
 import { NewsCollectRes } from "boot/response/NewsCollectRes.js";
 export default {
   name: "MainIntro",

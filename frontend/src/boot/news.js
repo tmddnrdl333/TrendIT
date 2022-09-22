@@ -1,5 +1,14 @@
 import { api } from "./axios.js";
 
+async function getNewsApi(success, fail) {
+  await api.get("/news/latest").then(success).catch(fail).finally;
+}
+
+async function dateNewsAgencySearchApi(newsDate, newsAgency, success, fail) {
+  // await api.get("/news/latest").then(success).catch(fail).finally;
+  console.log(newsDate, newsAgency, success, fail);
+}
+
 async function searchApi(param, success, fail) {
   await api
     .get("/news", {
@@ -13,4 +22,4 @@ async function searchApi(param, success, fail) {
     .catch(fail);
 }
 
-export { searchApi };
+export { getNewsApi, dateNewsAgencySearchApi, searchApi };

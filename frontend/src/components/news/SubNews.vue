@@ -82,7 +82,7 @@
 <script>
 // import { defineComponent } from "vue";
 import { ref } from "vue";
-import { getNewsApi } from "boot/getnews.js";
+import { getNewsApi } from "boot/news.js";
 
 export default {
   data() {
