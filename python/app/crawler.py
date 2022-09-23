@@ -1,12 +1,11 @@
 import pymysql
 from selenium import webdriver
-from selenium.webdriver import ActionChains
+from pyvirtualdisplay import Display
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -62,7 +61,7 @@ def crawl_data(driver, wait, begin_date, end_date):
             news_date = info.find_element(by=By.XPATH, value='p[1]').text
             news_link = info.find_element(by=By.XPATH, value='div/a').get_attribute("href") if len(link_exists) > 0 else ""
             data.append(tuple([headline, img_link, news_agency, news_content, news_date, news_date]))
-            #data.append({"headline" : headline, "img_link" : img_link, "news_agency" : news_agency, "news_content" : news_content, "news_date" : news_date, "news_link" : news_link})
+            print(news_agency, news_link)
 
         next_page = driver.find_element(by=By.XPATH, value='//*[@id="news-results-tab"]/div[1]/div[2]/div/div/div/div/div[4]/a')
         next_page.send_keys(Keys.ENTER)
@@ -76,8 +75,14 @@ def execute_crawler(date) :
     # 크롬 웹드라이버 생성
     options = Options()
     options.add_argument('--headless')
-    options.add_argument('--window-size=1920,1080')
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+
+    # 가상 웹브라우저
+    display = Display(visible=0, size=(1920, 1080))
+    display.start()
+
+    driver = webdriver.Chrome("/code/chromedriver", options=options)
     driver.implicitly_wait(20)
     driver.get(URL)
     wait = WebDriverWait(driver, 20)
