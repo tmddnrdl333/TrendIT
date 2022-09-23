@@ -4,7 +4,7 @@ async function getNewsApi(success, fail) {
   await api.get("/news/latest").then(success).catch(fail).finally;
 }
 
-async function dateNewsAgencySearchApi(newsDate, newsAgency, success, fail) {
+async function getNewsByOptionsApi(newsDate, newsAgency, success, fail) {
   // await api.get("/news/latest").then(success).catch(fail).finally;
   console.log(newsDate, newsAgency, success, fail);
 }
@@ -22,4 +22,4 @@ async function searchApi(param, success, fail) {
     .catch(fail);
 }
 
-export { getNewsApi, dateNewsAgencySearchApi, searchApi };
+export { getNewsApi, getNewsByOptionsApi, searchApi };

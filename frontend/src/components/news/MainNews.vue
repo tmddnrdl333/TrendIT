@@ -57,7 +57,7 @@
       <q-btn
         label="검색"
         color="primary"
-        @click="getnewsByOptions(newsDate, selection)"
+        @click="getNewsByOptions(newsDate, selection)"
       ></q-btn>
     </div>
   </div>
@@ -66,7 +66,7 @@
 <script>
 import { defineComponent, reactive, computed } from "vue";
 import { matCalendarMonth } from "@quasar/extras/material-icons";
-import { getnewsByOptionsApi } from "src/boot/getnewsByOptions.js";
+import { getNewsByOptionsApi } from "src/boot/news.js";
 
 import { ref } from "vue";
 
@@ -225,10 +225,10 @@ export default defineComponent({
   mounted() {},
   unmounted() {},
   methods: {
-    getnewsByOptions: function (newsDate, selection) {
+    getNewsByOptions: function (newsDate, selection) {
       const success = "성공";
       const fail = "실패";
-      getnewsByOptionsApi(newsDate, selection, success, fail);
+      getNewsByOptionsApi(newsDate, selection, success, fail);
     },
   },
 });
