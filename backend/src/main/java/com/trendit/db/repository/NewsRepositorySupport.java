@@ -102,8 +102,8 @@ public class NewsRepositorySupport {
                             qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)),
                             qNews.newsAgency.eq(newsAgency))
                     .orderBy(qNews.newsId.desc())
-                    .offset(10 * (page - 1))
-                    .limit(10)
+                    .offset(12 * (page - 1))
+                    .limit(12)
                     .fetch();
             return news;
         }
@@ -118,8 +118,8 @@ public class NewsRepositorySupport {
                             qKeyword.keyword.eq(keyword),
                             qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)))
                     .orderBy(qNews.newsId.desc())
-                    .offset(10 * (page - 1))
-                    .limit(10)
+                    .offset(12 * (page - 1))
+                    .limit(12)
                     .fetch();
             return news;
         }
@@ -133,8 +133,8 @@ public class NewsRepositorySupport {
                             qKeyword.keyword.eq(keyword),
                             qNews.newsAgency.eq(newsAgency))
                     .orderBy(qNews.newsId.desc())
-                    .offset(10 * (page - 1))
-                    .limit(10)
+                    .offset(12 * (page - 1))
+                    .limit(12)
                     .fetch();
             return news;
         }
@@ -147,8 +147,8 @@ public class NewsRepositorySupport {
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
                             qKeyword.keyword.eq(keyword))
                     .orderBy(qNews.newsId.desc())
-                    .offset(10 * (page - 1))
-                    .limit(10)
+                    .offset(12 * (page - 1))
+                    .limit(12)
                     .fetch();
             return news;
         }
