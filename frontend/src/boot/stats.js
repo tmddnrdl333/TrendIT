@@ -9,8 +9,10 @@ async function mainChartApi(param, success, fail) {
 
 // company bar-chart에 대한 api는 따로 만든 게 아닌가?
 async function companyChartApi(param, success, fail) {
-  // ??
-  await console.log("hi");
+  await api
+    .get("/stats/bar-chart/company/" + param)
+    .then(success)
+    .catch(fail);
 }
 
 async function keywordChartApi(param, success, fail) {
@@ -20,4 +22,8 @@ async function keywordChartApi(param, success, fail) {
     .catch(fail);
 }
 
-export { mainChartApi, companyChartApi, keywordChartApi };
+async function getNewsCollectData(success, fail) {
+  await api.get("/stats/news-count").then(success).catch(fail);
+}
+
+export { mainChartApi, companyChartApi, keywordChartApi, getNewsCollectData };

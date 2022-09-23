@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-xl">
-    <MainBarChart />
+    <main-bar-chart />
     <br />
-    <KeywordLineChart :keyword="keyword" />
+    <keyword-line-chart :keyword="keyword" />
     <br />
-    <CompanyBarChart />
+    <company-bar-chart />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import KeywordLineChart from "src/components/charts/KeywordLineChart.vue";
 export default {
   components: { MainBarChart, CompanyBarChart, KeywordLineChart },
   setup() {
-    const keyword = ref("카카오");
+    const keyword = ref("키워드1");
     return {
       keyword,
     };
