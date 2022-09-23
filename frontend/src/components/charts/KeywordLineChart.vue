@@ -17,6 +17,35 @@
       </div>
     </q-card-section>
   </q-card>
+  <div class="q-pa-md q-gutter-md">
+    <q-card class="side-card q-pa-sm column justify-evenly">
+      <div class="row justify-center">
+        <q-icon name="event" size="21px" left />
+        가장 기사건수가 많았던&nbsp;
+        <strong>{{ side_card.word1 }}</strong>
+      </div>
+      <div class="row justify-center">{{ side_card.date }}</div>
+    </q-card>
+    <q-card class="side-card q-pa-sm column justify-evenly">
+      <div class="row justify-center">
+        <q-icon name="trending_up" size="21px" left />
+        <strong>{{ side_card.word2 }}</strong>
+        &nbsp;대비 증감률
+      </div>
+      <div class="row justify-center">
+        <q-icon
+          v-if="side_card.percentage > 0"
+          name="arrow_drop_up"
+          color="red"
+          size="21px"
+        />
+        <q-icon v-else name="arrow_drop_down" color="blue" size="21px" />
+        <div :style="{ color: updownColor }">
+          {{ Math.abs(side_card.percentage) }}%
+        </div>
+      </div>
+    </q-card>
+  </div>
 </template>
 
 <script>
@@ -32,16 +61,50 @@ export default {
     },
   },
   setup() {
-    const data_list = ref(null);
-    const type = ref("day");
-
     return {
-      data_list,
-      type,
+      data_list: ref(null),
+      type: ref("day"),
+      side_card: ref({
+        word1: "null",
+        word2: "null",
+        date: "null",
+        percentage: "null",
+      }),
+      updownColor: ref("black"),
     };
   },
   async mounted() {
     await this.drawChart();
+  },
+  computed: {
+    word1() {
+      switch (this.type) {
+        case "day":
+          return "날";
+        case "week":
+          return "주";
+        case "month":
+          return "달";
+        case "year":
+          return "연도";
+        default:
+          return null;
+      }
+    },
+    word2() {
+      switch (this.type) {
+        case "day":
+          return "어제";
+        case "week":
+          return "지난주";
+        case "month":
+          return "전달";
+        case "year":
+          return "작년";
+        default:
+          return null;
+      }
+    },
   },
   methods: {
     async loadChartData() {
@@ -87,9 +150,34 @@ export default {
       // ~ 여기까지를 함수화
 
       let data_array = [];
-      this.data_list.forEach((item) => {
-        data_array.push(item);
-      });
+      let max_label = null;
+      let max_val = 0;
+      if (this.data_list) {
+        for (let i = 0; i < this.data_list.length; i++) {
+          data_array.push(this.data_list[i]);
+          if (this.data_list[i] >= max_val) {
+            max_val = this.data_list[i];
+            max_label = labels[i];
+          }
+        }
+      }
+
+      this.side_card.word1 = this.word1;
+      this.side_card.word2 = this.word2;
+      this.side_card.date = max_label + " (" + max_val + "건)";
+      this.side_card.percentage =
+        Math.round(
+          (this.data_list[this.data_list.length - 1] /
+            this.data_list[this.data_list.length - 2] -
+            1) *
+            10000
+        ) / 100;
+      if (this.side_card.percentage > 0) {
+        this.updownColor = "red";
+      } else {
+        this.updownColor = "blue";
+      }
+
       let data = {
         labels: labels,
         datasets: [
@@ -124,6 +212,9 @@ export default {
       */
       this.drawChart();
     },
+    keyword: function () {
+      this.drawChart();
+    },
   },
   components: {},
 };
@@ -138,5 +229,9 @@ export default {
   padding: 5px;
   width: 450px;
   /* test */
+}
+.side-card {
+  width: 300px;
+  height: 130px;
 }
 </style>

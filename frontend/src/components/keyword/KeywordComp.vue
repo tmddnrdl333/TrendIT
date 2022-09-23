@@ -45,7 +45,9 @@
     <q-card class="keyword-analyze q-pa-lg">
       <q-card-section class="q-gutter-md">
         <div>키워드 분석</div>
-        <keyword-line-chart :keyword="search" />
+        <div class="row justify-center items-center">
+          <keyword-line-chart :keyword="keyword" />
+        </div>
       </q-card-section>
     </q-card>
     <q-card class="keyword-analyze-result q-pa-lg">
@@ -90,7 +92,8 @@ import KeywordLineChart from "../charts/KeywordLineChart.vue";
 export default {
   setup() {
     return {
-      search: ref("키워드1"),
+      search: ref(""),
+      keyword: ref(""),
       dialog: ref(false),
       date_range: ref({ from: "", to: "" }),
       page: ref(1),
@@ -117,12 +120,13 @@ export default {
   },
   methods: {
     async doSearch() {
+      this.keyword = this.search;
       const period =
         this.date_range.from.replaceAll("/", "-") +
         "~" +
         this.date_range.to.replaceAll("/", "-");
       await searchApi(
-        { keyword: this.search, period: period, page: this.page },
+        { keyword: this.keyword, period: period, page: this.page },
         (response) => {
           this.result = response.data.news;
         },
