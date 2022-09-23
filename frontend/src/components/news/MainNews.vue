@@ -1,52 +1,72 @@
 <template>
   <div class="main-news q-pa-lg">
     <div>최신뉴스</div>
-    <div class="flex flex-center">
-      {{ newsDate }}
-      {{ newsAgency }}
-      <q-btn
-        label="기간설정"
-        color="primary"
-        icon="mail"
-        @click="alert = true"
-      ></q-btn>
+    Your pick: {{ selection }}
 
-      <q-dialog v-model="alert">
-        <div class="flex flex-center">
-          <div class="q-pa-md">
-            <q-date v-model="newsDate" range />
-          </div>
-          <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
-        </div>
+    <div class="flex flex-center">
+      {{ newsAgency }}
+
+      <div class="row justify-end">
+        <q-btn dense @click="newsDateDialog = true" size="5px">
+          {{ newsDate.from }} ~ {{ newsDate.to }}
+        </q-btn>
+      </div>
+
+      <q-btn dense @click="newsAgencyDialog = true" label="언론사설정">
+        <q-icon name="settings" />
+      </q-btn>
+
+      <q-dialog v-model="newsDateDialog">
+        <q-card>
+          <q-card-section>
+            검색 기간 설정
+            <br />
+            {{ newsDate.from }} ~ {{ newsDate.to }}
+            <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+            <div class="q-pa-md">
+              <q-date v-model="newsDate" minimal range />
+            </div>
+          </q-card-section>
+        </q-card>
       </q-dialog>
 
-      <!-- https://codepen.io/pen?&editors=101 -->
-      <div class="q-pa-md">
-        <div class="q-gutter-y-md column" style="max-width: 300px">
-          <q-select
-            clearable
-            filled
-            color="blue"
-            v-model="newsAgency"
-            :options="newsAgencyOptions"
-            label="언론사"
-          ></q-select>
-        </div>
-      </div>
+      <q-dialog v-model="newsAgencyDialog">
+        <q-card style="width: 700px; max-width: 80vw">
+          <div class="q-pa-md">
+            <div class="q-gutter-xs flex content-start">
+              <div
+                v-for="newsAgency in newsAgencyOptions"
+                :key="newsAgency.index"
+              >
+                <q-chip
+                  v-model:selected="newsAgencyOption[newsAgency]"
+                  color="primary"
+                  text-color="white"
+                  :label="newsAgency"
+                >
+                </q-chip>
+              </div>
+            </div>
+          </div>
+        </q-card>
+      </q-dialog>
 
       <q-btn
         label="검색"
         color="primary"
-        @click="dateNewsAgencySearch(newsDate, newsAgency)"
+        @click="getnewsByOptions(newsDate, selection)"
       ></q-btn>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, reactive, computed } from "vue";
 import { matCalendarMonth } from "@quasar/extras/material-icons";
-import { dateNewsAgencySearchApi } from "boot/dateNewsAgencySearch.js";
+import { getnewsByOptionsApi } from "src/boot/getnewsByOptions.js";
 
 import { ref } from "vue";
 
@@ -57,7 +77,7 @@ export default defineComponent({
     return {
       sampleData: [{}],
       // newsDate: { from: "2010/01/01", to: "2022/09/01" },
-      newsDate: {},
+      newsDate: { from: "", to: "" },
       newsAgency: "",
       newsAgencyOptions: [
         "경향신문",
@@ -118,20 +138,97 @@ export default defineComponent({
     };
   },
   setup() {
+    const newsAgencyOption = reactive({
+      경향신문: false,
+      국민일보: false,
+      내일신문: false,
+      동아일보: false,
+      문화일보: false,
+      서울신문: false,
+      세계일보: false,
+      중앙일보: false,
+      조선일보: false,
+      한겨레: false,
+      한국일보: false,
+      매일경제: false,
+      머니투데이: false,
+      서울경제: false,
+      아시아경제: false,
+      아주경제: false,
+      파이낸셜뉴스: false,
+      한국경제: false,
+      헤럴드경제: false,
+      KBS: false,
+      MBC: false,
+      OBS: false,
+      SBS: false,
+      YTN: false,
+      디지털타임스: false,
+      전자신문: false,
+      강원도민일보: false,
+      강원일보: false,
+      경기일보: false,
+      경남도민일보: false,
+      경남신문: false,
+      경상일보: false,
+      경인일보: false,
+      광주일보: false,
+      광주매일신문: false,
+      국제신문: false,
+      대구일보: false,
+      대전일보: false,
+      매일신문: false,
+      무등일보: false,
+      부산일보: false,
+      영남일보: false,
+      울산매일: false,
+      전남일보: false,
+      전북도민일보: false,
+      전북일보: false,
+      제민일보: false,
+      중도일보: false,
+      중부매일: false,
+      중부일보: false,
+      충북일보: false,
+      충청일보: false,
+      충청투데이: false,
+      한라일보: false,
+    });
     return {
-      alert: ref(false),
+      newsDateDialog: ref(false),
+      newsAgencyDialog: ref(false),
+      newsAgencyOption,
+      selection: computed(() => {
+        return Object.keys(newsAgencyOption)
+          .filter((type) => newsAgencyOption[type] === true)
+          .join(", ");
+      }),
     };
   },
   created() {
     this.matCalendarMonth = matCalendarMonth;
+    let date = new Date();
+    this.newsDate.to =
+      date.getFullYear() +
+      "/" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "/" +
+      date.getDate();
+    date.setFullYear(date.getFullYear() - 10);
+    this.newsDate.from =
+      date.getFullYear() +
+      "/" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "/" +
+      date.getDate();
   },
   mounted() {},
   unmounted() {},
   methods: {
-    dateNewsAgencySearch: function (newsDate, newsAgency) {
+    getnewsByOptions: function (newsDate, selection) {
       const success = "성공";
       const fail = "실패";
-      dateNewsAgencySearchApi(newsDate, newsAgency, success, fail);
+      getnewsByOptionsApi(newsDate, selection, success, fail);
     },
   },
 });
@@ -139,7 +236,7 @@ export default defineComponent({
 
 <style scoped>
 .main-news {
-  height: 480px;
+  height: 120px;
   width: 1200px;
   background-color: #ffffff;
   margin-top: 10px;
