@@ -1,17 +1,16 @@
-import { NewsRes } from "NewsRes.js";
+import { NewsRes } from "./NewsRes.js";
 
 class TodayTrendAndNewsRes {
+  getText() {
+    return this.keyword;
+  }
+
+  getSize() {
+    return this.count;
+  }
   constructor(keyword, count, selectedNews) {
     this.keyword = keyword;
     this.count = count;
-
-    function getText() {
-      return this.keyword;
-    }
-
-    function getSize() {
-      return this.count;
-    }
 
     this.selectedNews = new NewsRes(
       selectedNews.newsId,

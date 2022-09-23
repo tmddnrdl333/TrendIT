@@ -1,12 +1,13 @@
 <template>
   <div id="word-cloud">
-    <div @click="clicK">HAHA: {{ wordCloudData }}</div>
+    <div></div>
   </div>
 </template>
 
 <script>
 import cloud from "d3-cloud";
 import "d3";
+
 export default {
   props: {
     wordCloudData: Array,
@@ -27,67 +28,60 @@ export default {
       // ],
     };
   },
-  beforeUpdate() {
-    console.log("BEFORE UPDATE : ", this.$props);
-  },
   mounted() {
     this.genLayout();
   },
   methods: {
-    clicK() {
-      console.log(this.$props);
-    },
     genLayout() {
       const width = 500;
       const height = 500;
-      //   const cloud = require("d3-cloud");
-      console.log("HERE" + this.wordCloudData);
-      // cloud()
-      //   .size([width, height])
-      //   .words(this.wordCloudData)
-      //   .padding(2)
-      //   .rotate(0)
-      //   .font("Impact")
-      //   .text(function (d) {
-      //     return d.getText();
-      //   })
-      //   .fontSize(function (d) {
-      //     return d.getSize();
-      //   })
-      //   .on("end", this.end)
-      //   // .spiral("archimedean")
-      //   .start()
-      //   .stop();
+
+      cloud()
+        .size([width, height])
+        .words(this.wordCloudData)
+        .padding(2)
+        .rotate(0)
+        .font("Impact")
+        .text(function (d) {
+          return d.getText();
+        })
+        .fontSize(function (d) {
+          return d.getSize();
+        })
+        .on("end", this.end)
+        // .spiral("archimedean")
+        .start()
+        .stop();
     },
-    end(words) {
-      // const width = 500;
-      // const height = 500;
-      // d3.select("#word-cloud")
-      //   .append("svg")
-      //   .attr("width", width)
-      //   .attr("height", height)
-      //   .style("background", "rgb(78, 219, 226)")
-      //   .append("g")
-      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")") // g를 중심에서 단어들을 그리기 때문에 g를 svg 중심으로 이동
-      //   .selectAll("text")
-      //   .data(wordCloudData)
-      //   .enter()
-      //   .append("text")
-      //   .style("fill", (d) => {
-      //     if (d.getSize() > 30) return "red";
-      //     return "blue";
-      //   })
-      //   .style("font-size", (d) => {
-      //     return d.getSize() + "px";
-      //   })
-      //   // .style("padding", "100px")
-      //   // .style("margin", "100px")
-      //   .style("font-family", "Impact")
-      //   .attr("text-anchor", "middle")
-      //   .attr("transform", (d) => {
-      //     return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-      //   })
-      //   .text((d) => d.text);
+    end() {
+      const width = 500;
+      const height = 500;
+      d3.select("#word-cloud")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("background", "rgb(78, 219, 226)")
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")") // g를 중심에서 단어들을 그리기 때문에 g를 svg 중심으로 이동
+        .selectAll("text")
+        .data(this.wordCloudData)
+        .enter()
+        .append("text")
+        .style("fill", (d) => {
+          if (d.getSize() > 30) return "red";
+          return "blue";
+        })
+        .style("font-size", (d) => {
+          return d.getSize() + "px";
+        })
+        // .style("padding", "100px")
+        // .style("margin", "100px")
+        .style("font-family", "Impact")
+        .attr("text-anchor", "middle")
+        .attr("transform", (d) => {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text((d) => d.text);
     },
   },
 };

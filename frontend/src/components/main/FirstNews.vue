@@ -1,10 +1,7 @@
 <template>
   <div class="first__news__container">
-    <img
-      class="first__news__img"
-      src="https://cdn.quasar.dev/img/parallax2.jpg"
-    />
-    <news-head-body-piece :test="test"></news-head-body-piece>
+    <img class="first__news__img" :src="news.imgLink" />
+    <news-head-body-piece :news="news"></news-head-body-piece>
   </div>
 </template>
 
@@ -16,7 +13,7 @@ export default {
     NewsHeadBodyPiece,
   },
   props: {
-    test: Object,
+    news: Object,
   },
   created() {
     console.log(this.$props);

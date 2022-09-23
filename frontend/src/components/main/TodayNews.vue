@@ -1,11 +1,11 @@
 <template>
   <div class="today__news__container">
-    <first-news :test="data"></first-news>
+    <first-news :news="firstNews"></first-news>
     <div class="next__next__news__container">
       <next-news
-        v-for="(item, index) in datas"
+        v-for="(item, index) in nextNews"
         v-bind:key="index"
-        v-bind:test="item"
+        v-bind:news="item.selectedNews"
       ></next-news>
     </div>
   </div>
@@ -19,6 +19,10 @@ export default {
   components: {
     FirstNews,
     NextNews,
+  },
+  props: {
+    firstNews: Object,
+    nextNews: Array,
   },
   data() {
     return {
