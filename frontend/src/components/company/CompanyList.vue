@@ -4,9 +4,23 @@
       <div>기업 리스트</div>
 
       <!-- 검색창 -->
-      <div class="row justify-center">
-        <q-skeleton type="rect" class="q-ma-md" width="800px" height="40px" />
-      </div>
+      <q-card-section class="row justify-center">
+        <q-input
+          class="search-bar"
+          v-model="search"
+          label="검색"
+          outlined
+          dense
+          bottom-slots
+          @keydown.enter="doSearch()"
+        >
+          <template v-slot:after>
+            <q-btn round dense @click="doSearch()">
+              <q-icon name="search" />
+            </q-btn>
+          </template>
+        </q-input>
+      </q-card-section>
     </q-card-section>
     <q-separator inset />
     <div class="flex q-pa-lg justify-around">
@@ -29,25 +43,49 @@
       <q-pagination v-model="current" :max="5" input />
     </div>
   </q-card>
+  <q-dialog v-model="dialog">
+    <q-card>
+      <q-card-section>
+        <div>검색어를 입력해주세요.</div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { companyListApi } from "boot/company.js";
+import { companyListApi, searchCompanyApi } from "boot/company.js";
 import { ref } from "vue";
 export default {
   setup() {
-    const company_list = ref([{ companyName: "" }]);
-    const current = ref(1);
-
     return {
-      company_list,
-      current,
+      search: ref(""),
+      current: ref(1),
+
+      dialog: ref(false),
+
+      company_list: ref([{ companyName: "" }]),
     };
   },
   created() {
     this.loadCompanyList();
   },
   methods: {
+    async doSearch() {
+      if (!this.search) {
+        this.dialog = true;
+        return;
+      }
+      await searchCompanyApi(
+        this.search,
+        (response) => {
+          console.log(response);
+          console.log(response.data);
+          console.log(response.data.data);
+          this.company_list = response.data.data.content;
+        },
+        () => console.warn("failed")
+      );
+    },
     async loadCompanyList() {
       await companyListApi(
         (response) => {
@@ -66,6 +104,10 @@ export default {
 </script>
 
 <style scoped>
+.search-bar {
+  width: 500px;
+}
+
 .company-list {
   height: 1200px;
   width: 1200px;

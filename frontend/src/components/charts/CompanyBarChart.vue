@@ -12,11 +12,11 @@
         ]"
       />
       <!-- CHART -->
-      <ChartComp
+      <bar-chart-comp
         v-if="loaded"
         :chart-data="chartData"
         :chart-options="chartOptions"
-        :width="800"
+        :width="550"
         :height="250"
         class="chart"
       />
@@ -30,7 +30,7 @@
 <script>
 import { ref } from "vue";
 import { companyChartApi } from "boot/stats.js";
-import ChartComp from "./ChartComp.vue";
+import BarChartComp from "./BarChartComp.vue";
 
 export default {
   setup() {
@@ -140,20 +140,20 @@ export default {
       this.loadChartData();
     },
   },
-  components: { ChartComp },
+  components: { BarChartComp },
 };
 </script>
 
 <style scoped>
 .chart {
-  width: 800px;
+  width: 550px;
   height: 250px;
   margin: 10px auto;
   /* test */
 }
 .chart-container {
   padding: 6px;
-  width: 850px;
+  width: 600px;
   /* test */
 }
 </style>
