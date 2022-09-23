@@ -15,6 +15,9 @@ pip install pymysql
 
 ```bash
 pip install fastapi
+pip install gunicorn
+pip install httptools
+pip install uvicorn
 ```
 
 ## KoNLPy 설치

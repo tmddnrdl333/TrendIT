@@ -1,42 +1,32 @@
 from fastapi import FastAPI, HTTPException
 
-import crawler
-import db_util as db
-import keyword_processing as keyproc
-import morphological_analysis as morph
+from app import keyword_processing as keyproc, crawler, db_util as db, morphological_analysis as morph
 import subprocess
 
 app = FastAPI()
 
-mutex = 1
+hadoop_mutex = 1
+reducer = 2
 
 @app.get("/internal/run/{date}")
 def run(date: str):
-
-    global mutex
+    global hadoop_mutex
 
     ## 크롤러 실행 및 데이터 DB에 추가
-    db.insert_news(crawler.execute_crawler())
+    db.insert_news(crawler.execute_crawler(date))
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
-    keyword_processing.save_as_file(analysis_result)
+    keyproc.save_as_file(analysis_result)
 
     ## ssh 접속 및 분석
-    # 파일 전송, (hadoop wordcount)분석, 결과 파일 받아야 함
-    # 결과 파일은 hadoop_result = [(keyword, count), (keyword, count), (keyword, count)] 형태로 변경해서 넘겨야 함
-
-    while (mutex == 0):
-        pass
-
-    mutex = 0
-
+    while (hadoop_mutex == 0): pass
+    hadoop_mutex = 0
     result = subprocess.call(['sh', '/code/script.sh'])
-
-    mutex = 1
-
+    hadoop_mutex = 1
     if (result != 0):
-        raise HTTPException(status_code = 500, detail = "Failed")
+        raise HTTPException(status_code=500, detail="Failed")
+    hadoop_result = keyproc.get_hadoop_result(reducer)
 
     ## 키워드 판별 및 DB에 데이터 추가
     keywords = keyproc.extract_keyword(hadoop_result)

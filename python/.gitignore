@@ -1,4 +1,5 @@
 .idea
-keywords
+keywords_input/*.in
+keywords_output/*.out
 __pycache__
 *.pem

@@ -4,8 +4,7 @@ text : keyword has news 테이블에 들어갈 내용
 file : hadoop wordcount 처리용
 """
 
-import keyword_processing
-import morphological_analysis as morph
+from app import keyword_processing as keyproc, morphological_analysis as morph
 
 i = 1
 text = []
@@ -21,4 +20,4 @@ print(text)
 
 analysis_result = morph.morphological_analysis(text)
 print(analysis_result)
-keyword_processing.save_as_file(analysis_result, "2022-09-20", "2022-09-20")
+keyproc.save_as_file(analysis_result)

@@ -4,7 +4,8 @@ def execute_select(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
-        host="localhost",
+        host="172.26.2.161",
+        port=32000,
         db="trendit",
         charset='utf8'
     )
@@ -19,12 +20,14 @@ def execute_insert_many(sql, data):
     conn = pymysql.connect(
         user="trendit",
         passwd="trendit829",
-        host="localhost",
+        host="172.26.2.161",
+        port=32000,
         db="trendit",
         charset='utf8'
     )
     cursor = conn.cursor()
     cursor.executemany(sql, data)
+    conn.commit()
     cursor.close()
     conn.close()
 
@@ -49,16 +52,17 @@ def is_keyword(keyword):
     return execute_select(sql, keyword)
 
 # usage
-# keywords = [keyword, keyword, keyword]
+# keywords_input = [keyword, keyword, keyword]
 def insert_keyword(keywords) :
     sql = """INSERT INTO `keyword`(keyword) VALUES (%s)"""
-    execute_insert_many(sql, list(keywords))
+    rows = execute_insert_many(sql, keywords)
+    return rows
 
 # usage
 # data = [(keyword_id, frequency, year, month, day),
 #         (keyword_id, frequency, year, month, day)]
 def insert_statistics_date(data) :
-    sql = """INSERT INTO `statistics_date`(keyword_id, frequeny, year, month, day) VALUES (%s, %s, %s, %s, %s)"""
+    sql = """INSERT INTO `statistics_date`(keyword_id, frequency, target_time) VALUES (%s, %s, %s)"""
     execute_insert_many(sql, data)
 
 # usage
