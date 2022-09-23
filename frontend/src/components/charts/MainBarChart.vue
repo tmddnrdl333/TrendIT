@@ -12,10 +12,12 @@
         ]"
       />
       <!-- CHART -->
-      <ChartComp
+      <bar-chart-comp
         v-if="loaded"
         :chart-data="chartData"
         :chart-options="chartOptions"
+        :width="550"
+        :height="350"
         class="chart"
       />
       <div v-else class="chart" style="border: 1px red solid">
@@ -43,7 +45,7 @@
 <script>
 import { ref } from "vue";
 import { mainChartApi } from "boot/stats.js";
-import ChartComp from "./ChartComp.vue";
+import BarChartComp from "./BarChartComp.vue";
 
 export default {
   setup() {
@@ -218,7 +220,7 @@ export default {
       this.loadChartData();
     },
   },
-  components: { ChartComp },
+  components: { BarChartComp },
 };
 </script>
 
@@ -227,14 +229,14 @@ export default {
   width: 90%;
 }
 .chart {
-  width: 400px;
-  height: 250px;
+  width: 550px;
+  height: 350px;
   margin: 10px auto;
   /* test */
 }
 .chart-container {
   padding: 5px;
-  width: 450px;
+  width: 600px;
   /* test */
 }
 </style>
