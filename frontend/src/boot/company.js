@@ -4,4 +4,11 @@ async function companyListApi(success, fail) {
   await api.get("/company/list").then(success).catch(fail);
 }
 
-export { companyListApi };
+async function searchCompanyApi(param, success, fail) {
+  await api
+    .get("/company/search/" + param)
+    .then(success)
+    .catch(fail);
+}
+
+export { companyListApi, searchCompanyApi };

@@ -148,9 +148,6 @@ export default {
   width: 1200px;
   margin: 15px 0px;
 }
-.btn {
-  height: 30px;
-}
 .search-bar {
   width: 500px;
 }
