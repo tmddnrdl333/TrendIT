@@ -27,6 +27,7 @@ def execute_insert_many(sql, data):
     )
     cursor = conn.cursor()
     cursor.executemany(sql, data)
+    conn.commit()
     cursor.close()
     conn.close()
 
@@ -54,13 +55,14 @@ def is_keyword(keyword):
 # keywords_input = [keyword, keyword, keyword]
 def insert_keyword(keywords) :
     sql = """INSERT INTO `keyword`(keyword) VALUES (%s)"""
-    execute_insert_many(sql, list(keywords))
+    rows = execute_insert_many(sql, keywords)
+    return rows
 
 # usage
 # data = [(keyword_id, frequency, year, month, day),
 #         (keyword_id, frequency, year, month, day)]
 def insert_statistics_date(data) :
-    sql = """INSERT INTO `statistics_date`(keyword_id, frequeny, year, month, day) VALUES (%s, %s, %s, %s, %s)"""
+    sql = """INSERT INTO `statistics_date`(keyword_id, frequency, target_time) VALUES (%s, %s, %s)"""
     execute_insert_many(sql, data)
 
 # usage

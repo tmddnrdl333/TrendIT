@@ -13,7 +13,7 @@ def run(date: str):
     global hadoop_mutex
 
     ## 크롤러 실행 및 데이터 DB에 추가
-    # db.insert_news(crawler.execute_crawler(date))
+    db.insert_news(crawler.execute_crawler(date))
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))

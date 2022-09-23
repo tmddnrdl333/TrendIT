@@ -1,3 +1,4 @@
+import asyncio
 from app import db_util as db
 
 KEYWORD_COUNT_STANDARD = 10
@@ -32,35 +33,36 @@ def extract_keyword(hadoop_result) :
         # 키워드 등록 여부 확인
         keyword_id = db.is_keyword(item[0])
         # 등록되지 않은 단어 
-        if keyword_id is None:
+        if len(keyword_id) == 0:
             # 키워드 조건 확인
             if item[1] >= KEYWORD_COUNT_STANDARD :  
                 # 영단어 중복 없애기 위해 대문자 데이터만 삽입
                 keywords[item[0].upper()] = 0
         # 등록된 단어
         else :
-            keywords[item[0].upper()] = keyword_id
+            keywords[item[0].upper()] = keyword_id[0]
 
-    new_keywords = [k for k, v in keywords.items() if v == 0]
+    new_keywords = [tuple([k]) for k, v in keywords.items() if v == 0]
 
     # 키워드 새로 등록
     db.insert_keyword(new_keywords)
     # 키워드 : 키워드 id 형식의 dict 완성
     keywords = update_keyword_id(keywords)
+
     return keywords
 
 
 def update_keyword_id(keywords):
     for k, v in keywords.items() :
         if v == 0 :
-            keywords[k] = db.is_keyword(k)
+            keywords[k] = db.is_keyword(k)[0]
+            print(db.is_keyword(k)[0], type(db.is_keyword(k)[0]))
     return keywords
 
 
 # date = "2022-09-20"
 def save_statistics(keywords, hadoop_result, date):
-    date = date.split("-")
-    statistics = [(keywords[keyword], frequency, date[0], date[1], date[2]) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
+    statistics = [(keywords[keyword], frequency, date) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
     # (키워드 id, 빈도수, 날짜) 등록
     db.insert_statistics_date(statistics)
 
