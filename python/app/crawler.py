@@ -1,6 +1,5 @@
 import pymysql
 from selenium import webdriver
-from pyvirtualdisplay import Display
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -52,16 +51,20 @@ def crawl_data(driver, wait, begin_date, end_date):
         wait.until(EC.invisibility_of_element_located((By.XPATH, '//*[@id="collapse-step-2-body"]/div/div[2]/div[1]')))
         news_items = driver.find_elements(by=By.CLASS_NAME, value='news-item')
         for item in news_items:
-            headline = item.find_element(by=By.XPATH, value='div/div[2]/a/div/strong/span').text
-            img_link = item.find_element(by=By.XPATH, value='div/div[1]/a').get_attribute("style")[23:-3]
-            news_content = item.find_element(by=By.XPATH, value='div/div[2]/a/p').text
-            info = item.find_element(by=By.XPATH, value='div/div[2]/div')
-            link_exists = info.find_elements(by=By.CLASS_NAME, value='provider')
-            news_agency = info.find_element(by=By.XPATH, value='div/a').text if len(link_exists) > 0 else driver.execute_script("return arguments[0].firstChild.textContent", info.find_element(by=By.XPATH, value='div')).strip()
-            news_date = info.find_element(by=By.XPATH, value='p[1]').text
-            news_link = info.find_element(by=By.XPATH, value='div/a').get_attribute("href") if len(link_exists) > 0 else ""
-            data.append(tuple([headline, img_link, news_agency, news_content, news_date, news_date]))
-            print(news_agency, news_link)
+            try:
+                headline = item.find_element(by=By.XPATH, value='div/div[2]/a/div/strong/span').text
+                img_link = item.find_element(by=By.XPATH, value='div/div[1]/a').get_attribute("style")[23:-3]
+                news_content = item.find_element(by=By.XPATH, value='div/div[2]/a/p').text
+                info = item.find_element(by=By.XPATH, value='div/div[2]/div')
+                news_agency_content = info.find_element(by=By.XPATH, value='div').text
+                news_agency = info.find_element(by=By.XPATH, value='div').text.split(" ", 1)[0].strip()
+                news_date = info.find_element(by=By.XPATH, value='p[1]').text
+                news_link_exists = info.find_element(by=By.XPATH, value='div').get_attribute("innerHTML").split()
+                news_link = news_link_exists[1].split("\"")[1] if news_link_exists[0] == "<a" else ""
+                print(news_agency, news_link)
+                data.append(tuple([headline, img_link, news_agency, news_content, news_date, news_date]))
+            except:
+                continue
 
         next_page = driver.find_element(by=By.XPATH, value='//*[@id="news-results-tab"]/div[1]/div[2]/div/div/div/div/div[4]/a')
         next_page.send_keys(Keys.ENTER)
