@@ -6,7 +6,7 @@ def execute_select(sql, data):
         passwd="trendit829",
         host="172.26.2.161",
         port=32000,
-        db="trendit2",
+        db="trendit",
         charset='utf8'
     )
     cursor = conn.cursor()
@@ -22,7 +22,7 @@ def execute_insert_many(sql, data):
         passwd="trendit829",
         host="172.26.2.161",
         port=32000,
-        db="trendit2",
+        db="trendit",
         charset='utf8'
     )
     cursor = conn.cursor()
