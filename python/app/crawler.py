@@ -77,10 +77,7 @@ def execute_crawler(date) :
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-
-    # 가상 웹브라우저
-    display = Display(visible=0, size=(1920, 1080))
-    display.start()
+    options.add_argument('--window-size=1920,1080')
 
     driver = webdriver.Chrome("/code/chromedriver", options=options)
     driver.implicitly_wait(20)

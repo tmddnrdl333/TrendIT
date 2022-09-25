@@ -17,22 +17,22 @@ def run(date: str):
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
-    print(analysis_result)
-    # keyproc.save_as_file(analysis_result)
-    #
-    # ## ssh 접속 및 분석
-    # while (hadoop_mutex == 0): pass
-    # hadoop_mutex = 0
-    # result = subprocess.call(['sh', '/code/script.sh'])
-    # hadoop_mutex = 1
-    # if (result != 0):
-    #     raise HTTPException(status_code=500, detail="Failed")
-    # hadoop_result = keyproc.get_hadoop_result(reducer)
-    #
-    # ## 키워드 판별 및 DB에 데이터 추가
-    # keywords = keyproc.extract_keyword(hadoop_result)
-    # keyproc.save_keyword_news(keywords, analysis_result)
-    # keyproc.save_statistics(keywords, hadoop_result, date)
+    # print(analysis_result)
+    keyproc.save_as_file(analysis_result)
+
+    ## ssh 접속 및 분석
+    while (hadoop_mutex == 0): pass
+    hadoop_mutex = 0
+    result = subprocess.call(['sh', '/code/script.sh'])
+    hadoop_mutex = 1
+    if (result != 0):
+        raise HTTPException(status_code=500, detail="Failed")
+    hadoop_result = keyproc.get_hadoop_result(reducer)
+
+    ## 키워드 판별 및 DB에 데이터 추가
+    keywords = keyproc.extract_keyword(hadoop_result)
+    keyproc.save_keyword_news(keywords, analysis_result)
+    keyproc.save_statistics(keywords, hadoop_result, date)
 
     """
     if error -> raise HTTPException(status_code=500, detail="Failed")
