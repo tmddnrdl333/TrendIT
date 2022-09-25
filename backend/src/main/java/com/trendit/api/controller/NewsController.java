@@ -25,8 +25,8 @@ public class NewsController {
     NewsService newsService;
 
     @GetMapping("/latest")
-    public ResponseEntity getLatestNews(String newsAgency, Pageable pageable) {
-        Page<News> data = newsService.getLatestNews(newsAgency, pageable);
+    public ResponseEntity getLatestNews(String newsDate, String newsAgency, Pageable pageable) {
+        Page<News> data = newsService.getLatestNews(newsDate, newsAgency, pageable);
         return ResponseEntity.status(200).body(LatestNewsGetRes.of(200, "Success", data));
     }
 
