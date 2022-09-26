@@ -17,6 +17,7 @@ def run(date: str):
 
     ## headline, news_id 형태소 분석
     analysis_result = morph.morphological_analysis(db.select_news(date))
+    # print(analysis_result)
     keyproc.save_as_file(analysis_result)
 
     ## ssh 접속 및 분석
