@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 
-from app import keyword_processing as keyproc, crawler, db_util as db, morphological_analysis as morph
+from app import keyword_processing as keyproc, crawler, db_util as db, morphological_analysis as morph, user_dictionary as udic
 import subprocess
 
 app = FastAPI()
@@ -40,3 +40,12 @@ def run(date: str):
     """
     
     return {"message" : "Success"}
+
+
+@app.get("/internal/add_user_dictionary/{keyword}")
+def add_user_dictionary(keyword: str):
+    try:
+        udic.add_keyword(keyword)
+    except:
+        raise HTTPException(status_code=500, detail="Failed")
+    return {"message": "Success"}
