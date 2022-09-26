@@ -1,5 +1,6 @@
 import asyncio
 from app import db_util as db
+import date_util
 
 KEYWORD_COUNT_STANDARD = 10
 
@@ -63,9 +64,28 @@ def update_keyword_id(keywords):
 # date = "2022-09-20"
 def save_statistics(keywords, hadoop_result, date):
     statistics = [(keywords[keyword], frequency, date) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
+
     # (키워드 id, 빈도수, 날짜) 등록
     db.insert_statistics_date(statistics)
 
+    week_string = date_util.get_first_day_of_week(date)
+    month_string = date_util.get_first_day_of_month(date)
+    year_string = date_util.get_first_day_of_year(date)
+
+    # hadoop result로 온 키워드에 대해서 각각의 keyword_id를 구하고 keyword_id와 date로 조회해서 각각이 week 테이블에 있는지 검사한다.
+    # 검사해서 있으면 해당 frequency 값을 가져오고 frequency에 update
+
+
+    # s_result는 다음과 같은 형태이다 ((statistics_week/month/year_id, frequency))
+
+    statistics = [(keywords[keyword], frequency, week_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
+    db.insert_statistics_week(statistics)
+
+    statistics = [(keywords[keyword], frequency, month_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
+    db.insert_statistics_month(statistics)
+
+    statistics = [(keywords[keyword], frequency, year_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
+    db.insert_statistics_year(statistics)
 
 def save_keyword_news(keywords, analysis_result):
     keyword_news = [(keywords[keyword], news_id) for (keyword, news_id) in analysis_result if keyword in keywords.keys()]
