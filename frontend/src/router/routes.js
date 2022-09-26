@@ -8,6 +8,7 @@ import NewsView from "../pages/NewsView.vue";
 import AboutView from "../pages/AboutView.vue";
 import TestView from "../pages/TestView.vue";
 import TestPageView from "../pages/TestPageView.vue";
+import ChatTurnOnButtonVue from "src/components/chat/ChatTurnOnButton.vue";
 
 const routes = [
   {
@@ -41,6 +42,10 @@ const routes = [
       {
         path: "test2",
         component: TestPageView,
+      },
+      {
+        path: "dev",
+        component: ChatTurnOnButtonVue,
       },
     ],
   },
