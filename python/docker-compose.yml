@@ -1,9 +1,20 @@
-version: "3.7"
+version: "3.8"
 
 services:
-  internal:
+  trendit_python:
     build:
       context: .
       dockerfile: ./Dockerfile
+    container_name: trendit_python
+    restart: always
     ports:
       - 9090:9090
+    environment:
+      TZ: "Asia/Seoul"
+      TRENDIT_DB_PASSWORD: <TRENDIT_DB_PASSWORD>
+      TRENDIT_DB_HOST: <TRENDIT_DB_HOST>
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
