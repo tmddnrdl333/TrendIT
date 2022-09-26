@@ -3,11 +3,11 @@
     <q-card class="my-card news__container">
       <q-card-section>
         <div class="news__head">
-          {{ test.headline }}
+          {{ news.headline }}
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none news__body">
-        {{ test.content }}
+        {{ news.newsContent }}
       </q-card-section>
     </q-card>
   </div>
@@ -17,7 +17,7 @@
 export default {
   name: "NewsHeadBodyPiece",
   props: {
-    test: Object,
+    news: Object,
   },
 };
 </script>

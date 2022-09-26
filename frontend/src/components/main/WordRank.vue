@@ -3,15 +3,12 @@
     <q-card class="my-card rank__container">
       <q-card-section> 키워드 순위 </q-card-section>
       <q-separator inset />
-      <!-- <q-card-section v-for="(item, index) in items" v-bind:key="item">
-        {{ index + 1 }} {{ item.text }} {{ item.frequency }}건
-      </q-card-section> -->
       <word-rank-piece
-        v-for="(item, index) in items"
+        v-for="(item, index) in trendRankData"
         v-bind:key="item"
         v-bind:keywordRank="index + 1"
-        v-bind:keywordName="item.text"
-        v-bind:keywordFrequency="item.frequency"
+        v-bind:keywordName="item.getText()"
+        v-bind:keywordFrequency="item.getSize()"
       ></word-rank-piece>
     </q-card>
   </div>
@@ -24,7 +21,9 @@ export default {
   components: {
     WordRankPiece,
   },
-
+  props: {
+    trendRankData: Array,
+  },
   data() {
     return {
       items: [
