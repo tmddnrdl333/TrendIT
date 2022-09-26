@@ -63,7 +63,7 @@ export default {
 
       dialog: ref(false),
 
-      company_list: ref([{ companyName: "" }]),
+      company_list: ref([]),
     };
   },
   created() {
@@ -78,9 +78,6 @@ export default {
       await searchCompanyApi(
         this.search,
         (response) => {
-          console.log(response);
-          console.log(response.data);
-          console.log(response.data.data);
           this.company_list = response.data.data.content;
         },
         () => console.warn("failed")

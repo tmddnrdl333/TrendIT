@@ -1,7 +1,7 @@
 <template>
   <div class="first__news__container">
     <img class="first__news__img" :src="news.imgLink" />
-    <news-head-body-piece :news="news"></news-head-body-piece>
+    <news-head-body-piece :news="news" />
   </div>
 </template>
 
@@ -15,9 +15,7 @@ export default {
   props: {
     news: Object,
   },
-  created() {
-    console.log(this.$props);
-  },
+  created() {},
 };
 </script>
 

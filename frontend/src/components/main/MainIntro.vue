@@ -1,18 +1,20 @@
 <template>
-  <div class="main__intro__container">
-    <img
-      class="main__intro__pageinfo__img"
-      src="https://cdn.quasar.dev/img/parallax2.jpg"
-    />
-    <div class="main__intro__pageinfo__container">
-      <div class="main__intro__pageinfo__newscount">
-        <p>금일 뉴스 수집 : {{ newsCollectData.todayNewsCount }} 건</p>
-        <p>전체 뉴스 수집 : {{ newsCollectData.allNewsCount }} 건</p>
+  <div class="main-intro-container row">
+    <q-img class="intro-img" src="https://cdn.quasar.dev/img/parallax2.jpg" />
+    <div class="intro-content">
+      <div class="newscount-info">
+        <template v-if="totalCount == 0">
+          <p>뉴스 수집량을 계산 중입니다...</p>
+        </template>
+        <template v-else>
+          <p>금일 뉴스 수집 : {{ todayCount }} 건</p>
+          <p>전체 뉴스 수집 : {{ totalCount }} 건</p>
+        </template>
       </div>
-      <div class="main__intro__pageinfo__pageintro">
+      <div class="title">
         <p>쉽고 빠른 IT 트렌드 분석 플랫폼</p>
       </div>
-      <div class="main__intro__pageinfo__remainder">
+      <div class="subtitle">
         <p>트렌드 분석 -></p>
       </div>
     </div>
@@ -20,73 +22,61 @@
 </template>
 
 <script>
-import { getNewsCollectData } from "boot/stats.js";
-import { NewsCollectRes } from "boot/response/NewsCollectRes.js";
+import { ref } from "vue";
+import { getNewsCountApi } from "boot/stats.js";
+
 export default {
   name: "MainIntro",
-  async setup() {
-    let newsCollectData;
-    await getNewsCollectData(
-      (response) => {
-        newsCollectData = new NewsCollectRes(
-          response.data.data.todayCount,
-          response.data.data.totalCount
-        );
-      },
-      () => {
-        // TODO 예외처리 어떻게?
-        console.warn("WARN!");
-      }
-    );
-    console.log(newsCollectData);
+  setup() {
     return {
-      newsCollectData,
+      todayCount: ref(0),
+      totalCount: ref(0),
     };
   },
-  data() {
-    return {};
+  async created() {
+    await getNewsCountApi(
+      (response) => {
+        this.todayCount = response.data.data.todayCount;
+        this.totalCount = response.data.data.totalCount;
+      },
+      () => console.warn("failed to get news count")
+    );
   },
-
-  mounted() {},
-
-  methods: {},
 };
 </script>
 
 <style scoped>
-.main__intro__container {
-  display: flex;
-  flex-direction: row;
+.main-intro-container {
   width: 100%;
-  /* align-items: center; */
-  background: blue;
+  height: 300px;
+  background: #88addd;
 }
 
-.main__intro__pageinfo__img {
+.intro-img {
   width: 30%;
-  margin-left: 20px;
 }
-.main__intro__pageinfo__container {
+.intro-content {
   width: 70%;
-  display: flex;
-  flex-direction: column;
 }
-.main__intro__pageinfo__newscount {
+.newscount-info {
   color: aliceblue;
-  height: 20%;
+  height: 40px;
   text-align: right;
-  margin-top: 30px;
-  margin-right: 30px;
+  margin: 20px 20px 0px 0px;
 }
-.main__intro__pageinfo__pageintro {
+.title {
   height: 50%;
   text-align: center;
   font-size: 30px;
   color: aliceblue;
+  position: relative;
+  left: -100px;
 }
 
-.main__intro__pageinfo__remainder {
+.subtitle {
   text-align: center;
   color: white;
+  position: relative;
+  left: -100px;
 }
 </style>

@@ -4,10 +4,7 @@
       class="next__nexs__img"
       src="https://cdn.quasar.dev/img/parallax2.jpg"
     />
-    <news-head-body-piece
-      class="next__news__piece"
-      :news="news"
-    ></news-head-body-piece>
+    <news-head-body-piece class="next__news__piece" :news="news" />
   </div>
 </template>
 

@@ -10,7 +10,6 @@ async function getNewsApi(params, success, fail) {
 }
 
 async function getNewsByOptionsApi(params, success, fail) {
-  console.log(params, "params in boot(getNewsByOptionsApi) ");
   params = {
     newsDate: params.newsDate,
     newsAgency: params.selection, // 언론사
