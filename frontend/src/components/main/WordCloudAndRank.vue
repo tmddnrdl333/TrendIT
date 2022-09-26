@@ -1,7 +1,7 @@
 <template>
   <div class="wordcloud__container">
-    <word-cloud></word-cloud>
-    <word-rank></word-rank>
+    <word-cloud :wordCloudData="wordCloudData"></word-cloud>
+    <word-rank :trendRankData="trendRankData"></word-rank>
   </div>
 </template>
 
@@ -14,6 +14,10 @@ export default {
   components: {
     WordCloud,
     WordRank,
+  },
+  props: {
+    wordCloudData: Array,
+    trendRankData: Array,
   },
   data() {
     return {};

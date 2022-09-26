@@ -5,7 +5,9 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <suspense>
+        <router-view />
+      </suspense>
       <!-- Footer에 넣을 내용 채워주삼 -->
       <LayoutFooter />
     </q-page-container>

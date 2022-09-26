@@ -6,7 +6,7 @@
     />
     <news-head-body-piece
       class="next__news__piece"
-      :test="test"
+      :news="news"
     ></news-head-body-piece>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     return {};
   },
   props: {
-    test: Object,
+    news: Object,
   },
   mounted() {},
   methods: {},
