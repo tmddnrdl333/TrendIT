@@ -12,7 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 ## DB 세팅 
 conn = pymysql.connect(
     user="trendit",
-    passwd="trendit829",
+    passwd="",
     host="localhost",
     db="trendit"
 )

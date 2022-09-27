@@ -84,7 +84,7 @@ def insert_database(conn, sql, data) :
 # DB 커넥션 생성
 conn = pymysql.connect(
     user="trendit",
-    passwd="trendit829",
+    passwd="",
     host="localhost",
     db="trendit"
 )
