@@ -22,8 +22,21 @@ async function keywordChartApi(param, success, fail) {
     .catch(fail);
 }
 
-async function getNewsCollectData(success, fail) {
+async function getNewsCountApi(success, fail) {
   await api.get("/stats/news-count").then(success).catch(fail);
 }
 
-export { mainChartApi, companyChartApi, keywordChartApi, getNewsCollectData };
+async function getWordcloudApi(param, success, fail) {
+  await api
+    .get("/stats/wordcloud/" + param)
+    .then(success)
+    .catch(fail);
+}
+
+export {
+  mainChartApi,
+  companyChartApi,
+  keywordChartApi,
+  getNewsCountApi,
+  getWordcloudApi,
+};
