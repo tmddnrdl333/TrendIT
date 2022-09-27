@@ -1,52 +1,45 @@
 <template>
-  <div>
-    <div class="today__news__container">
-      <template v-for="(item, index) in newsData.slice(0, 5)" :key="index">
-        <!-- First News -->
-        <template v-if="index == 0">
-          <div class="first__news__container">
-            <img class="main-news-img" :src="item.newsData.imgLink" />
-            <div>
-              <q-card class="my-card news__container">
-                <q-card-section>
-                  <div class="news__head">
-                    {{ item.newsData.headline }}
-                  </div>
-                </q-card-section>
-                <q-card-section class="q-pt-none news__body">
-                  {{ item.newsData.newsContent }}
-                </q-card-section>
-              </q-card>
-            </div>
-          </div>
-        </template>
-
-        <!-- Second ~ Fifth News -->
-        <template v-else>
-          <div class="next__next__news__container">
-            <div class="next__news__container">
-              <img
-                class="side-news-img"
-                src="https://cdn.quasar.dev/img/parallax2.jpg"
-              />
-              <div>
-                <q-card class="my-card news__container">
-                  <q-card-section>
-                    <div class="news__head">
-                      {{ item.newsData.headline }}
-                    </div>
-                  </q-card-section>
-                  <q-card-section class="q-pt-none news__body">
-                    {{ item.newsData.newsContent }}
-                  </q-card-section>
-                </q-card>
-              </div>
-            </div>
-          </div>
-        </template>
+  <q-card class="news-container row q-pa-lg">
+    <!-- MAIN -->
+    <div class="main-news-container col-6 q-gutter-md">
+      <template v-if="newsData[0]">
+        <q-img
+          class="main-news-img shadow-1"
+          :src="newsData[0].newsData.imgLink"
+        />
+        <div class="news-title">
+          <strong>{{ newsData[0].newsData.headline }}</strong>
+        </div>
+        <div class="news-content">
+          {{ contentfilter(newsData[0].newsData.newsContent) }}
+        </div>
+        <div>
+          {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+          {{ newsData[0].newsData.newsDate }}
+        </div>
       </template>
     </div>
-  </div>
+    <!-- SIDE -->
+    <div class="side-news-container col-6">
+      <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
+        <div class="side-news row q-ma-xs">
+          <q-img
+            class="col side-news-img shadow-1 q-mr-md"
+            :src="item.newsData.imgLink"
+          />
+
+          <div class="col q-gutter-sm">
+            <div class="news-title">
+              <strong>{{ item.newsData.headline }}</strong>
+            </div>
+            <div>
+              {{ contentfilter(item.newsData.newsContent) }}
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </q-card>
 </template>
 
 <script>
@@ -70,34 +63,62 @@ export default {
         // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
         // 이 중 6개는 키워드와 count 는 랭크에
         // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
-        this.newsData = resData;
-        console.log("wordclouddata setting");
+        this.newsData = [];
+        resData.forEach((item) => {
+          if (item.newsData.imgLink.substring(0, 5) == "/asse") {
+            item.newsData.imgLink = "src/assets/img-noImg.png";
+          }
+          this.newsData.push(item);
+        });
+        // this.newsData = resData;
         this.wordCloudData = this.newsData.slice(0, 10);
         this.trendRankData = this.newsData.slice(1, 6);
       },
       () => console.warn("WARN")
     );
   },
+  computed: {
+    contentfilter() {
+      return function (text) {
+        if (text.length > 50) return text.substring(0, 45) + "..";
+        else return text;
+      };
+    },
+  },
 };
 </script>
 
 <style scoped>
-.today__next__news__container {
-  display: flex;
-  flex-direction: column;
-}
-.today__news__container {
+.news-container {
   /* display: flex; */
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 1050px;
+  margin: auto;
 }
+
+.main-news-container {
+  height: 570px;
+}
+
+.side-news-container {
+  height: 570px;
+}
+
 .main-news-img {
-  height: 100px;
-  width: 100px;
+  max-height: 380px;
+  max-width: 470px;
+  border-radius: 5px;
 }
+
+.side-news {
+  height: 140px;
+}
+
 .side-news-img {
-  height: 50px;
-  width: 50px;
+  max-width: 190px;
+  max-height: 120px;
+  border-radius: 5px;
 }
 </style>
