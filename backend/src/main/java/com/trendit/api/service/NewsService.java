@@ -28,8 +28,8 @@ public class NewsService {
         return data;
     }
 
-    public List<News> getNews(String keyword, String newsDate, String newsAgency, int page) {
-        List<News> news = newsRepositorySupport.getNewsByOptions(keyword, newsDate, newsAgency, page);
+    public List<News> getNews(long keywordId, String newsDate, String newsAgency, int page) {
+        List<News> news = newsRepositorySupport.getNewsByOptions(keywordId, newsDate, newsAgency, page);
         return news;
     }
 }

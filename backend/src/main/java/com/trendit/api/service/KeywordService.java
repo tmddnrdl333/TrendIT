@@ -1,9 +1,10 @@
 package com.trendit.api.service;
 
+import com.trendit.api.response.data.KeywordData;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.common.type.PeriodEnum;
 import com.trendit.db.repository.CustomRepository;
-import com.trendit.db.repository.KeywordNewsRepositorySupport;
+import com.trendit.db.repository.KeywordRepositorySupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class KeywordService {
 
-    private final KeywordNewsRepositorySupport keywordNewsRepositorySupport;
+    private  final KeywordRepositorySupport keywordRepositorySupport;
+
     private final CustomRepository customRepository;
 
     public List<KeywordNewsData> getKeywordNews(PeriodEnum type) {
@@ -21,5 +23,10 @@ public class KeywordService {
         //List<KeywordNewsData> keywordNewsList = keywordNewsRepositorySupport.getKeywordNews(type);
         List<KeywordNewsData> keywordNewsList = customRepository.getKeywordNews(type);
         return keywordNewsList;
+    }
+
+    public List<KeywordData> getKeywordList(String keyword) {
+        List<KeywordData> keywordList = keywordRepositorySupport.getKeywordList(keyword);
+        return keywordList;
     }
 }

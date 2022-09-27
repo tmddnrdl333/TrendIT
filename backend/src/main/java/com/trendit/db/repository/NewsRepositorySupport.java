@@ -74,21 +74,8 @@ public class NewsRepositorySupport {
         return qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1));
     }
 
-    public List<News> getNewsByOptions(String keyword, String newsDate, String newsAgency, int page) {
+    public List<News> getNewsByOptions(long keywordId, String newsDate, String newsAgency, int page) {
         List<News> news = new ArrayList<>();
-
-//        List<News> news = jpaQueryFactory
-//                .select(qNews)
-//                .from(qKeyword, qKeywordHasNews, qNews)
-//                .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
-//                        qKeywordHasNews.news.newsId.eq(qNews.newsId),
-//                        qKeyword.keyword.eq(keyword),
-//                        eqNewsAgency(newsAgency),
-//                        eqNewsDate(newsDate))
-//                .orderBy(qNews.newsId.desc())
-//                .offset(10 * (page - 1))
-//                .limit(10)
-//                .fetch();
 
         if (newsDate != null && newsAgency != null) {
             List<LocalDate> parsedDate = parsingDate(newsDate);
@@ -99,7 +86,7 @@ public class NewsRepositorySupport {
                     .from(qKeyword, qKeywordHasNews, qNews)
                     .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keyword.eq(keyword),
+                            qKeyword.keywordId.eq(keywordId),
                             qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)),
                             qNews.newsAgency.eq(newsAgency))
                     .orderBy(qNews.newsId.desc())
@@ -116,7 +103,7 @@ public class NewsRepositorySupport {
                     .from(qKeyword, qKeywordHasNews, qNews)
                     .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keyword.eq(keyword),
+                            qKeyword.keywordId.eq(keywordId),
                             qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)))
                     .orderBy(qNews.newsId.desc())
                     .offset(12 * (page - 1))
@@ -131,7 +118,7 @@ public class NewsRepositorySupport {
                     .from(qKeyword, qKeywordHasNews, qNews)
                     .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keyword.eq(keyword),
+                            qKeyword.keywordId.eq(keywordId),
                             qNews.newsAgency.eq(newsAgency))
                     .orderBy(qNews.newsId.desc())
                     .offset(12 * (page - 1))
@@ -146,7 +133,7 @@ public class NewsRepositorySupport {
                     .from(qKeyword, qKeywordHasNews, qNews)
                     .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
                             qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keyword.eq(keyword))
+                            qKeyword.keywordId.eq(keywordId))
                     .orderBy(qNews.newsId.desc())
                     .offset(12 * (page - 1))
                     .limit(12)
