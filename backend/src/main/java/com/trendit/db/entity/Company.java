@@ -23,7 +23,7 @@ public class Company {
     String companyCategory;
 
     @Column(length = 50)
-    String companyMainItem;
+    String companyRepresentative;
 
     @Column(length = 500)
     String companyLink;
