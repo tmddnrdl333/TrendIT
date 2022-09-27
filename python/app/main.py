@@ -42,7 +42,7 @@ def run(date: str):
     return {"message" : "Success"}
 
 
-@app.get("/internal/add_user_dictionary/{keyword}")
+@app.post("/internal/user-dictionary/{keyword}")
 def add_user_dictionary(keyword: str):
     try:
         udic.add_keyword(keyword)

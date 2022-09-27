@@ -14,12 +14,15 @@ import com.trendit.db.repository.KeywordNewsRepositorySupport;
 import com.trendit.db.repository.KeywordRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class KeywordService {
+
+    private final WebClient webClient;
 
     private final KeywordNewsRepositorySupport keywordNewsRepositorySupport;
     private final CustomRepository customRepository;
@@ -32,7 +35,7 @@ public class KeywordService {
         return keywordNewsList;
     }
 
-    public void addKeyword(KeywordPostReq keywordPostReq) throws DuplicatedKeywordException {
+    public void addKeyword(KeywordPostReq keywordPostReq) throws DuplicatedKeywordException, Exception {
         if (duplicatedKeyword(keywordPostReq.getKeyword())) {
             throw new DuplicatedKeywordException("Dupllicated keyword");
         } else {

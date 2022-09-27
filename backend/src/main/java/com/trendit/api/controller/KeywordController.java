@@ -5,6 +5,7 @@ import com.trendit.api.request.BoardPostReq;
 import com.trendit.api.request.KeywordPostReq;
 import com.trendit.api.service.BoardService;
 import com.trendit.api.service.KeywordService;
+import com.trendit.api.service.WebClientService;
 import com.trendit.common.model.response.BaseRes;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -26,6 +27,7 @@ import java.util.NoSuchElementException;
 public class KeywordController {
 
     private final KeywordService keywordService;
+    private final WebClientService webClientService;
 
     @PostMapping
     @ApiOperation(value = "키워드 추가", notes = "키워드를 추가합니다.")
@@ -37,6 +39,7 @@ public class KeywordController {
     public ResponseEntity addKeyword(@Validated @RequestBody KeywordPostReq keywordPostReq, BindingResult bindingResult) {
         try {
             keywordService.addKeyword(keywordPostReq);
+            webClientService.addUserDictionary(keywordPostReq.getKeyword());
         } catch (DuplicatedKeywordException duplicatedKeywordException) {
             return ResponseEntity.status(400).body(BaseRes.of(400, "중복된 키워드입니다."));
         } catch (Exception exception) {
