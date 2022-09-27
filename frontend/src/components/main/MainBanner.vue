@@ -53,6 +53,7 @@ export default {
 }
 
 .intro-img {
+  height: 300px;
   width: 30%;
 }
 .intro-content {
