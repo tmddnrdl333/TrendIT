@@ -4,7 +4,7 @@ from konlpy.tag import Komoran
 # output = [(keyword, news_id), (keyword, news_id), (keyword, news_id)]
 def morphological_analysis(data) :
     morpho_analysis_result = []
-    komoran = Komoran()
+    komoran = Komoran(userdic="user_data/user_dictionary.txt")
     for item in data :
         pos = komoran.nouns(item[0])
         for keyword in pos :

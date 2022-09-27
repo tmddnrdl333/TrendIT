@@ -1,0 +1,124 @@
+<template>
+  <q-card class="news-container row q-pa-lg">
+    <!-- MAIN -->
+    <div class="main-news-container col-6 q-gutter-md">
+      <template v-if="newsData[0]">
+        <q-img
+          class="main-news-img shadow-1"
+          :src="newsData[0].newsData.imgLink"
+        />
+        <div class="news-title">
+          <strong>{{ newsData[0].newsData.headline }}</strong>
+        </div>
+        <div class="news-content">
+          {{ contentfilter(newsData[0].newsData.newsContent) }}
+        </div>
+        <div>
+          {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+          {{ newsData[0].newsData.newsDate }}
+        </div>
+      </template>
+    </div>
+    <!-- SIDE -->
+    <div class="side-news-container col-6">
+      <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
+        <div class="side-news row q-ma-xs">
+          <q-img
+            class="col side-news-img shadow-1 q-mr-md"
+            :src="item.newsData.imgLink"
+          />
+
+          <div class="col q-gutter-sm">
+            <div class="news-title">
+              <strong>{{ item.newsData.headline }}</strong>
+            </div>
+            <div>
+              {{ contentfilter(item.newsData.newsContent) }}
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </q-card>
+</template>
+
+<script>
+import { ref } from "vue";
+import { getWordcloudApi } from "boot/stats.js";
+
+export default {
+  name: "TodayNews",
+  setup() {
+    return {
+      newsData: ref([]),
+      wordCloudData: ref([]),
+      trendRankData: ref([]),
+    };
+  },
+  async created() {
+    await getWordcloudApi(
+      "day",
+      (response) => {
+        const resData = response.data.data;
+        // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
+        // 이 중 6개는 키워드와 count 는 랭크에
+        // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
+        this.newsData = [];
+        resData.forEach((item) => {
+          if (item.newsData.imgLink.substring(0, 5) == "/asse") {
+            item.newsData.imgLink = "src/assets/img-noImg.png";
+          }
+          this.newsData.push(item);
+        });
+        // this.newsData = resData;
+        this.wordCloudData = this.newsData.slice(0, 10);
+        this.trendRankData = this.newsData.slice(1, 6);
+      },
+      () => console.warn("WARN")
+    );
+  },
+  computed: {
+    contentfilter() {
+      return function (text) {
+        if (text.length > 50) return text.substring(0, 45) + "..";
+        else return text;
+      };
+    },
+  },
+};
+</script>
+
+<style scoped>
+.news-container {
+  /* display: flex; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 1050px;
+  margin: auto;
+}
+
+.main-news-container {
+  height: 570px;
+}
+
+.side-news-container {
+  height: 570px;
+}
+
+.main-news-img {
+  max-height: 380px;
+  max-width: 470px;
+  border-radius: 5px;
+}
+
+.side-news {
+  height: 140px;
+}
+
+.side-news-img {
+  max-width: 190px;
+  max-height: 120px;
+  border-radius: 5px;
+}
+</style>
