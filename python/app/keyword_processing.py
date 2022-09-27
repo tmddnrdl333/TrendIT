@@ -1,6 +1,5 @@
-import asyncio
 from app import db_util as db
-import date_util
+from app import date_util as date_util
 
 KEYWORD_COUNT_STANDARD = 10
 
@@ -28,12 +27,13 @@ def get_hadoop_result(reducer) :
 
 # hadoop_result = [(keyword, count), (keyword, count), (keyword, count)]
 # analysis_result = [(keyword, news_id), (keyword, news_id), (keyword, news_id)]
+
 def extract_keyword(hadoop_result) :
     keywords = dict()
     for item in hadoop_result :
         # 키워드 등록 여부 확인
         keyword_id = db.is_keyword(item[0])
-        # 등록되지 않은 단어 
+        # 등록되지 않은 단어
         if len(keyword_id) == 0:
             # 키워드 조건 확인
             if item[1] >= KEYWORD_COUNT_STANDARD :  
@@ -57,12 +57,12 @@ def update_keyword_id(keywords):
     for k, v in keywords.items() :
         if v == 0 :
             keywords[k] = db.is_keyword(k)[0]
-            print(db.is_keyword(k)[0], type(db.is_keyword(k)[0]))
     return keywords
 
 
 # date = "2022-09-20"
 def save_statistics(keywords, hadoop_result, date):
+
     statistics = [(keywords[keyword], frequency, date) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
 
     # (키워드 id, 빈도수, 날짜) 등록
@@ -75,17 +75,60 @@ def save_statistics(keywords, hadoop_result, date):
     # hadoop result로 온 키워드에 대해서 각각의 keyword_id를 구하고 keyword_id와 date로 조회해서 각각이 week 테이블에 있는지 검사한다.
     # 검사해서 있으면 해당 frequency 값을 가져오고 frequency에 update
 
+    no_exists_list = []
+    exists_list = []
 
-    # s_result는 다음과 같은 형태이다 ((statistics_week/month/year_id, frequency))
+    for (keyword, frequency) in hadoop_result:
+        if keyword not in keywords.keys():
+          continue
+        keyword_id = keywords[keyword]
+        result_set = db.get_statistics_week(week_string, keyword_id)
+        if len(result_set) == 0:
+            no_exists_list.append((keyword_id, frequency, week_string))
+        else:
+            s_id = result_set[0][0]
+            new_frequency = frequency + result_set[0][1]
+            exists_list.append((new_frequency, s_id))
+    
+    db.insert_statistics_week(no_exists_list)
+    db.update_statistics_week(exists_list)
 
-    statistics = [(keywords[keyword], frequency, week_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
-    db.insert_statistics_week(statistics)
+    no_exists_list = []
+    exists_list = []
 
-    statistics = [(keywords[keyword], frequency, month_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
-    db.insert_statistics_month(statistics)
+    for (keyword, frequency) in hadoop_result:
+        if keyword not in keywords.keys():
+          continue
+        keyword_id = keywords[keyword]
+        result_set = db.get_statistics_month(month_string, keyword_id)
+        if len(result_set) == 0:
+            no_exists_list.append((keyword_id, frequency, month_string))
+        else:
+            s_id = result_set[0][0]
+            new_frequency = frequency + result_set[0][1]
+            exists_list.append((new_frequency, s_id))
+    
+    db.insert_statistics_month(no_exists_list)
+    db.update_statistics_month(exists_list)
 
-    statistics = [(keywords[keyword], frequency, year_string) for (keyword, frequency) in hadoop_result if keyword in keywords.keys()]
-    db.insert_statistics_year(statistics)
+    no_exists_list = []
+    exists_list = []
+
+    for (keyword, frequency) in hadoop_result:
+        if keyword not in keywords.keys():
+          continue
+        keyword_id = keywords[keyword]
+        result_set = db.get_statistics_year(year_string, keyword_id)
+        if len(result_set) == 0:
+            no_exists_list.append((keyword_id, frequency, year_string))
+        else:
+            s_id = result_set[0][0]
+            new_frequency = frequency + result_set[0][1]
+            exists_list.append((new_frequency, s_id))
+    
+    db.insert_statistics_year(no_exists_list)
+    db.update_statistics_year(exists_list)
+
 
 def save_keyword_news(keywords, analysis_result):
     keyword_news = [(keywords[keyword], news_id) for (keyword, news_id) in analysis_result if keyword in keywords.keys()]

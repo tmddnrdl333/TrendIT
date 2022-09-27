@@ -1,14 +1,18 @@
 import pymysql
+import os
+
+def get_connection():
+    return pymysql.connect(
+        user = "trendit",
+        passwd = os.environ.get("TRENDIT_DB_PASSWORD", ''),
+        host = os.environ.get("TRENDIT_DB_HOST", ''),
+        port = 32000,
+        db = "trendit",
+        charset = 'utf8'
+    )
 
 def execute_select(sql, data):
-    conn = pymysql.connect(
-        user="trendit",
-        passwd="trendit829",
-        host="172.26.2.161",
-        port=32000,
-        db="trendit",
-        charset='utf8'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(sql, data)
     result = cursor.fetchall()
@@ -17,34 +21,19 @@ def execute_select(sql, data):
     return result
 
 def execute_insert_many(sql, data):
-    conn = pymysql.connect(
-        user="trendit",
-        passwd="trendit829",
-        host="172.26.2.161",
-        port=32000,
-        db="trendit",
-        charset='utf8'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.executemany(sql, data)
     conn.commit()
     cursor.close()
     conn.close()
 
-def get_connection():
-    return pymysql.connect(
-        user="trendit",
-        passwd="trendit829",
-        host="172.26.2.161",
-        port=32000,
-        db="trendit",
-        charset='utf8'
-    )
 
-def execute_update(sql, count, target_time):
+
+def execute_update_many(sql, data):
     conn = get_connection()
     cursor = conn.cursor()
-    rows = cursor.exectue(sql, count, target_time)
+    rows = cursor.executemany(sql, data)
     conn.commit()
     cursor.close()
     conn.close()
@@ -71,29 +60,29 @@ def is_keyword(keyword):
     sql = """SELECT keyword_id from `keyword` WHERE keyword = %s;"""
     return execute_select(sql, keyword)
 
-def get_statistics_week(target_time):
-    sql = """SELECT statistics_week_id, frequency from `statistics_week` WHERE target_time = %s;"""
-    return execute_select(sql, target_time)
+def get_statistics_week(target_time, keyword_id):
+    sql = """SELECT statistics_week_id, frequency from `statistics_week` WHERE target_time = %s AND keyword_id = %s;"""
+    return execute_select(sql, (target_time, keyword_id))
 
-def get_statistics_month(target_time):
-    sql = """SELECT statistics_month_id, frequency from `statistics_month` WHERE target_time = %s;"""
-    return execute_select(sql, target_time)
+def get_statistics_month(target_time, keyword_id):
+    sql = """SELECT statistics_month_id, frequency from `statistics_month` WHERE target_time = %s AND keyword_id = %s;"""
+    return execute_select(sql, (target_time, keyword_id))
 
-def get_statistics_year(target_time):
-    sql = """SELECT statistics_year_id, frequency from `statistics_year` WHERE target_time = %s;"""
-    return execute_select(sql, target_time)
+def get_statistics_year(target_time, keyword_id):
+    sql = """SELECT statistics_year_id, frequency from `statistics_year` WHERE target_time = %s AND keyword_id = %s;"""
+    return execute_select(sql, (target_time, keyword_id))
 
-def update_statistics_week(count, target_time):
-    sql = """UPDATE statistics_week SET frequency = %d WHERE target_time = %s;"""
-    return execute_update(sql, count, target_time)
+def update_statistics_week(data):
+    sql = """UPDATE statistics_week SET frequency = %s WHERE statistics_week_id = %s;"""
+    return execute_update_many(sql, data)
 
-def update_statistics_month(count, target_time):
-    sql = """UPDATE statistics_month SET frequency = %d WHERE target_time = %s;"""
-    return execute_update(sql, count, target_time)
+def update_statistics_month(data):
+    sql = """UPDATE statistics_month SET frequency = %s WHERE statistics_month_id = %s;"""
+    return execute_update_many(sql, data)
 
-def update_statistics_year(count, target_time):
-    sql = """UPDATE statistics_year SET frequency = %d WHERE target_time = %s;"""
-    return execute_update(sql, count, target_time)
+def update_statistics_year(data):
+    sql = """UPDATE statistics_year SET frequency = %s WHERE statistics_year_id = %s;"""
+    return execute_update_many(sql, data)
 
 # usage
 # keywords_input = [keyword, keyword, keyword]
