@@ -152,7 +152,6 @@ export default {
             this.chartData.labels.push(item.keyword);
             this.chartData.datasets[0].data.push(item.frequency);
           });
-          // console.log(this.chartData);
           this.loaded = true;
         },
         () => console.warn("failed")

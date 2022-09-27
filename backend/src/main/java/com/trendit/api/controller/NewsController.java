@@ -37,13 +37,13 @@ public class NewsController {
             @ApiResponse(code = 400, message = "입력 내용을 다시 확인해주세요"),
             @ApiResponse(code = 500, message = "오류가 발생했습니다")
     })
-    public ResponseEntity<? extends BaseRes> getNews(@RequestParam("keyword") String keyword,
+    public ResponseEntity<? extends BaseRes> getNews(@RequestParam("keywordId") long keywordId,
                                                      @RequestParam(value = "newsDate", required = false) String newsDate,
                                                      @RequestParam(value = "newsAgency", required = false) String newsAgency,
                                                      @RequestParam("page") int page) {
         List<News> news;
         try {
-            news = newsService.getNews(keyword, newsDate, newsAgency, page);
+            news = newsService.getNews(keywordId, newsDate, newsAgency, page);
         } catch (NoSuchElementException e1) {
             e1.printStackTrace();
             return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));

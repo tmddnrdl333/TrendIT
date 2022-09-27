@@ -131,7 +131,6 @@ export default {
           this.result = response.data.news;
         },
         (e) => {
-          console.log("HERE!!");
           console.error(e);
         }
       );

@@ -1,13 +1,23 @@
 import pymysql
+import os
+
+db_info = {
+    "user": "trendit",
+    "passwd": os.environ.get("TRENDIT_DB_PASSWORD", ''),
+    "host": os.environ.get("TRENDIT_DB_HOST", ''),
+    "port": 32000,
+    "db": "trendit",
+    "charset": "utf8"
+}
 
 def execute_select(sql, data):
     conn = pymysql.connect(
-        user="trendit",
-        passwd="trendit829",
-        host="172.26.2.161",
-        port=32000,
-        db="trendit",
-        charset='utf8'
+        user=db_info['user'],
+        passwd=db_info['passwd'],
+        host=db_info['host'],
+        port=db_info['port'],
+        db=db_info['db'],
+        charset=db_info['charset']
     )
     cursor = conn.cursor()
     cursor.execute(sql, data)
@@ -18,12 +28,12 @@ def execute_select(sql, data):
 
 def execute_insert_many(sql, data):
     conn = pymysql.connect(
-        user="trendit",
-        passwd="trendit829",
-        host="172.26.2.161",
-        port=32000,
-        db="trendit",
-        charset='utf8'
+        user=db_info['user'],
+        passwd=db_info['passwd'],
+        host=db_info['host'],
+        port=db_info['port'],
+        db=db_info['db'],
+        charset=db_info['charset']
     )
     cursor = conn.cursor()
     cursor.executemany(sql, data)

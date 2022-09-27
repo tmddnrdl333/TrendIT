@@ -4,6 +4,7 @@ import com.trendit.api.exception.DuplicatedKeywordException;
 import com.trendit.api.exception.PasswordMisMatchException;
 import com.trendit.api.request.KeywordCompanyPostReq;
 import com.trendit.api.request.KeywordPostReq;
+import com.trendit.api.response.data.KeywordData;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.common.type.PeriodEnum;
 import com.trendit.db.entity.Board;
@@ -12,6 +13,7 @@ import com.trendit.db.entity.Keyword;
 import com.trendit.db.repository.CustomRepository;
 import com.trendit.db.repository.KeywordNewsRepositorySupport;
 import com.trendit.db.repository.KeywordRepository;
+import com.trendit.db.repository.KeywordRepositorySupport;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -25,6 +27,7 @@ public class KeywordService {
     private final WebClient webClient;
 
     private final KeywordNewsRepositorySupport keywordNewsRepositorySupport;
+    private  final KeywordRepositorySupport keywordRepositorySupport;
     private final CustomRepository customRepository;
     private final KeywordRepository keywordRepository;
 
@@ -66,4 +69,8 @@ public class KeywordService {
         else return false;
     }
 
+    public List<KeywordData> getKeywordList(String keyword) {
+        List<KeywordData> keywordList = keywordRepositorySupport.getKeywordList(keyword);
+        return keywordList;
+    }
 }
