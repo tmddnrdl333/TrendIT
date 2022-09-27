@@ -5,7 +5,6 @@ import com.trendit.api.response.LineChartGetRes;
 import com.trendit.api.response.NewsCountGetRes;
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.service.StatsService;
-import com.trendit.common.exception.IllegalChartDataTypeException;
 import com.trendit.common.model.response.BaseRes;
 import com.trendit.common.type.PeriodEnum;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -83,7 +81,7 @@ public class StatsController {
             @PathVariable int val) {
         List<BarChartData> barChartDataList;
         try {
-            barChartDataList = statsService.getBarChartData(type, val, false);
+            barChartDataList = statsService.getBarChartData(type, val);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
@@ -104,8 +102,9 @@ public class StatsController {
             @ApiParam(value = "type: day/week/month/year", required = true)
             @PathVariable PeriodEnum type) {
         List<BarChartData> barChartDataList;
+
         try {
-            barChartDataList = statsService.getBarChartData(type, 0, true);
+            barChartDataList = statsService.getCompanyBarChartData(type);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));

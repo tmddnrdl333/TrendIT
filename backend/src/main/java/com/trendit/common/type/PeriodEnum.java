@@ -21,9 +21,8 @@ public enum PeriodEnum {
 //        return dateConstant - val;
 //    }
 
-    public LocalDate getTargetDate(int time) {
+    public LocalDate getTargetDate(int timeOffset) {
         LocalDate targetTime = LocalDate.now();
-        int timeOffset = time;
         if (this == day) {
             return targetTime.minusDays(timeOffset);
         } else if (this == week) {
@@ -34,7 +33,7 @@ public enum PeriodEnum {
             return LocalDateUtils.getFirstDayOfTargetMonth(targetTime);
         } else { // this == year
             targetTime = targetTime.minusYears(timeOffset);
-            return  LocalDateUtils.getFirstDayOfTargetYear(targetTime);
+            return LocalDateUtils.getFirstDayOfTargetYear(targetTime);
         }
     }
 
@@ -48,6 +47,30 @@ public enum PeriodEnum {
             return LocalDateUtils.getFirstDayOfTargetMonth(recentTime);
         } else { // this == year
             return LocalDateUtils.getFirstDayOfTargetYear(recentTime);
+        }
+    }
+
+    public LocalDate getNextTime(LocalDate currentTime, int offset) {
+        if (this == day) {
+            return currentTime.plusDays(offset);
+        } else if (this == week) {
+            return currentTime.plusWeeks(offset);
+        } else if (this == month) {
+            return currentTime.plusMonths(offset);
+        } else { // this == year
+            return currentTime.plusYears(offset);
+        }
+    }
+
+    public LocalDate getBeforeTime(LocalDate currentTime, int offset) {
+        if (this == day) {
+            return currentTime.minusDays(offset);
+        } else if (this == week) {
+            return currentTime.minusWeeks(offset);
+        } else if (this == month) {
+            return currentTime.minusMonths(offset);
+        } else { // this == year
+            return currentTime.minusYears(offset);
         }
     }
 

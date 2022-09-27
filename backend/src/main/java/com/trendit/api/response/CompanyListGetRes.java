@@ -26,7 +26,7 @@ public class CompanyListGetRes extends BaseRes {
                             .companyId(company.getCompanyId())
                             .companyName(company.getCompanyName())
                             .companyCategory(company.getCompanyCategory())
-                            .companyMainItem(company.getCompanyMainItem())
+                            .companyRepresentative(company.getCompanyRepresentative())
                             .companyLink(company.getCompanyLink())
                             .build()
                     );

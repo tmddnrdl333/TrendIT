@@ -2,6 +2,7 @@ package com.trendit.db.repository;
 
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.response.data.KeywordNewsData;
+import com.trendit.common.exception.IllegalChartDataException;
 import com.trendit.common.type.PeriodEnum;
 import com.trendit.common.util.RepositoryUtils;
 import lombok.RequiredArgsConstructor;
@@ -48,18 +49,20 @@ public class CustomRepository {
     }
 
 
-    public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, String keyword) {
+    public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, String keyword) throws IllegalChartDataException {
         String query = repositoryUtils.buildFrequencyStatsPerKeywordQuery(type);
-
-        int limitNum = type.getDateConstant();
-
-        List<Integer> list = entityManager
+        int dateNum = type.getDateConstant();
+        LocalDate startDate = type.getTargetDate(dateNum);
+        LocalDate lastDate = type.getRecentTime();
+        List<Object[]> tupleList = entityManager
                 .createQuery(query)
                 .setParameter("keyword", keyword)
-                .setMaxResults(limitNum)
+                .setParameter("startDate", startDate)
+                .setParameter("lastDate", lastDate)
                 .getResultList();
 
-        Collections.reverse(list);
+        List<Integer> list = repositoryUtils.parseFrequencyStatsPerKeywordList(tupleList, type);
+
         return list;
     }
 
