@@ -21,7 +21,7 @@ public class KeywordRepositorySupport {
     public List<KeywordData> getKeywordList(String keyword) {
         List<Keyword> sql_list = jpaQueryFactory.select(qKeyword)
                 .from(qKeyword)
-                .where(qKeyword.keyword.like("%"+keyword+"%"))
+                .where(qKeyword.keyword.like(keyword+"%"))
                 .fetch();
         List<KeywordData> ret_list = new ArrayList<>();
         for(Keyword k:sql_list)
