@@ -6,7 +6,8 @@ def morphological_analysis(data) :
     morpho_analysis_result = []
     komoran = Komoran(userdic="user_data/user_dictionary.txt")
     for item in data :
-        pos = komoran.nouns(item[0])
-        for keyword in pos :
-            morpho_analysis_result.append(tuple([keyword, item[1]]))
+        komoran_result = komoran.pos(item[0])
+        for keyword in komoran_result :
+            if keyword[1] in ('NNP', 'NNG', 'SL') :
+                morpho_analysis_result.append(tuple([keyword[0].replace(" ", ""), item[1]]))
     return morpho_analysis_result
