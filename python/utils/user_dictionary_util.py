@@ -18,7 +18,9 @@ def morpho_analysis():
     while True:
         line = input()
         if line == "": break
-        print(komoran.nouns(line))
+        komoran_result = komoran.pos(line)
+        result = [word[0].replace(" ", "") for word in komoran_result if word[1] in ('NNP','NNG','SL')]
+        print(result)
 
 while True:
     print("1. 사용자 사전 단어 추가\n2. 형태소 분석\n3. 종료")
