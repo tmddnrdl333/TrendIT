@@ -64,8 +64,11 @@ export default {
 
   methods: {
     async genLayout() {
-      console.log("genLayout called");
+      console.log("drawing wordcloud...");
+
+      let max_size = 0;
       this.wordCloudData.forEach((item) => {
+        max_size = item.count > max_size ? item.count : max_size;
         this.data.push({ text: item.keyword, size: item.count });
       });
       try {
@@ -87,7 +90,7 @@ export default {
         .rotate(0)
         .font("Impact")
         .text((d) => d.text)
-        .fontSize((d) => d.size)
+        .fontSize((d) => (d.size / max_size) * 80)
         .on("end", this.end)
         // .spiral("archimedean")
         .start()
@@ -108,7 +111,7 @@ export default {
         .enter()
         .append("text")
         .style("fill", (d) => {
-          if (d.size > 30) return "black";
+          if (d.size > 60) return "red";
           return "blue";
         })
         .style("font-size", (d) => {
