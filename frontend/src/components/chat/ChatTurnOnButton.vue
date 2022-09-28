@@ -37,6 +37,7 @@
           />
         </q-card-section>
         <q-card-section>
+          <!-- <test-component></test-component> -->
           <q-scroll-area style="height: 200px; max-width: 300px">
             <q-infinite-scroll @load="onLoad" reverse>
               <template v-slot:loading>
@@ -45,19 +46,12 @@
                 </div>
               </template>
 
-              <div
-                v-for="(item, index) in items"
+              <chat-component
+                v-for="(chat, index) in chats"
                 :key="index"
-                class="caption q-py-sm"
+                :board="chat"
               >
-                <q-badge class="shadow-1">
-                  {{ items.length - index }}
-                </q-badge>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-                repellendus sit voluptate voluptas eveniet porro. Rerum
-                blanditiis perferendis totam, ea at omnis vel numquam
-                exercitationem aut, natus minima, porro labore.
-              </div>
+              </chat-component>
             </q-infinite-scroll>
           </q-scroll-area>
         </q-card-section>
@@ -77,8 +71,8 @@
               v-model="password"
             />
           </div>
-          <q-input filled autogrow v-model="nickname" :label="nicknameLabel" />
-          <q-btn round dense flat icon="send" />
+          <q-input filled autogrow v-model="content" :label="nicknameLabel" />
+          <q-btn round dense flat icon="send" @click="sendMasseage" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -87,28 +81,119 @@
 
 <script>
 import { ref } from "vue";
+import { postBoard, getBoards } from "src/boot/board.js";
+import ChatComponent from "./ChatComponent.vue";
+import { BoardPostReq } from "src/boot/request/BoardReq";
+import TestComponent from "./TestComponent.vue";
 export default {
   name: "ChatTurnOnButton",
+  components: {
+    ChatComponent,
+    // TestComponent,
+  },
   setup() {
-    const items = ref([{}, {}, {}, {}, {}, {}, {}]);
-    const nicknameLabel = "[북극곰]";
-    const nickname = ref("");
+    function makeNickName() {
+      const adj = ["강력한", "웃긴", "귀여운", "멋진", "아름다운"];
+      const nouns = ["곰", "사자", "호랑이", "강아지", "고양이"];
+      const name =
+        adj[Math.floor(Math.random() * adj.length)] +
+        nouns[Math.floor(Math.random() * nouns.length)];
+      console.log(name);
+      return name;
+    }
+    // const items = ref([{}, {}, {}, {}, {}, {}, {}]);
+    const chats = ref([]);
+
+    const nickname = makeNickName();
+    const nicknameLabel = "[" + nickname + "]";
+    const content = ref("");
     const password = ref("");
+    const boardId = ref(1);
+
+    const keywordId = 1;
+
+    getBoards(
+      keywordId,
+      (response) => {
+        console.log(response);
+        const data = response.data.boardData;
+        boardId.value = data[data.length - 1].boardId;
+        console.log(boardId.value);
+        // 1~100, 101~200 => 200~101 // 100~1
+        for (let i = data.length - 1; i >= 0; i--) {
+          // 첫 인덱스 저장
+          chats.value.push(data[i]);
+          // chats 맨 마지막에 data[0]이 와야됨
+        }
+      },
+      () => {
+        console.warn();
+      }
+    );
 
     return {
+      keywordId,
+      chats,
       seamless: ref(false),
-      items,
-      nicknameLabel,
       nickname,
+      nicknameLabel,
+      content,
       password,
       onLoad(index, done) {
         // 여기서 데이터를 요청함, 그리고 번호를 기록해놓음
-        setTimeout(() => {
-          items.value.splice(0, 0, {}, {}, {}, {}, {}, {}, {});
-          done();
-        }, 2000);
+        // setTimeout(() => {
+        //   items.value.splice(0, 0, {}, {}, {}, {}, {}, {}, {});
+        //   done();
+        // }, 2000);
+        console.log("INFINITY");
+        // setTimeout(() => {
+
+        // }, 2000);
+        let length;
+        getBoards(
+          keywordId,
+          (response) => {
+            console.log(response);
+            const data = response.data.boardData;
+            length = data.length;
+            boardId.value = data[data.length - 1].boardId;
+            for (let i = 0; i < data.length; i++) {
+              chats.value.unshift(data[i]);
+            }
+            console.log(chats.value);
+            done();
+          },
+          () => {
+            console.warn();
+          },
+          boardId.value
+        );
+        done();
       },
     };
+  },
+  methods: {
+    sendMasseage() {
+      postBoard(
+        new BoardPostReq(
+          this.keywordId,
+          this.nickname,
+          this.password,
+          this.content
+        ),
+        (response) => {
+          // 성공일 때
+          // 성공 알림 후
+          this.password = "";
+          this.content = "";
+          // 실패일 때
+          // 실패 알림
+        },
+        () => {
+          console.warn();
+        }
+      );
+    },
   },
 };
 </script>
