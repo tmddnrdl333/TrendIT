@@ -7,13 +7,13 @@
           class="main-news-img shadow-1"
           :src="newsData[0].newsData.imgLink"
         />
-        <div class="news-title">
+        <div class="main-news-title">
           <strong>{{ newsData[0].newsData.headline }}</strong>
         </div>
-        <div class="news-content">
+        <div class="main-news-content">
           {{ contentfilter(newsData[0].newsData.newsContent) }}
         </div>
-        <div>
+        <div class="main-news-agency">
           {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
           {{ newsData[0].newsData.newsDate }}
         </div>
@@ -29,10 +29,10 @@
           />
 
           <div class="col q-gutter-sm">
-            <div class="news-title">
+            <div class="side-news-title">
               <strong>{{ item.newsData.headline }}</strong>
             </div>
-            <div>
+            <div class="side-news-content">
               {{ contentfilter(item.newsData.newsContent) }}
             </div>
           </div>
@@ -89,6 +89,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+
 .news-container {
   /* display: flex; */
   flex-direction: row;
@@ -96,6 +98,8 @@ export default {
   align-items: center;
   width: 1050px;
   margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .main-news-container {
@@ -120,5 +124,24 @@ export default {
   max-width: 190px;
   max-height: 120px;
   border-radius: 5px;
+}
+.main-news-title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 20px;
+}
+.main-news-content {
+  font-family: "NanumBarunGothic";
+  font-size: 16px;
+}
+.main-news-agency {
+  color: gray;
+}
+.side-news-title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 16px;
+}
+.side-news-content {
+  font-family: "NanumBarunGothic";
+  font-size: 14px;
 }
 </style>
