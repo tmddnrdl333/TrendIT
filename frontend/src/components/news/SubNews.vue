@@ -308,14 +308,19 @@ export default {
       newsAgencyDialog: ref(false),
       newsAgencyOption,
       selection: computed(() => {
-        return Object.keys(newsAgencyOption)
-          .filter((type) => newsAgencyOption[type] === true)
-          .join(", ");
+        const test = Object.keys(newsAgencyOption).filter(
+          (type) => newsAgencyOption[type] === true
+        );
+        console.log(test, "test in computed");
+        return test;
+        // .join(", ");
       }),
     };
   },
   beforeCreate() {
-    console.log(this.newsDate, "in beforeCreate");
+    // console.log(this.newsDate, "this.newsDate in beforeCreate");
+    console.log(this.selection, "this.selection in beforeCreate");
+    console.log(typeof this.selection, "typeof this.selection in beforeCreate");
     getNewsApi(
       {
         newsDate:
@@ -344,25 +349,12 @@ export default {
   },
   created() {
     this.matCalendarMonth = matCalendarMonth;
-    console.log(this.newsDate, "in Created");
+    // console.log(this.newsDate, "in Created");
+    console.log(this.selection, "this.selection in created");
+    console.log(typeof this.selection, "typeof this.selection in created");
   },
   beforeMount() {},
-  mounted() {
-    // let date = new Date();
-    // this.newsDate.to =
-    //   date.getFullYear() +
-    //   "-" +
-    //   (date.getMonth() + 1).toString().padStart(2, "0") +
-    //   "-" +
-    //   date.getDate();
-    // date.setMonth(date.getMonth() - 1);
-    // this.newsDate.from =
-    //   date.getFullYear() +
-    //   "-" +
-    //   (date.getMonth() + 1).toString().padStart(2, "0") +
-    //   "-" +
-    //   date.getDate();
-  },
+  mounted() {},
   methods: {
     myFunction: function (newsLink) {
       // 주석지우지 말것
@@ -378,6 +370,8 @@ export default {
     },
 
     async getNewsByOptions() {
+      await console.log(this.selection, "this.selection in beforeCreate");
+
       await getNewsByOptionsApi(
         {
           newsDate:
