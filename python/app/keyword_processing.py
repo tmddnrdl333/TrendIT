@@ -35,12 +35,14 @@ def extract_keyword(hadoop_result) :
         keyword_id = db.is_keyword(item[0])
         # 등록되지 않은 단어
         if len(keyword_id) == 0:
+            if len(item[0]) <= 1:
+                continue
             # 키워드 조건 확인
             if item[1] >= KEYWORD_COUNT_STANDARD :  
                 # 영단어 중복 없애기 위해 대문자 데이터만 삽입
                 keywords[item[0].upper()] = 0
         # 등록된 단어
-        else :
+        else:
             keywords[item[0].upper()] = keyword_id[0]
 
     new_keywords = [tuple([k]) for k, v in keywords.items() if v == 0]
