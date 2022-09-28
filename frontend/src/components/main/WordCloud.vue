@@ -11,10 +11,12 @@
     <!-- WordCloud -->
     <div class="q-pa-md row items-start q-gutter-md">
       <q-card class="rank-container text-center">
-        <q-card-section> 키워드 순위 </q-card-section>
+        <q-card-section class="rank-container-title">
+          키워드 순위
+        </q-card-section>
         <q-separator />
         <template v-for="(item, index) in trendRankData" :key="index">
-          <div class="rank-item row items-center">
+          <div class="rank-item row items-center rank-container-content">
             <div class="col-3">{{ index + 1 }}</div>
             <div class="col-3">{{ item.keyword }}</div>
             <div class="col-3">{{ item.count }}건</div>
@@ -137,6 +139,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
 .wordcloud-container {
   width: 1050px;
   margin: 20px auto;
@@ -144,6 +147,15 @@ export default {
 .rank-container {
   width: 250px;
   height: 380px;
+}
+.rank-container-title {
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 28px;
+  padding: 4px;
+}
+.rank-container-content {
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 18px;
 }
 .rank-item {
   height: 45px;
