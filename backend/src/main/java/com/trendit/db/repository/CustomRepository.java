@@ -49,14 +49,14 @@ public class CustomRepository {
     }
 
 
-    public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, String keyword) throws IllegalChartDataException {
+    public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, long keywordId) throws IllegalChartDataException {
         String query = repositoryUtils.buildFrequencyStatsPerKeywordQuery(type);
         int dateNum = type.getDateConstant();
         LocalDate startDate = type.getTargetDate(dateNum);
         LocalDate lastDate = type.getRecentTime();
         List<Object[]> tupleList = entityManager
                 .createQuery(query)
-                .setParameter("keyword", keyword)
+                .setParameter("keywordId", keywordId)
                 .setParameter("startDate", startDate)
                 .setParameter("lastDate", lastDate)
                 .getResultList();

@@ -89,7 +89,7 @@ public class RepositoryUtils {
         StringBuffer queryBuffer = new StringBuffer("select s.targetTime, s.frequency from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
         queryBuffer.append(" s ");
-        queryBuffer.append("where s.keyword.keyword = :keyword and s.targetTime >= :startDate and s.targetTime <= :lastDate ");
+        queryBuffer.append("where s.keyword.keywordId = :keywordId and s.targetTime >= :startDate and s.targetTime <= :lastDate ");
         queryBuffer.append("order by s.targetTime");
 
         String query = queryBuffer.toString();
