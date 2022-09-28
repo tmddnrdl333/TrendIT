@@ -27,10 +27,12 @@
       <template v-for="(item, index) of company_list" :key="index">
         <q-card class="company-card q-my-md">
           <q-card-section>
-            {{ item.companyName }}
+            <span class="company-title">
+              {{ item.companyName }}
+            </span>
           </q-card-section>
           <q-separator />
-          <q-card-section>
+          <q-card-section class="company-content">
             <div>업종: {{ item.companyCategory }}</div>
             <div>음음: {{ item.companyMainItem }}</div>
             <div>링크: {{ item.companyLink }}</div>
@@ -101,6 +103,10 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap");
+@import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+
 .search-bar {
   width: 500px;
 }
@@ -116,5 +122,16 @@ export default {
   height: 200px;
   width: 230px;
   padding: 15px;
+}
+
+.company-title {
+  /* font-family: "NanumBarunGothicBold"; */
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 24px;
+}
+.company-content {
+  /* font-family: "NanumBarunGothicBold"; */
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 16px;
 }
 </style>
