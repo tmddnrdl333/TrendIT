@@ -3,10 +3,12 @@ package com.trendit.common.util;
 import com.trendit.api.response.data.BarChartData;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.api.response.data.NewsData;
+import com.trendit.common.exception.IllegalChartDataException;
 import com.trendit.common.type.PeriodEnum;
 import com.trendit.db.entity.News;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,14 +86,54 @@ public class RepositoryUtils {
     public String buildFrequencyStatsPerKeywordQuery(PeriodEnum type) {
         String targetEntity = type.getTargetEntity();
 
-        StringBuffer queryBuffer = new StringBuffer("select s.frequency from ");
+        StringBuffer queryBuffer = new StringBuffer("select s.targetTime, s.frequency from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
         queryBuffer.append(" s ");
-        queryBuffer.append("where s.keyword.keyword = :keyword ");
-        queryBuffer.append("order by s.targetTime desc");
+        queryBuffer.append("where s.keyword.keyword = :keyword and s.targetTime >= :startDate and s.targetTime <= :lastDate ");
+        queryBuffer.append("order by s.targetTime");
 
         String query = queryBuffer.toString();
         return query;
+    }
+
+    public List<Integer> parseFrequencyStatsPerKeywordList(List<Object[]> list, PeriodEnum type)
+            throws IllegalChartDataException{
+
+        List<Integer> data = new ArrayList<>();
+        int maxNum = type.getDateConstant();
+        LocalDate endDate = type.getRecentTime();
+        LocalDate currentDate = type.getBeforeTime(endDate, maxNum - 1);
+
+        /*
+           최근 7일/5주/12개월/10년간의 데이터 추이를 보여준다. 이 떄 해당 키워드가 있었던 기간에는
+           그 키워드의 frequency를 보여주고 아닐 경우 0으로 그 자리를 채운다.
+           최종적으로 [0,10,15,40,0,20,0] (type=day일 경우) 와 같은 형태로 출력된다.
+        */
+        int currentPos = 0;
+        while (!currentDate.isAfter(endDate)) {
+            if (currentPos >= list.size()) {
+                while (data.size() < maxNum) {
+                    data.add(0);
+                }
+                break;
+            }
+            Object[] row = list.get(currentPos);
+            LocalDate rowDate = (LocalDate) row[0];
+            Integer frequency = (Integer) row[1];
+            if (currentDate.isEqual(rowDate)) {
+                data.add(frequency);
+                currentPos++;
+            }
+            else {
+                data.add(0);
+            }
+            currentDate = type.getNextTime(currentDate, 1);
+        }
+
+        if (data.size() > maxNum) {
+            throw new IllegalChartDataException();
+        }
+        return data;
     }
 
 }

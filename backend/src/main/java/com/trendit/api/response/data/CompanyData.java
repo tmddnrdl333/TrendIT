@@ -13,6 +13,6 @@ public class CompanyData {
     long companyId;
     String companyName;
     String companyCategory;
-    String companyMainItem;
+    String companyRepresentative;
     String companyLink;
 }

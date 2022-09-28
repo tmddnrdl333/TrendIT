@@ -25,7 +25,7 @@ public class SearchCompanyGetRes extends BaseRes {
                         .companyName(m.getCompanyName())
                         .companyLink(m.getCompanyLink())
                         .companyCategory(m.getCompanyCategory())
-                        .companyMainItem(m.getCompanyMainItem())
+                        .companyRepresentative(m.getCompanyRepresentative())
                         .build())
         );
 
