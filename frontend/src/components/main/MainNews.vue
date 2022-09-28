@@ -89,7 +89,8 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+/* 네이버 나눔 바른 고딕*/
+@import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
 
 .news-container {
   /* display: flex; */
@@ -135,6 +136,7 @@ export default {
 }
 .main-news-agency {
   color: gray;
+  font-family: "NanumBarunGothic";
 }
 .side-news-title {
   font-family: "NanumBarunGothicBold";
