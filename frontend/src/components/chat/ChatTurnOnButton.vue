@@ -8,7 +8,7 @@
       @click="seamless = true"
     />
 
-    <q-dialog v-model="seamless" seamless position="right">
+    <q-dialog id="chat" v-model="seamless" seamless position="right">
       <q-card
         style="
           width: 300px;
@@ -71,8 +71,11 @@
               v-model="password"
             />
           </div>
-          <q-input filled autogrow v-model="content" :label="nicknameLabel" />
-          <q-btn round dense flat icon="send" @click="sendMasseage" />
+          <q-input filled autogrow v-model="content" :label="nicknameLabel">
+            <template v-slot:after>
+              <q-btn round dense flat icon="send" @click="sendMasseage" />
+            </template>
+          </q-input>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -85,6 +88,8 @@ import { postBoard, getBoards } from "src/boot/board.js";
 import ChatComponent from "./ChatComponent.vue";
 import { BoardPostReq } from "src/boot/request/BoardReq";
 import TestComponent from "./TestComponent.vue";
+import $ from "jquery";
+
 export default {
   name: "ChatTurnOnButton",
   components: {
@@ -120,11 +125,13 @@ export default {
         boardId.value = data[data.length - 1].boardId;
         console.log(boardId.value);
         // 1~100, 101~200 => 200~101 // 100~1
+
         for (let i = data.length - 1; i >= 0; i--) {
           // 첫 인덱스 저장
           chats.value.push(data[i]);
           // chats 맨 마지막에 data[0]이 와야됨
         }
+        console.log("first", chats.value);
       },
       () => {
         console.warn();
@@ -160,15 +167,17 @@ export default {
             for (let i = 0; i < data.length; i++) {
               chats.value.unshift(data[i]);
             }
-            console.log(chats.value);
-            done();
+            console.log("nexts", chats.value);
+            console.log(length);
+            if (length >= 100) done();
+            else done(true);
+            // done();
           },
           () => {
             console.warn();
           },
           boardId.value
         );
-        done();
       },
     };
   },
@@ -186,6 +195,9 @@ export default {
           // 성공 알림 후
           this.password = "";
           this.content = "";
+          console.log(this.seamless);
+          $("#chat").load(window.location.href + " #chat");
+          console.log(this.seamless);
           // 실패일 때
           // 실패 알림
         },
