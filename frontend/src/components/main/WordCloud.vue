@@ -71,6 +71,7 @@ export default {
         max_size = item.count > max_size ? item.count : max_size;
         this.data.push({ text: item.keyword, size: item.count });
       });
+      console.log(this.wordCloudData);
       try {
         const ctx = document.getElementById("wordcloud");
         ctx.parentNode.removeChild(ctx);
@@ -111,7 +112,7 @@ export default {
         .enter()
         .append("text")
         .style("fill", (d) => {
-          if (d.size > 60) return "red";
+          if (d.size > 60) return "#EE6C4D";
           return "blue";
         })
         .style("font-size", (d) => {

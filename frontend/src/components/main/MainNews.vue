@@ -66,7 +66,7 @@ export default {
         this.newsData = [];
         resData.forEach((item) => {
           if (item.newsData.imgLink.substring(0, 5) == "/asse") {
-            item.newsData.imgLink = "src/assets/img-noImg.png";
+            item.newsData.imgLink = "src/assets/no-image.png";
           }
           this.newsData.push(item);
         });

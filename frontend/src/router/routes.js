@@ -9,6 +9,9 @@ import AboutView from "../pages/AboutView.vue";
 import TestView from "../pages/TestView.vue";
 import TestPageView from "../pages/TestPageView.vue";
 
+import NoResult from "../components/keyword/result/NoResult.vue";
+import KeywordResult from "../components/keyword/result/KeywordResult.vue";
+
 const routes = [
   {
     path: "/",
@@ -21,6 +24,18 @@ const routes = [
       {
         path: "keyword",
         component: KeywordView,
+        children: [
+          {
+            name: "empty_keyword",
+            path: "",
+            component: NoResult,
+          },
+          {
+            name: "search_keyword",
+            path: ":keyword_id",
+            component: KeywordResult,
+          },
+        ],
       },
       {
         path: "company",
