@@ -1,5 +1,6 @@
 package com.trendit.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +31,12 @@ public class Company {
 
     @OneToOne(mappedBy = "company")
     Keyword keyword;
+
+    @Builder
+    public Company(String companyName, String companyCategory, String companyRepresentative, String companyLink) {
+        this.companyName = companyName;
+        this.companyCategory = companyCategory;
+        this.companyRepresentative = companyRepresentative;
+        this.companyLink = companyLink;
+    }
 }
