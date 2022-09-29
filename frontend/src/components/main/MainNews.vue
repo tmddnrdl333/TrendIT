@@ -1,7 +1,10 @@
 <template>
   <q-card class="news-container row q-pa-lg">
     <!-- MAIN -->
-    <div class="main-news-container col-6 q-gutter-md">
+    <div
+      class="main-news-container col-6 q-gutter-md"
+      v-on:click="goToLink(newsData[0])"
+    >
       <template v-if="newsData[0]">
         <q-img
           class="main-news-img shadow-1"
@@ -22,7 +25,7 @@
     <!-- SIDE -->
     <div class="side-news-container col-6">
       <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
-        <div class="side-news row q-ma-xs">
+        <div class="side-news row q-ma-xs" v-on:click="goToLink(item)">
           <q-img
             class="col side-news-img shadow-1 q-mr-md"
             :src="item.newsData.imgLink"
@@ -83,6 +86,18 @@ export default {
         if (text.length > 50) return text.substring(0, 45) + "..";
         else return text;
       };
+    },
+  },
+  methods: {
+    goToLink: function (newsData) {
+      if (newsData.newsData.newsLink === "") {
+        window.open(
+          "http://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" +
+            newsData.newsData.newsAgency +
+            " " +
+            newsData.newsData.headline
+        );
+      } else window.open(newsData.newsData.newsLink);
     },
   },
 };
