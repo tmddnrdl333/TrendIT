@@ -27,7 +27,7 @@ public class CustomRepository {
         String query = repositoryUtils.buildKeywordNewsQuery(type);
 
         List<Object[]> list = (List<Object[]>) entityManager
-                .createQuery(query)
+                .createNativeQuery(query)
                 .setParameter("recentTime", recentTime)
                 .setMaxResults(30)
                 .getResultList();
