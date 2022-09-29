@@ -10,10 +10,7 @@ import com.trendit.common.type.PeriodEnum;
 import com.trendit.db.entity.Board;
 import com.trendit.db.entity.Company;
 import com.trendit.db.entity.Keyword;
-import com.trendit.db.repository.CustomRepository;
-import com.trendit.db.repository.KeywordNewsRepositorySupport;
-import com.trendit.db.repository.KeywordRepository;
-import com.trendit.db.repository.KeywordRepositorySupport;
+import com.trendit.db.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -30,6 +27,7 @@ public class KeywordService {
     private  final KeywordRepositorySupport keywordRepositorySupport;
     private final CustomRepository customRepository;
     private final KeywordRepository keywordRepository;
+    private final CompanyRepository companyRepository;
 
     public List<KeywordNewsData> getKeywordNews(PeriodEnum type) {
         /* TODO: 2개 중 하나만 남기기 */
@@ -40,21 +38,25 @@ public class KeywordService {
 
     public void addKeyword(KeywordPostReq keywordPostReq) throws DuplicatedKeywordException, Exception {
         if (duplicatedKeyword(keywordPostReq.getKeyword())) {
-            throw new DuplicatedKeywordException("Dupllicated keyword");
+            throw new DuplicatedKeywordException("Duplicated keyword");
         } else {
             keywordRepository.save(toKeywordEntity(keywordPostReq.getKeyword(), null));
         }
     }
 
-//    public void addKeywordCompany(KeywordCompanyPostReq keywordcompanyPostReq) throws DuplicatedKeywordException {
-//        if (duplicatedKeyword(keywordcompanyPostReq.getKeyword())) {
-//            throw new DuplicatedKeywordException("Dupllicated keyword");
-//        } else {
-//            // company save
-//            // company를 가져와서 keyword에 함께 넣기
-//            keywordRepository.save(keywordPostReq.toKeywordEntity(null));
-//        }
-//    }
+    public void addKeywordCompany(KeywordCompanyPostReq keywordCompanyPostReq) throws DuplicatedKeywordException, Exception {
+        if (duplicatedKeyword(keywordCompanyPostReq.getCompanyName())) {
+            throw new DuplicatedKeywordException("Duplicated keyword");
+        } else {
+            Company targetCompany = companyRepository.save(Company.builder()
+                    .companyName(keywordCompanyPostReq.getCompanyName())
+                    .companyCategory(keywordCompanyPostReq.getCompanyCategory())
+                    .companyRepresentative(keywordCompanyPostReq.getCompanyRepresentative())
+                    .companyLink(keywordCompanyPostReq.getCompanyLink())
+                    .build());
+            keywordRepository.save(toKeywordEntity(keywordCompanyPostReq.getCompanyName(), targetCompany));
+        }
+    }
 
     public Keyword toKeywordEntity (String keyword, Company company) {
         return Keyword.builder()

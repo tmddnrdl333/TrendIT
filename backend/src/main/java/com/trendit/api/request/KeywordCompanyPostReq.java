@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class KeywordCompanyPostReq {
-
     @ApiParam(value = "회사 이름", required = true)
     @NotBlank
     @Size(max = 20)
