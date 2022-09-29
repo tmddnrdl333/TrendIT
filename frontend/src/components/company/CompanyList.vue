@@ -26,16 +26,21 @@
     <div class="flex q-pa-lg justify-around">
       <template v-for="(item, index) of company_list" :key="index">
         <q-card class="company-card q-my-md">
-          <q-card-section>
-            <span class="company-title">
-              {{ item.companyName }}
-            </span>
+          <q-icon
+            name="add_home"
+            size="21px"
+            class="add-home"
+            v-on:click="goToLink(item.companyLink)"
+          ></q-icon>
+
+          <q-card-section class="company-title">
+            {{ item.companyName }}
           </q-card-section>
           <q-separator />
           <q-card-section class="company-content">
             <div>업종: {{ item.companyCategory }}</div>
             <div>음음: {{ item.companyMainItem }}</div>
-            <div>링크: {{ item.companyLink }}</div>
+            <!-- <div>링크: {{ item.companyLink }}</div> -->
             <!-- <div>{{ item.keyword }}</div> -->
           </q-card-section>
         </q-card>
@@ -93,6 +98,9 @@ export default {
         () => console.warn("failed")
       );
     },
+    goToLink: function (companyLink) {
+      window.open(companyLink);
+    },
   },
   watch: {
     current: function () {
@@ -121,7 +129,7 @@ export default {
 .company-card {
   height: 200px;
   width: 230px;
-  padding: 15px;
+  padding: 15px 0 15px 15px;
 }
 
 .company-title {
@@ -133,5 +141,11 @@ export default {
   /* font-family: "NanumBarunGothicBold"; */
   font-family: "Hanna", fantasy;
   font-size: 16px;
+}
+.add-home {
+  position: absolute;
+  margin-left: 180px;
+  margin-top: 20px;
+  z-index: 2;
 }
 </style>
