@@ -10,6 +10,7 @@
           { label: '월별', value: 'month' },
           { label: '연도별', value: 'year' },
         ]"
+        class="label-option"
       />
       <!-- CHART -->
       <div id="chartbox">
@@ -21,26 +22,32 @@
     <q-card class="side-card q-pa-sm column justify-evenly">
       <div class="row justify-center">
         <q-icon name="event" size="21px" left />
-        가장 기사건수가 많았던&nbsp;
-        <strong>{{ side_card.word1 }}</strong>
+        <div class="most-news-date-title">
+          가장 기사건수가 많았던&nbsp;
+          <strong>{{ side_card.word1 }}</strong>
+        </div>
       </div>
-      <div class="row justify-center">{{ side_card.date }}</div>
+      <div class="row justify-center most-news-date-content">
+        {{ side_card.date }}
+      </div>
     </q-card>
     <q-card class="side-card q-pa-sm column justify-evenly">
       <div class="row justify-center">
         <q-icon name="trending_up" size="21px" left />
-        <strong>{{ side_card.word2 }}</strong>
-        &nbsp;대비 증감률
+        <div class="most-news-date-title">
+          <strong class="rating-title">{{ side_card.word2 }}</strong>
+          &nbsp;대비 증감률
+        </div>
       </div>
-      <div class="row justify-center">
+      <div class="row justify-center rating-content">
         <q-icon
           v-if="side_card.percentage > 0"
           name="arrow_drop_up"
           color="red"
-          size="21px"
+          size="35px"
         />
-        <q-icon v-else name="arrow_drop_down" color="blue" size="21px" />
-        <div :style="{ color: updownColor }">
+        <q-icon v-else name="arrow_drop_down" color="blue" size="35px" />
+        <div class="rating-content" :style="{ color: updownColor }">
           {{ Math.abs(side_card.percentage) }}%
         </div>
       </div>
@@ -94,13 +101,13 @@ export default {
     word2() {
       switch (this.type) {
         case "day":
-          return "어제";
+          return "전일";
         case "week":
-          return "지난주";
+          return "전주";
         case "month":
-          return "전달";
+          return "전월";
         case "year":
-          return "작년";
+          return "전년";
         default:
           return null;
       }
@@ -221,8 +228,11 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
+
 .chart {
   margin: 10px auto;
+
   /* test */
 }
 .chart-container {
@@ -233,5 +243,26 @@ export default {
 .side-card {
   width: 300px;
   height: 130px;
+}
+
+.most-news-date-title {
+  font-family: "Hanna", fantasy;
+  font-size: 16px;
+}
+.most-news-date-content {
+  font-family: "Hanna", fantasy;
+  font-size: 24px;
+}
+.rating-title {
+  font-family: "Hanna", fantasy;
+  font-size: 16px;
+}
+.rating-content {
+  font-family: "Hanna", fantasy;
+  font-size: 24px;
+}
+.label-option {
+  font-family: "Hanna", fantasy;
+  font-size: 21px;
 }
 </style>

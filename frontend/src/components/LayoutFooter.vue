@@ -15,12 +15,14 @@
 </template>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
+
 .footer {
   height: 100%;
   background-color: #e8e8e8;
   text-align: center;
   padding-top: 1px;
-  font-family: "Do Hyeon", sans-serif;
+  font-family: "Hanna", fantasy;
 }
 .navy-line {
   width: 120px;
