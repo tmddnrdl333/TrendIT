@@ -126,7 +126,7 @@ public class BoardController {
             @ApiResponse(code = 400, message = "입력 내용을 다시 확인해주세요"),
             @ApiResponse(code = 500, message = "오류가 발생했습니다")
     })
-    public ResponseEntity<? extends BaseRes> getBoards(@PathVariable long keywordId, long boardId) {
+    public ResponseEntity<? extends BaseRes> getBoards(@PathVariable long keywordId, @PathVariable long boardId) {
         List<BoardData> boardDataList;
         try {
             boardDataList = boardService.getBoards(keywordId, boardId);
