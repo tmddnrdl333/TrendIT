@@ -121,7 +121,7 @@ export default {
         })
         // .style("padding", "100px")
         // .style("margin", "100px")
-        .style("font-family", "Impact")
+        .style("font-family", `"Hanna", fantasy`)
         .attr("text-anchor", "middle")
         .attr("transform", (d) => {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -139,7 +139,8 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
+
 .wordcloud-container {
   width: 1050px;
   margin: 20px auto;
@@ -149,12 +150,12 @@ export default {
   height: 380px;
 }
 .rank-container-title {
-  font-family: "Do Hyeon", sans-serif;
+  font-family: "Hanna", fantasy;
   font-size: 28px;
   padding: 4px;
 }
 .rank-container-content {
-  font-family: "Do Hyeon", sans-serif;
+  font-family: "Hanna", fantasy;
   font-size: 18px;
 }
 .rank-item {
