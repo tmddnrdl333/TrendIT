@@ -7,4 +7,11 @@ async function getKeywordListApi(param, success, fail) {
     .catch(fail);
 }
 
-export { getKeywordListApi };
+async function getKeywordApi(param, success, fail) {
+  await api
+    .get("/keyword/" + param)
+    .then(success)
+    .catch(fail);
+}
+
+export { getKeywordListApi, getKeywordApi };

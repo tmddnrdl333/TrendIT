@@ -3,6 +3,7 @@ package com.trendit.api.controller;
 import com.trendit.api.exception.DuplicatedKeywordException;
 import com.trendit.api.request.BoardPostReq;
 import com.trendit.api.request.KeywordPostReq;
+import com.trendit.api.response.KeywordGetRes;
 import com.trendit.api.service.BoardService;
 import com.trendit.api.service.KeywordService;
 import com.trendit.api.service.WebClientService;
@@ -17,15 +18,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -58,14 +55,26 @@ public class KeywordController {
     }
 
     @GetMapping("")
-    @ApiOperation(value = "키워드 조회", notes = "입력한 문자열을 포함한 키워드들을 리스트로 조회합니다.")
+    @ApiOperation(value = "문자열로 키워드 검색", notes = "입력한 문자열을 포함한 키워드들을 리스트로 조회합니다.")
     @ApiResponses({
-            @ApiResponse(code=200,message = "키워드 조회에 성공했습니다."),
+            @ApiResponse(code=200,message = "키워드 검색에 성공했습니다."),
             @ApiResponse(code=400, message = "해당하는 키워드가 없습니다."),
             @ApiResponse(code=500, message = "서버 에러 발생.")
     })
     public ResponseEntity getKeywordList(@RequestParam("keyword")String keyword){
         List<KeywordData> data = keywordService.getKeywordList(keyword);
         return ResponseEntity.status(200).body(KeywordListGetRes.of(200,"Success",data));
+    }
+
+    @GetMapping("{keyword_id}")
+    @ApiOperation(value="키워드id로 키워드 조회", notes = "키워드id를 입력하여 해당하는 키워드를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(code=200,message="키워드 조회에 성공했습니다."),
+            @ApiResponse(code=400, message = "해당하는 키워드가 없습니다."),
+            @ApiResponse(code=500, message = "서버 에러 발생.")
+    })
+    public ResponseEntity getKeyword(@PathVariable long keyword_id) {
+        KeywordData data = keywordService.getKeyword(keyword_id);
+        return ResponseEntity.status(200).body(KeywordGetRes.of(200,"Success",data));
     }
 }
