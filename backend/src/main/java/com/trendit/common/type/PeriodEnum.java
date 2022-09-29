@@ -74,4 +74,16 @@ public enum PeriodEnum {
         }
     }
 
+    public String targetEntityToSnakeCase() {
+        if (this == day) {
+            return "statistics_date";
+        } else if (this == week) {
+            return "statistics_week";
+        } else if (this == month) {
+            return "statistics_month";
+        } else { // this == year
+            return "statistics_year";
+        }
+    }
+
 }
