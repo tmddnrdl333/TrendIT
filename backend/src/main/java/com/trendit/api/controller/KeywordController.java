@@ -1,6 +1,7 @@
 package com.trendit.api.controller;
 
 import com.trendit.api.exception.DuplicatedKeywordException;
+import com.trendit.api.exception.KeywordHasSpaceException;
 import com.trendit.api.request.BoardPostReq;
 import com.trendit.api.request.KeywordCompanyPostReq;
 import com.trendit.api.request.KeywordPostReq;
@@ -66,6 +67,8 @@ public class KeywordController {
         try {
             keywordService.addKeyword(keywordPostReq);
             webClientService.addUserDictionary(keywordPostReq.getKeyword());
+        } catch (KeywordHasSpaceException keywordHasSpaceException) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, "요청 값이 잘못되었습니다."));
         } catch (DuplicatedKeywordException duplicatedKeywordException) {
             return ResponseEntity.status(400).body(BaseRes.of(400, "중복된 키워드입니다."));
         } catch (Exception exception) {
@@ -92,6 +95,8 @@ public class KeywordController {
         try {
             keywordService.addKeywordCompany(keywordCompanyPostReq);
             webClientService.addUserDictionary(keywordCompanyPostReq.getCompanyName());
+        } catch (KeywordHasSpaceException keywordHasSpaceException) {
+            return ResponseEntity.status(400).body(BaseRes.of(400, "요청 값이 잘못되었습니다."));
         } catch (DuplicatedKeywordException duplicatedKeywordException) {
             return ResponseEntity.status(400).body(BaseRes.of(400, "중복된 키워드입니다."));
         } catch (Exception exception) {

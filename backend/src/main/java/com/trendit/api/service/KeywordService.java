@@ -1,13 +1,13 @@
 package com.trendit.api.service;
 
 import com.trendit.api.exception.DuplicatedKeywordException;
-import com.trendit.api.exception.PasswordMisMatchException;
+import com.trendit.api.exception.KeywordHasSpaceException;
 import com.trendit.api.request.KeywordCompanyPostReq;
 import com.trendit.api.request.KeywordPostReq;
 import com.trendit.api.response.data.KeywordData;
 import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.common.type.PeriodEnum;
-import com.trendit.db.entity.Board;
+import com.trendit.common.util.StringUtils;
 import com.trendit.db.entity.Company;
 import com.trendit.db.entity.Keyword;
 import com.trendit.db.repository.*;
@@ -37,6 +37,9 @@ public class KeywordService {
     }
 
     public void addKeyword(KeywordPostReq keywordPostReq) throws DuplicatedKeywordException, Exception {
+        if (!StringUtils.isValidKeyword(keywordPostReq.getKeyword())) {
+            throw new KeywordHasSpaceException("Keyword has space");
+        }
         if (duplicatedKeyword(keywordPostReq.getKeyword())) {
             throw new DuplicatedKeywordException("Duplicated keyword");
         } else {
@@ -45,6 +48,9 @@ public class KeywordService {
     }
 
     public void addKeywordCompany(KeywordCompanyPostReq keywordCompanyPostReq) throws DuplicatedKeywordException, Exception {
+        if (!StringUtils.isValidKeyword(keywordCompanyPostReq.getCompanyName())) {
+            throw new KeywordHasSpaceException("Keyword has space");
+        }
         if (duplicatedKeyword(keywordCompanyPostReq.getCompanyName())) {
             throw new DuplicatedKeywordException("Duplicated keyword");
         } else {
