@@ -12,6 +12,7 @@
               <q-btn v-close-popup flat round dense icon="close"> </q-btn>
             </q-card-section>
 
+            <!-- Radio Button -->
             <q-list class="row">
               <q-item tag="label" v-ripple>
                 <q-item-section avatar>
@@ -42,6 +43,7 @@
               </q-item>
             </q-list>
 
+            <!-- 일반 키워드 일때-->
             <template v-if="color === 'normal-keyword'">
               <q-card-section>
                 <div class="q-mb-sm">
@@ -52,19 +54,21 @@
                     placeholder="(ex. 블록체인)"
                     hint="한글, 영어 대소문자 최대 20자"
                     :rules="[(val) => !!val || '필수값입니다']"
+                    ref="keyword"
                   ></q-input>
 
                   <q-card-section align="right">
                     <q-btn
                       label="등록"
                       color="primary"
-                      @click="createNormalKeyword()"
+                      @click="submitFormNormalKeyword()"
                     ></q-btn>
                   </q-card-section>
                 </div>
               </q-card-section>
             </template>
 
+            <!-- 회사 키워드 일때 -->
             <template v-if="color === 'company-keyword'">
               <q-card-section>
                 <div class="q-mb-sm">
@@ -123,9 +127,10 @@
                     ref="companyLink"
                   ></q-input>
                 </div>
-                <q-card-section align="right">
-                  <q-btn label="등록" color="primary" type="submit" />
-                </q-card-section>
+              </q-card-section>
+
+              <q-card-section align="right">
+                <q-btn label="등록" color="primary" type="submit" />
               </q-card-section>
             </template>
           </q-card>
@@ -147,7 +152,7 @@ export default {
     return {
       sampleData: "",
       color: ref("normal-keyword"),
-      keyword: ref(""),
+      keyword: "",
       taskToSubmit: {
         companyName: "",
         companyCategory: "",
@@ -162,6 +167,15 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    // 일반 키워드 일때 - 유효성검사
+    submitFormNormalKeyword() {
+      if (!this.keyword === "") {
+        this.createNormalKeyword();
+        console.log("노에러");
+      } else alert("에러");
+    },
+
+    // 회사 키워드 일때 - 유효성검사
     submitForm() {
       // this.$refs.companyName.validate();
       // this.$refs.companyCategory.validate();
@@ -178,6 +192,7 @@ export default {
       } else alert("에러");
     },
 
+    // 일반 키워드 일때 - API
     async createNormalKeyword() {
       await console.log(this.keyword);
       await createNormalKeywordApi(
@@ -191,6 +206,7 @@ export default {
       );
     },
 
+    // 회사 키워드 일때 - API
     async createCompanyKeyword() {
       await createCompanyKeywordApi(
         new CompanyKeywordReq(
