@@ -88,7 +88,6 @@ import { postBoard, getBoards } from "src/boot/board.js";
 import ChatComponent from "./ChatComponent.vue";
 import { BoardPostReq } from "src/boot/request/BoardReq";
 import TestComponent from "./TestComponent.vue";
-import $ from "jquery";
 
 export default {
   name: "ChatTurnOnButton",
