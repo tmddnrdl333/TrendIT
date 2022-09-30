@@ -34,4 +34,18 @@ public class WebClientService {
         System.out.println(responseStr);
         return response;
     }
+
+    public Mono<String> executeDataPipeline(String date) {
+        Mono<String> response = webClient.get()
+                .uri("/run/{date}", date)
+                .retrieve()
+                .onStatus(HttpStatus::is5xxServerError, clientResponse ->
+                        Mono.error(new WebClientException("WebClient500"))
+                )
+                .bodyToMono(String.class);
+        String responseStr = response.block();
+        System.out.println(responseStr);
+        return response;
+    }
+
 }
