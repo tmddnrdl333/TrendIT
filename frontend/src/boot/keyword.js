@@ -7,4 +7,18 @@ async function getKeywordListApi(param, success, fail) {
     .catch(fail);
 }
 
-export { getKeywordListApi };
+async function createNormalKeywordApi(data, success, fail) {
+  await api.post("/keyword", data).then(success).catch(fail);
+}
+
+// async function createNormalKeywordApi(param, success, fail) {
+//   await api
+//     .post("/keyword", { params: { keyword: param } })
+//     .then(success)
+//     .catch(fail);
+// }
+
+async function createCompanyKeywordApi(data, success, fail) {
+  await api.post("/keyword/company", data).then(success).catch(fail);
+}
+export { getKeywordListApi, createNormalKeywordApi, createCompanyKeywordApi };
