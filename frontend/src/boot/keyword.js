@@ -21,4 +21,17 @@ async function createNormalKeywordApi(data, success, fail) {
 async function createCompanyKeywordApi(data, success, fail) {
   await api.post("/keyword/company", data).then(success).catch(fail);
 }
-export { getKeywordListApi, createNormalKeywordApi, createCompanyKeywordApi };
+
+async function getKeywordApi(param, success, fail) {
+  await api
+    .get("/keyword/" + param)
+    .then(success)
+    .catch(fail);
+}
+
+export {
+  getKeywordListApi,
+  createNormalKeywordApi,
+  createCompanyKeywordApi,
+  getKeywordApi,
+};
