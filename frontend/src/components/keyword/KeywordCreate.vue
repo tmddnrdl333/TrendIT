@@ -7,7 +7,7 @@
         <form @submit.prevent="submitForm">
           <q-card>
             <q-card-section class="row">
-              <div class="text-h6">키워드 등록</div>
+              <div class="text-h6">키워드 등록 {{ keyword }}</div>
               <q-space />
               <q-btn v-close-popup flat round dense icon="close"> </q-btn>
             </q-card-section>
@@ -52,8 +52,8 @@
                     v-model="keyword"
                     label="등록할 키워드"
                     placeholder="(ex. 블록체인)"
-                    hint="한글, 영어 대소문자 최대 20자"
-                    :rules="[(val) => !!val || '필수값입니다']"
+                    hint="한글, 영어 대소문자, 숫자 최대 20자"
+                    :rules="[(val) => !!val || '필수값입니다.']"
                     ref="keyword"
                   ></q-input>
 
@@ -74,25 +74,26 @@
                 <div class="q-mb-sm">
                   <q-input
                     outlined
-                    v-model="taskToSubmit.companyName"
+                    v-model="companyName"
                     label="등록할 키워드"
                     placeholder="(ex. 삼성전자)"
-                    hint="한글, 영어 대소문자 최대 20자"
-                    :rules="[(val) => !!val || '필수값입니다']"
+                    hint="한글, 영어 대소문자, 숫자 최대 20자"
+                    :rules="[(val) => !!val || '필수값입니다.']"
                     ref="companyName"
                   ></q-input>
                 </div>
+                <!-- :rules="[(val) => denySpacialChar(val) || '특수문자가 허용되지 않는 필수값입니다']" -->
 
                 <div class="q-mb-sm">
                   <q-input
                     outlined
-                    v-model="taskToSubmit.companyCategory"
+                    v-model="companyCategory"
                     label="업종 분류"
                     placeholder="(ex. 통신 및 방송 장비 제조업)"
                     hint=" "
                     :rules="[
                       (val) =>
-                        val.length <= 5 || 'Please use maximum 5 characters',
+                        val.length <= 50 || 'Please use maximum 50 characters',
                     ]"
                     ref="companyCategory"
                   ></q-input>
@@ -101,13 +102,13 @@
                 <div class="q-mb-sm">
                   <q-input
                     outlined
-                    v-model="taskToSubmit.companyRepresentative"
+                    v-model="companyRepresentative"
                     label="대표자"
                     placeholder="(ex. 한종희, 경계현)"
                     hint=" "
                     :rules="[
                       (val) =>
-                        val.length <= 5 || 'Please use maximum 5 characters',
+                        val.length <= 50 || 'Please use maximum 50 characters',
                     ]"
                     ref="companyRepresentative"
                   ></q-input>
@@ -116,13 +117,14 @@
                 <div class="q-mb-sm">
                   <q-input
                     outlined
-                    v-model="taskToSubmit.companyLink"
+                    v-model="companyLink"
                     label="회사 링크"
                     placeholder="(ex. https://www.samsung.com/sec/)"
                     hint=" "
                     :rules="[
                       (val) =>
-                        val.length <= 5 || 'Please use maximum 5 characters',
+                        val.length <= 500 ||
+                        'Please use maximum 500 characters',
                     ]"
                     ref="companyLink"
                   ></q-input>
@@ -153,12 +155,10 @@ export default {
       sampleData: "",
       color: ref("normal-keyword"),
       keyword: "",
-      taskToSubmit: {
-        companyName: "",
-        companyCategory: "",
-        companyRepresentative: "",
-        companyLink: "",
-      },
+      companyName: "",
+      companyCategory: "",
+      companyRepresentative: "",
+      companyLink: "",
       dense: ref(false),
     };
   },
@@ -166,6 +166,7 @@ export default {
   created() {},
   mounted() {},
   unmounted() {},
+
   methods: {
     // 일반 키워드 일때 - 유효성검사
     submitFormNormalKeyword() {
@@ -210,10 +211,10 @@ export default {
     async createCompanyKeyword() {
       await createCompanyKeywordApi(
         new CompanyKeywordReq(
-          this.taskToSubmit.companyName,
-          this.taskToSubmit.companyCategory,
-          this.taskToSubmit.companyRepresentative,
-          this.taskToSubmit.companyLink
+          this.companyName,
+          this.companyCategory,
+          this.companyRepresentative,
+          this.companyLink
         ),
         (response) => {
           console.log(
@@ -230,6 +231,30 @@ export default {
           );
         }
       );
+    },
+    // denySpacialChar(val) {
+    //   const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+    //   if (regExp.exec(val) !== null || val === "") {
+    //     this.keyword = this.keyword.slice(0, -1);
+    //     return false;
+    //   } else return true;
+    // },
+  },
+
+  watch: {
+    // 현재 대소문자 / 한글 / 숫자 / 띄어쓰기 가능
+    keyword(val) {
+      const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+      if (regExp.exec(val) !== null || val.length > 20) {
+        return (this.keyword = this.keyword.slice(0, -1));
+      }
+    },
+
+    companyName(val) {
+      const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+      if (regExp.exec(val) !== null || val.length > 20) {
+        return (this.companyName = this.companyName.slice(0, -1));
+      }
     },
   },
 };
