@@ -7,7 +7,7 @@
         <form @submit.prevent="submitForm">
           <q-card>
             <q-card-section class="row">
-              <div class="text-h6">키워드 등록 {{ keyword }}</div>
+              <div class="text-h6">키워드 등록</div>
               <q-space />
               <q-btn v-close-popup flat round dense icon="close"> </q-btn>
             </q-card-section>
