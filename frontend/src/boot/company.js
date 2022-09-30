@@ -6,7 +6,9 @@ async function companyListApi(success, fail) {
 
 async function searchCompanyApi(param, success, fail) {
   await api
-    .get("/company/search/" + param)
+    .get("/company/search/", {
+      params: { companyName: param.companyName, page: param.page, size: 12 },
+    })
     .then(success)
     .catch(fail);
 }

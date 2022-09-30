@@ -39,15 +39,13 @@
           <q-separator />
           <q-card-section class="company-content">
             <div>업종: {{ item.companyCategory }}</div>
-            <div>음음: {{ item.companyMainItem }}</div>
-            <!-- <div>링크: {{ item.companyLink }}</div> -->
-            <!-- <div>{{ item.keyword }}</div> -->
+            <div>대표자: {{ item.companyRepresentative }}</div>
           </q-card-section>
         </q-card>
       </template>
     </div>
     <div class="q-pa-lg flex flex-center">
-      <q-pagination v-model="current" :max="5" input />
+      <q-pagination v-model="current" :max="max_page" input />
     </div>
   </q-card>
   <q-dialog v-model="dialog">
@@ -60,13 +58,14 @@
 </template>
 
 <script>
-import { companyListApi, searchCompanyApi } from "boot/company.js";
+import { searchCompanyApi } from "boot/company.js";
 import { ref } from "vue";
 export default {
   setup() {
     return {
       search: ref(""),
       current: ref(1),
+      max_page: ref(99),
 
       dialog: ref(false),
 
@@ -77,27 +76,30 @@ export default {
     this.loadCompanyList();
   },
   methods: {
-    async doSearch() {
-      if (!this.search) {
-        this.dialog = true;
-        return;
-      }
+    async loadCompanyList() {
       await searchCompanyApi(
-        this.search,
+        { companyName: this.search, page: this.current },
         (response) => {
           this.company_list = response.data.data.content;
+          console.log(this.company_list);
+          console.log(response.data.data);
+          this.max_page = response.data.data.totalPages;
         },
         () => console.warn("failed")
       );
     },
-    async loadCompanyList() {
-      await companyListApi(
-        (response) => {
-          this.company_list = response.data.data;
-        },
-        () => console.warn("failed")
-      );
+    async doSearch() {
+      if (!this.search) {
+        window.alert("검색어를 입력하세요");
+        return;
+      } else if (this.search.length < 2) {
+        window.alert("검색어를 두 글자 이상 입력하세요");
+        return;
+      }
+      this.current = 1;
+      await this.loadCompanyList();
     },
+
     goToLink: function (companyLink) {
       window.open(companyLink);
     },
