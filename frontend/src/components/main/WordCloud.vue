@@ -66,8 +66,6 @@ export default {
 
   methods: {
     async genLayout() {
-      console.log("drawing wordcloud...");
-
       let max_size = 0;
       this.wordCloudData.forEach((item) => {
         max_size = item.count > max_size ? item.count : max_size;
@@ -113,7 +111,7 @@ export default {
         .enter()
         .append("text")
         .style("fill", (d) => {
-          if (d.size > 60) return "red";
+          if (d.size > 60) return "#EE6C4D";
           return "blue";
         })
         .style("font-size", (d) => {
@@ -131,7 +129,6 @@ export default {
   },
   watch: {
     wordCloudData: async function () {
-      console.log("data changed");
       await this.genLayout();
     },
   },

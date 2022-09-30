@@ -2,6 +2,7 @@ package com.trendit.db.repository;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPQLQuery;
 import com.trendit.db.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -58,12 +59,18 @@ public class NewsRepositorySupport {
     }
 
 
-
     private BooleanExpression eqNewsAgency(String newsAgency) {
         if (StringUtils.isEmpty(newsAgency)) {
             return null;
         }
         return qNews.newsAgency.eq(newsAgency);
+    }
+
+    private BooleanExpression inNewsAgencies(List<String> newsAgencies) {
+        if (newsAgencies==null || newsAgencies.size()==0) {
+            return null;
+        }
+        return qNews.newsAgency.in(newsAgencies);
     }
 
     private BooleanExpression eqNewsDate(String newsDate) {
@@ -74,73 +81,24 @@ public class NewsRepositorySupport {
         return qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1));
     }
 
-    public List<News> getNewsByOptions(long keywordId, String newsDate, String newsAgency, int page) {
-        List<News> news = new ArrayList<>();
-
-        if (newsDate != null && newsAgency != null) {
-            List<LocalDate> parsedDate = parsingDate(newsDate);
+    public Page<News> getNewsByOptions(long keywordId, String newsDate, List<String> newsAgencies, Pageable pageable) {
 
 
-            news = jpaQueryFactory
-                    .select(qNews)
-                    .from(qKeyword, qKeywordHasNews, qNews)
-                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
-                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keywordId.eq(keywordId),
-                            qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)),
-                            qNews.newsAgency.eq(newsAgency))
-                    .orderBy(qNews.newsId.desc())
-                    .offset(12 * (page - 1))
-                    .limit(12)
-                    .fetch();
-            return news;
-        }
+        JPQLQuery<News> query = jpaQueryFactory
+                .select(qNews)
+                .from(qKeyword, qKeywordHasNews, qNews)
+                .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
+                        qKeywordHasNews.news.newsId.eq(qNews.newsId),
+                        qKeyword.keywordId.eq(keywordId), inNewsAgencies(newsAgencies), eqNewsDate(newsDate))
+                .orderBy(qNews.newsId.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
 
-        if (newsDate != null && newsAgency == null) {
-            List<LocalDate> parsedDate = parsingDate(newsDate);
-            news = jpaQueryFactory
-                    .select(qNews)
-                    .from(qKeyword, qKeywordHasNews, qNews)
-                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
-                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keywordId.eq(keywordId),
-                            qNews.newsDate.between(parsedDate.get(0), parsedDate.get(1)))
-                    .orderBy(qNews.newsId.desc())
-                    .offset(12 * (page - 1))
-                    .limit(12)
-                    .fetch();
-            return news;
-        }
+        List<News> news = query.fetch();
 
-        if (newsDate == null && newsAgency != null) {
-            news = jpaQueryFactory
-                    .select(qNews)
-                    .from(qKeyword, qKeywordHasNews, qNews)
-                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
-                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keywordId.eq(keywordId),
-                            qNews.newsAgency.eq(newsAgency))
-                    .orderBy(qNews.newsId.desc())
-                    .offset(12 * (page - 1))
-                    .limit(12)
-                    .fetch();
-            return news;
-        }
-
-        if (newsDate == null && newsAgency == null) {
-            news = jpaQueryFactory
-                    .select(qNews)
-                    .from(qKeyword, qKeywordHasNews, qNews)
-                    .where(qKeyword.keywordId.eq(qKeywordHasNews.keyword.keywordId),
-                            qKeywordHasNews.news.newsId.eq(qNews.newsId),
-                            qKeyword.keywordId.eq(keywordId))
-                    .orderBy(qNews.newsId.desc())
-                    .offset(12 * (page - 1))
-                    .limit(12)
-                    .fetch();
-            return news;
-        }
-        return news;
+        long totalCount = query.fetchCount();
+        Page<News> ret = new PageImpl<>(news, pageable, totalCount);
+        return ret;
     }
 
     public List<LocalDate> parsingDate(String newsDate) {

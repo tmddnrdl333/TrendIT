@@ -114,7 +114,7 @@ public class StatsController {
     }
 
 
-    @GetMapping("/line-chart/{type}/{keyword}")
+    @GetMapping("/line-chart/{type}/{keywordId}")
     @ApiOperation(value = "line-chart 생성에 필요한 데이터")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
@@ -124,12 +124,12 @@ public class StatsController {
     public ResponseEntity getLineChartData(
             @ApiParam(value = "type: day/week/month/year", required = true)
             @PathVariable PeriodEnum type,
-            @ApiParam(value = "keyword : 키워드 입력", required = true)
-            @PathVariable String keyword) {
+            @ApiParam(value = "keywordId : 키워드 입력", required = true)
+            @PathVariable long keywordId) {
 
         List<Integer> lineChartDataList;
         try {
-            lineChartDataList = statsService.getLineChartData(type, keyword);
+            lineChartDataList = statsService.getLineChartData(type, keywordId);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));

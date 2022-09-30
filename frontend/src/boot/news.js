@@ -24,9 +24,10 @@ async function searchApi(param, success, fail) {
   await api
     .get("/news", {
       params: {
-        keyword: param.keyword,
-        period: param.period,
+        keywordId: param.keywordId,
+        newsDate: param.period,
         page: param.page,
+        size: 12,
       },
     })
     .then(success)

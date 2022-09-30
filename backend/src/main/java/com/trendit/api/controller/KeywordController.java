@@ -5,6 +5,7 @@ import com.trendit.api.exception.KeywordHasSpaceException;
 import com.trendit.api.request.BoardPostReq;
 import com.trendit.api.request.KeywordCompanyPostReq;
 import com.trendit.api.request.KeywordPostReq;
+import com.trendit.api.response.KeywordGetRes;
 import com.trendit.api.service.BoardService;
 import com.trendit.api.service.KeywordService;
 import com.trendit.api.service.WebClientService;
@@ -19,15 +20,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -104,5 +101,17 @@ public class KeywordController {
             return ResponseEntity.status(500).body(BaseRes.of(500, "서버 에러 발생."));
         }
         return ResponseEntity.status(200).body(BaseRes.of(200, "키워드가 추가되었습니다."));
+    }
+
+    @GetMapping("{keyword_id}")
+    @ApiOperation(value="키워드id로 키워드 조회", notes = "키워드id를 입력하여 해당하는 키워드를 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(code=200,message="키워드 조회에 성공했습니다."),
+            @ApiResponse(code=400, message = "해당하는 키워드가 없습니다."),
+            @ApiResponse(code=500, message = "서버 에러 발생.")
+    })
+    public ResponseEntity getKeyword(@PathVariable long keyword_id) {
+        KeywordData data = keywordService.getKeyword(keyword_id);
+        return ResponseEntity.status(200).body(KeywordGetRes.of(200,"Success",data));
     }
 }

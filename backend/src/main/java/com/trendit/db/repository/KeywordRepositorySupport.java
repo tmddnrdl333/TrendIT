@@ -29,4 +29,13 @@ public class KeywordRepositorySupport {
         return ret_list;
     }
 
+    public KeywordData getKeyword(long keyword_id){
+        Keyword data =  jpaQueryFactory.select(qKeyword)
+                .from(qKeyword)
+                .where(qKeyword.keywordId.eq(keyword_id))
+                .fetchOne();
+        KeywordData ret = new KeywordData(data.getKeywordId(),data.getKeyword(),data.getCompany().getCompanyId());
+        return ret;
+    }
+
 }
