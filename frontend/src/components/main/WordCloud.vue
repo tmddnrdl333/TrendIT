@@ -71,7 +71,6 @@ export default {
         max_size = item.count > max_size ? item.count : max_size;
         this.data.push({ text: item.keyword, size: item.count });
       });
-      console.log(this.wordCloudData);
       try {
         const ctx = document.getElementById("wordcloud");
         ctx.parentNode.removeChild(ctx);

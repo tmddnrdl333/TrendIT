@@ -59,6 +59,10 @@ export default {
       type: String,
       default: null,
     },
+    keyword_id: {
+      type: String,
+      default: null,
+    },
   },
   setup() {
     return {
@@ -109,7 +113,7 @@ export default {
   methods: {
     async loadChartData() {
       await keywordChartApi(
-        { type: this.type, keyword: this.keyword },
+        { type: this.type, keyword: this.keyword_id },
         (response) => {
           this.data_list = response.data.data;
         },

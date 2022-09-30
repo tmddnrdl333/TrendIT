@@ -33,7 +33,6 @@ export default {
       "day",
       (response) => {
         this.recommendations = response.data.data.slice(0, 5);
-        console.log("RECOMMENDATIONS: ", this.recommendations);
       },
       (e) => console.warn("failed to get today's recommendations")
     );

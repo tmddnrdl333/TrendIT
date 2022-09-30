@@ -124,7 +124,7 @@ public class StatsController {
     public ResponseEntity getLineChartData(
             @ApiParam(value = "type: day/week/month/year", required = true)
             @PathVariable PeriodEnum type,
-            @ApiParam(value = "keyword : 키워드 입력", required = true)
+            @ApiParam(value = "keywordId : 키워드 입력", required = true)
             @PathVariable long keywordId) {
 
         List<Integer> lineChartDataList;

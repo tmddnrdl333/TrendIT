@@ -69,29 +69,20 @@ import { getKeywordListApi } from "boot/keyword.js";
 export default {
   setup() {
     return {
-      // 검색창
-      search: ref(""),
-      keyword: ref("키워드1"),
-      keywordId: ref(""),
-      // 검색 조건
-      dialog: ref(false),
+      // 검색
+      search: ref(""), // 사용자가 입력하는 내용 v-model
+      dialog: ref(false), // 기간선택 모달 표시여부
       period: ref({ from: "", to: "" }),
-      // 검색 추천
-      // option_labels: ref([]),
-      search_options: ref([]),
 
-      result: ref([]),
-
-      page: ref(1),
-      page_max: ref(null),
+      search_options: ref([]), // 입력한 search로 요청해 받은 추천 키워드 리스트
     };
   },
   mounted() {
     let date = new Date();
-    let to_date = date.toISOString().substring(0, 10);
+    let to_date = date.toISOString().substring(0, 10).replaceAll("-", "/");
     this.period.to = to_date;
-    date.setMonth(date.getMonth() - 1); // 범위의 초기값
-    let from_date = date.toISOString().substring(0, 10);
+    date.setFullYear(date.getFullYear() - 10); // 범위의 초기값
+    let from_date = date.toISOString().substring(0, 10).replaceAll("-", "/");
     this.period.from = from_date;
   },
   methods: {
@@ -115,7 +106,6 @@ export default {
         needle,
         (response) => {
           console.log("getKeywordListApi called");
-          console.log(response.data.data);
           let list = response.data.data.slice(0, 5);
           this.search_options = [];
           list.forEach((item) => {
@@ -133,14 +123,14 @@ export default {
       if (typeof this.search == "object" && this.search.value)
         this.$router.push({
           name: "search_keyword",
-          query: { period: this.period.from + "~" + this.period.to },
           params: { keyword_id: this.search.value },
+          query: {
+            period:
+              this.period.from.replaceAll("/", "-") +
+              "~" +
+              this.period.to.replaceAll("/", "-"),
+          },
         });
-    },
-  },
-  watch: {
-    page: function () {
-      this.toResult();
     },
   },
 };
@@ -154,33 +144,5 @@ export default {
 }
 .search-bar {
   width: 500px;
-}
-
-/* 2 */
-.keyword-analyze {
-  width: 1200px;
-  margin: 15px 0px;
-}
-
-/* 3 */
-.keyword-analyze-result {
-  /* TODO: "키워드 분석" 글자 폰트, 사이즈, 패딩 마진 등 결정 후 고정된 높이 줘야 할듯 */
-  /* height: 1112px; */
-  width: 1200px;
-  margin: 15px 0px;
-}
-
-.news-card {
-  height: 270px;
-  width: 230px;
-  padding: 0px;
-}
-.card-img {
-  width: 100%;
-}
-
-.search-options {
-  position: absolute;
-  border: 1px solid red;
 }
 </style>
