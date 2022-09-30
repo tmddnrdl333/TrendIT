@@ -25,7 +25,7 @@ public class StatsService {
         return customRepository.getFrequencyStats(type, targetTime, true);
     }
 
-    public List<Integer> getLineChartData(PeriodEnum type, String keyword) throws IllegalChartDataException {
-        return customRepository.getFrequencyStatsPerKeyword(type, keyword);
+    public List<Integer> getLineChartData(PeriodEnum type, long keywordId) throws IllegalChartDataException {
+        return customRepository.getFrequencyStatsPerKeyword(type, keywordId);
     }
 }

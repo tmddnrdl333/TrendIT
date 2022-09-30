@@ -113,7 +113,7 @@ export default {
         .enter()
         .append("text")
         .style("fill", (d) => {
-          if (d.size > 60) return "red";
+          if (d.size > 60) return "#EE6C4D";
           return "blue";
         })
         .style("font-size", (d) => {

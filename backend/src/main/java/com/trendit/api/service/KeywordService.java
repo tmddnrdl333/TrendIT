@@ -81,4 +81,9 @@ public class KeywordService {
         List<KeywordData> keywordList = keywordRepositorySupport.getKeywordList(keyword);
         return keywordList;
     }
+
+    public KeywordData getKeyword(long keyword_id){
+        KeywordData keyword = keywordRepositorySupport.getKeyword(keyword_id);
+        return keyword;
+    }
 }

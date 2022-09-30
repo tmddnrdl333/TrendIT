@@ -39,11 +39,11 @@ public class NewsController {
     })
     public ResponseEntity<? extends BaseRes> getNews(@RequestParam("keywordId") long keywordId,
                                                      @RequestParam(value = "newsDate", required = false) String newsDate,
-                                                     @RequestParam(value = "newsAgency", required = false) String newsAgency,
-                                                     @RequestParam("page") int page) {
-        List<News> news;
+                                                     @RequestParam(value = "newsAgencies", required = false) List<String> newsAgencies,
+                                                     Pageable pageable) {
+        Page<News> news;
         try {
-            news = newsService.getNews(keywordId, newsDate, newsAgency, page);
+            news = newsService.getNews(keywordId, newsDate, newsAgencies, pageable);
         } catch (NoSuchElementException e1) {
             e1.printStackTrace();
             return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));

@@ -69,7 +69,7 @@ export default {
         this.newsData = [];
         resData.forEach((item) => {
           if (item.newsData.imgLink.substring(0, 5) == "/asse") {
-            item.newsData.imgLink = "src/assets/img-noImg.png";
+            item.newsData.imgLink = "src/assets/no-image.png";
           }
           this.newsData.push(item);
         });
@@ -83,7 +83,7 @@ export default {
   computed: {
     contentfilter() {
       return function (text) {
-        if (text.length > 50) return text.substring(0, 45) + "..";
+        if (text.length > 50) return text.substring(0, 45) + "...";
         else return text;
       };
     },

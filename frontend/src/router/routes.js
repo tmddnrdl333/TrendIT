@@ -12,6 +12,9 @@ import ChatTurnOnButtonVue from "src/components/chat/ChatTurnOnButton.vue";
 import ChatComponent from "src/components/chat/ChatComponent.vue";
 import TestComponent from "src/components/chat/TestComponent.vue";
 
+import NoResult from "../components/keyword/result/NoResult.vue";
+import KeywordResult from "../components/keyword/result/KeywordResult.vue";
+
 const routes = [
   {
     path: "/",
@@ -24,6 +27,18 @@ const routes = [
       {
         path: "keyword",
         component: KeywordView,
+        children: [
+          {
+            name: "empty_keyword",
+            path: "",
+            component: NoResult,
+          },
+          {
+            name: "search_keyword",
+            path: ":keyword_id",
+            component: KeywordResult,
+          },
+        ],
       },
       {
         path: "company",

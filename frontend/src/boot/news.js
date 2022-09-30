@@ -21,12 +21,14 @@ async function getNewsByOptionsApi(params, success, fail) {
 }
 
 async function searchApi(param, success, fail) {
+  console.log(param);
   await api
     .get("/news", {
       params: {
-        keyword: param.keyword,
-        period: param.period,
+        keywordId: param.keywordId,
+        newsDate: param.period,
         page: param.page,
+        size: 12,
       },
     })
     .then(success)

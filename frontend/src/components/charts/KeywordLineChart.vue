@@ -66,6 +66,10 @@ export default {
       type: String,
       default: null,
     },
+    keyword_id: {
+      type: String,
+      default: null,
+    },
   },
   setup() {
     return {
@@ -116,7 +120,7 @@ export default {
   methods: {
     async loadChartData() {
       await keywordChartApi(
-        { type: this.type, keyword: this.keyword },
+        { type: this.type, keyword: this.keyword_id },
         (response) => {
           this.data_list = response.data.data;
         },
@@ -148,7 +152,7 @@ export default {
       */
       // 여기부터 ~
       let labels = [];
-      for (let i = 6; i >= 0; i--) {
+      for (let i = 7; i >= 1; i--) {
         let date_val = new Date();
         date_val.setDate(date_val.getDate() - i);
         let date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
