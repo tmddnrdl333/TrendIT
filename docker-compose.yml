@@ -1,0 +1,95 @@
+# docker-compose version
+version: "3.8"
+
+#container list
+services:
+  jenkins:
+    restart: always
+    image: jenkins/jenkins:lts
+    user: root
+    container_name: jenkins
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - /jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    volumes:
+      # Mount cotainer drive to real drive
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      # network inside of a container
+      - app-network
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: trendit829
+      TZ: "Asia/Seoul"
+    privileged: true
+  trendit:
+    image: backend:1
+    build:
+      context: ./build
+    container_name: trendit
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: "Asia/Seoul"
+      # Spring application.properties DB
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/trendit?userUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true"
+      server.address: 0.0.0.0
+      ACCESS-KEY: <ACCESS-KEY>
+      SECRET-KEY: <SECRET-KEY>
+    networks:
+      - app-network
+    depends_on:
+      - db
+  certbot:
+    depends_on:
+      - nginx
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./dist:/var/www/html
+    command: renew
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dist:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - "80"
+      - "443"
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+volumes:
+  certbot-etc:
+  dist:
+  nginx-conf:
+networks:
+  app-network:
+    driver: bridge

@@ -62,8 +62,6 @@
       <q-btn label="검색" color="primary" @click="getNewsByOptions()"></q-btn>
 
       <!-- First Card-->
-      <!-- <div v-if="(newsLink = Math.random() > 0.5)">Now you see me</div>
-      <div v-else>Now you don't</div> -->
       <div v-on:click="myFunction(newsFirst.newsLink)">
         <q-card class="my-card">
           <q-card-section horizontal>
@@ -74,14 +72,16 @@
               height="400px"
             >
               <div class="absolute-bottom text-h6">
-                <div class="text-h4">
+                <div class="first-card-headline">
                   {{ newsFirst.headline }} / {{ newsFirst.newsId }}
                 </div>
                 <br />
-                {{ newsFirst.newsAgency }} / {{ newsFirst.newsDate }}
+                <div class="first-card-agency">
+                  {{ newsFirst.newsAgency }} / {{ newsFirst.newsDate }}
+                </div>
               </div>
             </q-img>
-            <q-card-section>
+            <q-card-section class="first-card-content">
               {{ newsFirst.newsContent }}
             </q-card-section>
           </q-card-section>
@@ -90,7 +90,10 @@
 
       <!-- Card 12개-->
       <div id="q-app" style="min-height: 100vh">
-        <div class="q-pa-md row items-start q-gutter-md">
+        <div
+          class="q-pa-md row items-start q-gutter-md"
+          style="margin-left: 80px; margin-top: 20px"
+        >
           <div v-for="newsitem in newsList" :key="newsitem.newsId">
             <!-- <a v-bind:href="newsitem.newsLink"> -->
             <!-- localhost + link -->
@@ -99,14 +102,14 @@
               <q-card class="my-card">
                 <q-img :src="newsitem.imgLink" />
                 <q-card-section>
-                  <div class="text-h6">
+                  <div class="cards-headline">
                     {{ newsitem.headline }} / {{ newsitem.newsId }}
                   </div>
-                  <div class="text-subtitle2">
+                  <div class="text-subtitle2 cards-content">
                     {{ newsitem.newsContent.substring(0, 15) }}
                   </div>
                 </q-card-section>
-                <q-card-section class="q-pt-none">
+                <q-card-section class="q-pt-none cards-agency">
                   {{ newsitem.newsAgency }} / {{ newsitem.newsDate }}
                 </q-card-section>
               </q-card>
@@ -421,10 +424,39 @@ export default {
 
 <style scoped>
 .sub-news {
-  height: 1200px;
+  height: 100%;
   width: 1200px;
   background-color: #ffffff;
   margin-top: 10px;
   margin-bottom: 10px;
+  /* text-align: center; */
+}
+
+.first-card-headline {
+  font-family: "NanumBarunGothicBold";
+  font-size: 28px;
+}
+.first-card-content {
+  font-family: "NanumBarunGothic";
+  font-size: 20px;
+}
+.first-card-agency {
+  color: gray;
+  font-family: "NanumBarunGothic";
+  font-size: 16px;
+}
+
+.cards-headline {
+  font-family: "NanumBarunGothicBold";
+  font-size: 16px;
+}
+.cards-content {
+  font-family: "NanumBarunGothic";
+  font-size: 14px;
+}
+.cards-agency {
+  color: gray;
+  font-family: "NanumBarunGothic";
+  font-size: 12px;
 }
 </style>

@@ -11,10 +11,12 @@
     <!-- WordCloud -->
     <div class="q-pa-md row items-start q-gutter-md">
       <q-card class="rank-container text-center">
-        <q-card-section> 키워드 순위 </q-card-section>
+        <q-card-section class="rank-container-title">
+          키워드 순위
+        </q-card-section>
         <q-separator />
         <template v-for="(item, index) in trendRankData" :key="index">
-          <div class="rank-item row items-center">
+          <div class="rank-item row items-center rank-container-content">
             <div class="col-3">{{ index + 1 }}</div>
             <div class="col-3">{{ item.keyword }}</div>
             <div class="col-3">{{ item.count }}건</div>
@@ -119,7 +121,7 @@ export default {
         })
         // .style("padding", "100px")
         // .style("margin", "100px")
-        .style("font-family", "Impact")
+        .style("font-family", `"Hanna", fantasy`)
         .attr("text-anchor", "middle")
         .attr("transform", (d) => {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -137,6 +139,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
+
 .wordcloud-container {
   width: 1050px;
   margin: 20px auto;
@@ -144,6 +148,15 @@ export default {
 .rank-container {
   width: 250px;
   height: 380px;
+}
+.rank-container-title {
+  font-family: "Hanna", fantasy;
+  font-size: 28px;
+  padding: 4px;
+}
+.rank-container-content {
+  font-family: "Hanna", fantasy;
+  font-size: 18px;
 }
 .rank-item {
   height: 45px;

@@ -8,3 +8,10 @@
     <!-- <q-btn flat label="TEST(임시)" href="test" /> -->
   </q-toolbar>
 </template>
+
+<style scoped>
+.header {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+}
+</style>

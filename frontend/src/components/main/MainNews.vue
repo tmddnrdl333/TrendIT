@@ -1,19 +1,22 @@
 <template>
   <q-card class="news-container row q-pa-lg">
     <!-- MAIN -->
-    <div class="main-news-container col-6 q-gutter-md">
+    <div
+      class="main-news-container col-6 q-gutter-md"
+      v-on:click="goToLink(newsData[0])"
+    >
       <template v-if="newsData[0]">
         <q-img
           class="main-news-img shadow-1"
           :src="newsData[0].newsData.imgLink"
         />
-        <div class="news-title">
+        <div class="main-news-title">
           <strong>{{ newsData[0].newsData.headline }}</strong>
         </div>
-        <div class="news-content">
+        <div class="main-news-content">
           {{ contentfilter(newsData[0].newsData.newsContent) }}
         </div>
-        <div>
+        <div class="main-news-agency">
           {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
           {{ newsData[0].newsData.newsDate }}
         </div>
@@ -22,17 +25,17 @@
     <!-- SIDE -->
     <div class="side-news-container col-6">
       <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
-        <div class="side-news row q-ma-xs">
+        <div class="side-news row q-ma-xs" v-on:click="goToLink(item)">
           <q-img
             class="col side-news-img shadow-1 q-mr-md"
             :src="item.newsData.imgLink"
           />
 
           <div class="col q-gutter-sm">
-            <div class="news-title">
+            <div class="side-news-title">
               <strong>{{ item.newsData.headline }}</strong>
             </div>
-            <div>
+            <div class="side-news-content">
               {{ contentfilter(item.newsData.newsContent) }}
             </div>
           </div>
@@ -85,10 +88,25 @@ export default {
       };
     },
   },
+  methods: {
+    goToLink: function (newsData) {
+      if (newsData.newsData.newsLink === "") {
+        window.open(
+          "http://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" +
+            newsData.newsData.newsAgency +
+            " " +
+            newsData.newsData.headline
+        );
+      } else window.open(newsData.newsData.newsLink);
+    },
+  },
 };
 </script>
 
 <style scoped>
+/* 네이버 나눔 바른 고딕*/
+@import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
+
 .news-container {
   /* display: flex; */
   flex-direction: row;
@@ -96,6 +114,8 @@ export default {
   align-items: center;
   width: 1050px;
   margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .main-news-container {
@@ -120,5 +140,25 @@ export default {
   max-width: 190px;
   max-height: 120px;
   border-radius: 5px;
+}
+.main-news-title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 20px;
+}
+.main-news-content {
+  font-family: "NanumBarunGothic";
+  font-size: 16px;
+}
+.main-news-agency {
+  color: gray;
+  font-family: "NanumBarunGothic";
+}
+.side-news-title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 16px;
+}
+.side-news-content {
+  font-family: "NanumBarunGothic";
+  font-size: 14px;
 }
 </style>

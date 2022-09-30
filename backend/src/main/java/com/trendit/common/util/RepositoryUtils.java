@@ -5,9 +5,10 @@ import com.trendit.api.response.data.KeywordNewsData;
 import com.trendit.api.response.data.NewsData;
 import com.trendit.common.exception.IllegalChartDataException;
 import com.trendit.common.type.PeriodEnum;
-import com.trendit.db.entity.News;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,24 +16,19 @@ import java.util.List;
 @Component
 public class RepositoryUtils {
     public String buildKeywordNewsQuery(PeriodEnum type) {
-        String targetEntity = type.getTargetEntity();
+        String targetEntity = type.targetEntityToSnakeCase();
 
-        StringBuffer queryBuffer = new StringBuffer("select s.frequency, k.keyword, n from ");
+        StringBuffer queryBuffer = new StringBuffer("select s.frequency,k.keyword,");
+        queryBuffer.append("n.news_id,n.headline,n.news_content,n.news_date,");
+        queryBuffer.append("n.news_agency,n.news_link,n.img_link from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
         queryBuffer.append(" s ");
-        queryBuffer.append("join s.keyword k ");
-        queryBuffer.append("join k.keywordHasNews kn ");
-        queryBuffer.append("join kn.news n ");
-        queryBuffer.append("where s.targetTime = :recentTime ");
-        queryBuffer.append("and n.newsId in (select max(n.newsId) from KeywordHasNews kn join kn.news n group by kn.keyword.keywordId) ");
+        queryBuffer.append("join keyword k on s.keyword_id=k.keyword_id ");
+        queryBuffer.append("join (select kn.keyword_id, max(kn.news_id) as recent_news_id from keyword_has_news kn group by keyword_id) recent_news ");
+        queryBuffer.append("on s.keyword_id = recent_news.keyword_id ");
+        queryBuffer.append("join news n on n.news_id = recent_news.recent_news_id ");
+        queryBuffer.append("where s.target_time = :recentTime ");
         queryBuffer.append("order by s.frequency desc");
-
-        /* TODO : dependant subquery가 발생하는 문제점 -> 더 나은 해결책? */
-
-//        SELECT s.frequency, k.keyword, n.news_id, n.headline FROM statistics_date as s JOIN keyword as k ON s.keyword_id = k.keyword_id
-//        join (SELECT kn.keyword_id, max(kn.news_id) as recent_news_id from keyword_has_news kn group by keyword_id) recent_news on s.keyword_id = recent_news.keyword_id
-//        JOIN news as n on n.news_id = recent_news.recent_news_id
-//        where s.target_time = '2022-09-20' ORDER BY s.frequency DESC;
 
         String query = queryBuffer.toString();
         return query;
@@ -41,12 +37,20 @@ public class RepositoryUtils {
     public List<KeywordNewsData> parseKeywordNewsResultList(List<Object[]> list) {
         List<KeywordNewsData> data = new ArrayList<>();
 
+        /* Native Query의 결과를 변환 */
+
         for (Object[] row : list) {
             int frequency = (int)row[0];
             String keyword = (String)row[1];
-            News news = (News)row[2];
+            long newsId = ((BigInteger)row[2]).longValue();
+            String headline = (String)row[3];
+            String newsContent = (String)row[4];
+            LocalDate newsDate = ((Date)row[5]).toLocalDate();
+            String newsAgency = (String)row[6];
+            String newsLink = (String)row[7];
+            String imgLink = (String)row[8];
 
-            NewsData newsData = new NewsData(news.getNewsId(), news.getHeadline(), news.getNewsContent(), news.getNewsDate(), news.getNewsAgency(), news.getNewsLink(), news.getImgLink());
+            NewsData newsData = new NewsData(newsId, headline, newsContent, newsDate, newsAgency, newsLink, imgLink);
             KeywordNewsData keywordNewsData = new KeywordNewsData(keyword, frequency, newsData);
             data.add(keywordNewsData);
         }
