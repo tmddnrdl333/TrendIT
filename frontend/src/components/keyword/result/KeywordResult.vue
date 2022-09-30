@@ -74,7 +74,6 @@ export default {
       }
     );
     this.period = this.$route.query.period;
-    console.log("loading page:", this.page);
     await this.getNewsOfPage(this.page);
   },
   methods: {
@@ -86,7 +85,6 @@ export default {
           page: n,
         },
         (response) => {
-          console.log("HI", response.data.news);
           this.result = response.data.news.content;
           this.result.forEach((item) => {
             // TODO: 이미지가 없는 뉴스는 이렇게 일단 처리함.

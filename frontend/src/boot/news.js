@@ -21,7 +21,6 @@ async function getNewsByOptionsApi(params, success, fail) {
 }
 
 async function searchApi(param, success, fail) {
-  console.log(param);
   await api
     .get("/news", {
       params: {
