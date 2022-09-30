@@ -75,6 +75,8 @@ export default {
       period: ref({ from: "", to: "" }),
 
       search_options: ref([]), // 입력한 search로 요청해 받은 추천 키워드 리스트
+
+      reload: ref(0),
     };
   },
   mounted() {
@@ -105,7 +107,6 @@ export default {
       await getKeywordListApi(
         needle,
         (response) => {
-          console.log("getKeywordListApi called");
           let list = response.data.data.slice(0, 5);
           this.search_options = [];
           list.forEach((item) => {
@@ -120,17 +121,15 @@ export default {
     },
 
     async toResult() {
-      if (typeof this.search == "object" && this.search.value)
-        this.$router.push({
-          name: "search_keyword",
-          params: { keyword_id: this.search.value },
-          query: {
-            period:
-              this.period.from.replaceAll("/", "-") +
-              "~" +
-              this.period.to.replaceAll("/", "-"),
-          },
-        });
+      if (typeof this.search == "object" && this.search.value) {
+        location.href =
+          "/keyword/" +
+          this.search.value +
+          "?period=" +
+          this.period.from.replaceAll("/", "-") +
+          "~" +
+          this.period.to.replaceAll("/", "-");
+      }
     },
   },
 };

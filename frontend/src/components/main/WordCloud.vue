@@ -66,8 +66,6 @@ export default {
 
   methods: {
     async genLayout() {
-      console.log("drawing wordcloud...");
-
       let max_size = 0;
       this.wordCloudData.forEach((item) => {
         max_size = item.count > max_size ? item.count : max_size;
@@ -131,7 +129,6 @@ export default {
   },
   watch: {
     wordCloudData: async function () {
-      console.log("data changed");
       await this.genLayout();
     },
   },
