@@ -171,7 +171,6 @@ export default {
     submitFormNormalKeyword() {
       if (!this.keyword === "") {
         this.createNormalKeyword();
-        console.log("노에러");
       } else alert("에러");
     },
 
@@ -188,13 +187,11 @@ export default {
         !this.$refs.companyLink.hasError
       ) {
         this.createCompanyKeyword();
-        console.log("노에러");
       } else alert("에러");
     },
 
     // 일반 키워드 일때 - API
     async createNormalKeyword() {
-      await console.log(this.keyword);
       await createNormalKeywordApi(
         new NormalKeywordReq(this.keyword),
         (response) => {

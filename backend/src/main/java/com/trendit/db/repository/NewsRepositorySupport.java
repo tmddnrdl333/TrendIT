@@ -45,11 +45,11 @@ public class NewsRepositorySupport {
         return totalNewsCount;
     }
 
-    public Page<News> getLatestNews(String newsDate, String newsAgency, Pageable pageable) {
+    public Page<News> getLatestNews(String newsDate, List<String> newsAgencies, Pageable pageable) {
         QueryResults<News> latestNews = jpaQueryFactory
                 .select(qNews)
                 .from(qNews)
-                .where(eqNewsAgency(newsAgency))
+                .where(inNewsAgencies(newsAgencies))
                 .where(eqNewsDate(newsDate))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
