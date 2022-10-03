@@ -23,7 +23,7 @@ public class PipelineScheduler {
         LocalDate target = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formatedTarget = target.format(formatter);
-//        webClientService.executeDataPipeline(formatedTarget);
+        webClientService.executeDataPipeline(formatedTarget);
         log.info("execute pipeline - {}", formatedTarget);
     }
 }
