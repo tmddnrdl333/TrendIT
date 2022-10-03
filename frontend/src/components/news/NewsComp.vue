@@ -16,10 +16,10 @@
           </template>
         </q-field>
 
-        <q-field class="q-mx-md q-mb-md">
+        <q-field label="언론사 설정" stack-label class="q-mx-md q-mb-md">
           <template v-slot:control>
             <div class="self-center full-width no-outline">
-              {{ selection }}
+              {{ press(selection.length) }}
             </div>
           </template>
           <template v-slot:append>
@@ -347,15 +347,11 @@ export default {
             : response.data.data.content[0].newsLink;
         this.newsList = res_data.slice(1);
         this.max = response.data.data.totalPages;
-        console.log("getNewsApi success");
       },
       () => console.warn("failed...")
     );
   },
-  created() {
-    console.log(this.selection, "this.selection in created");
-    console.log(typeof this.selection, "typeof this.selection in created");
-  },
+  created() {},
   methods: {
     myFunction: function (newsLink) {
       // 주석지우지 말것
@@ -371,8 +367,6 @@ export default {
     },
 
     async getNewsByOptions() {
-      await console.log(this.selection, "this.selection in beforeCreate");
-
       await getNewsByOptionsApi(
         {
           newsDate:
@@ -397,13 +391,19 @@ export default {
           this.newsFirst = res_data[0];
           this.newsList = res_data.slice(1);
           this.max = response.data.data.totalPages;
-          console.log("getNewsByOptionsApi 성공!!");
         },
         (error) => {
-          console.log("실패!!");
           console.error(error);
         }
       );
+    },
+  },
+  computed: {
+    press() {
+      return function (length) {
+        if (length == 0) return "전체";
+        return length + "개 언론사";
+      };
     },
   },
   watch: {
