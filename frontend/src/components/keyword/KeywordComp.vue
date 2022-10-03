@@ -89,12 +89,12 @@ export default {
   },
   methods: {
     filterFn(val, update, abort) {
-      if (val.length < 2) {
+      const needle = val.toLocaleLowerCase().trim();
+      if (needle.length == 0) {
         abort();
         return;
       }
       update(() => {
-        const needle = val.toLocaleLowerCase();
         this.setSearchOptions(needle);
       });
     },

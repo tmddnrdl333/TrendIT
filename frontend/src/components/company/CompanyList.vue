@@ -87,13 +87,6 @@ export default {
       );
     },
     async doSearch() {
-      if (!this.search) {
-        window.alert("검색어를 입력하세요");
-        return;
-      } else if (this.search.length < 2) {
-        window.alert("검색어를 두 글자 이상 입력하세요");
-        return;
-      }
       this.current = 1;
       await this.loadCompanyList();
     },
