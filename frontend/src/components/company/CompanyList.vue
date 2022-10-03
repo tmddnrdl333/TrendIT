@@ -81,8 +81,6 @@ export default {
         { companyName: this.search, page: this.current },
         (response) => {
           this.company_list = response.data.data.content;
-          console.log(this.company_list);
-          console.log(response.data.data);
           this.max_page = response.data.data.totalPages;
         },
         () => console.warn("failed")

@@ -1,122 +1,127 @@
 <template>
-  <div class="sub-news q-pa-lg">
-    Your pick: {{ selection }}
-    <br />
-    현재페이지: {{ page }}
-
-    <div class="flex flex-center">
-      {{ newsAgency }}
-
-      <div class="row justify-end">
-        <q-btn dense @click="newsDateDialog = true" size="5px">
-          {{ newsDate.from }} ~ {{ newsDate.to }}
-        </q-btn>
-      </div>
-
-      <!-- 언론사 설정 -->
-      <q-btn dense @click="newsAgencyDialog = true" label="언론사설정">
-        <q-icon name="settings" />
-      </q-btn>
-
-      <!-- 날짜 dialog -->
-      <q-dialog v-model="newsDateDialog">
-        <q-card>
-          <q-card-section>
-            검색 기간 설정
-            <br />
-            {{ newsDate.from }} ~ {{ newsDate.to }}
-            <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
-          </q-card-section>
-          <q-separator />
-          <q-card-section>
-            <div class="q-pa-md">
-              <q-date v-model="newsDate" minimal range />
+  <q-card class="news-comp q-pa-lg">
+    <q-card-section class="row justify-center">
+      <!-- 기간 설정 -->
+      <div>
+        <q-field label="기간 설정" stack-label class="q-mx-md q-mb-md">
+          <template v-slot:control>
+            <div class="self-center full-width no-outline">
+              {{ newsDate.from }} ~ {{ newsDate.to }}
             </div>
-          </q-card-section>
-        </q-card>
-      </q-dialog>
+          </template>
+          <template v-slot:append>
+            <q-btn dense @click="newsDateDialog = true">
+              <q-icon name="calendar_month" />
+            </q-btn>
+          </template>
+        </q-field>
 
-      <!-- 언론사 dialog -->
-      <q-dialog v-model="newsAgencyDialog">
-        <q-card style="width: 700px; max-width: 80vw">
-          <div class="q-pa-md">
-            <div class="q-gutter-xs flex content-start">
-              <div
-                v-for="newsAgency in newsAgencyOptions"
-                :key="newsAgency.index"
-              >
-                <q-chip
-                  v-model:selected="newsAgencyOption[newsAgency]"
-                  color="primary"
-                  text-color="white"
-                  :label="newsAgency"
-                >
-                </q-chip>
-              </div>
+        <q-field label="언론사 설정" stack-label class="q-mx-md q-mb-md">
+          <template v-slot:control>
+            <div class="self-center full-width no-outline">
+              {{ press(selection.length) }}
             </div>
-          </div>
-        </q-card>
-      </q-dialog>
+          </template>
+          <template v-slot:append>
+            <q-btn dense @click="newsAgencyDialog = true">
+              <q-icon name="settings" />
+            </q-btn>
+          </template>
+        </q-field>
 
-      <!-- 검색 버튼 -->
-      <q-btn label="검색" color="primary" @click="getNewsByOptions()"></q-btn>
-
-      <!-- First Card-->
-      <div v-on:click="myFunction(newsFirst.newsLink)">
-        <q-card class="my-card">
-          <q-card-section horizontal>
-            <q-img
-              class="rounded-borders"
-              :src="newsFirst.imgLink"
-              width="843px"
-              height="400px"
-            >
-              <div class="absolute-bottom text-h6">
-                <div class="first-card-headline">
-                  {{ newsFirst.headline }} / {{ newsFirst.newsId }}
-                </div>
-                <br />
-                <div class="first-card-agency">
-                  {{ newsFirst.newsAgency }} / {{ newsFirst.newsDate }}
-                </div>
-              </div>
-            </q-img>
-            <q-card-section class="first-card-content">
-              {{ newsFirst.newsContent }}
+        <!-- 날짜 dialog -->
+        <q-dialog v-model="newsDateDialog">
+          <q-card>
+            <q-card-section>
+              검색 기간 설정
+              <br />
+              {{ newsDate.from }} ~ {{ newsDate.to }}
+              <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
             </q-card-section>
-          </q-card-section>
-        </q-card>
+            <q-separator />
+            <q-card-section>
+              <div class="q-pa-md">
+                <q-date v-model="newsDate" minimal range />
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+
+        <!-- 언론사 dialog -->
+        <q-dialog v-model="newsAgencyDialog">
+          <q-card style="width: 700px; max-width: 80vw">
+            <div class="q-pa-md">
+              <div class="q-gutter-xs flex content-start">
+                <div
+                  v-for="newsAgency in newsAgencyOptions"
+                  :key="newsAgency.index"
+                >
+                  <q-chip
+                    v-model:selected="newsAgencyOption[newsAgency]"
+                    color="primary"
+                    text-color="white"
+                    :label="newsAgency"
+                  >
+                  </q-chip>
+                </div>
+              </div>
+            </div>
+          </q-card>
+        </q-dialog>
+
+        <!-- 검색 버튼 -->
+        <q-btn label="검색" color="primary" @click="getNewsByOptions()"></q-btn>
       </div>
 
-      <!-- Card 12개-->
-      <div id="q-app" style="min-height: 100vh">
-        <div
-          class="q-pa-md row items-start q-gutter-md"
-          style="margin-left: 80px; margin-top: 20px"
-        >
-          <div v-for="newsitem in newsList" :key="newsitem.newsId">
-            <!-- <a v-bind:href="newsitem.newsLink"> -->
-            <!-- localhost + link -->
-            <!-- <div v-on:click="window.open(newsitem.newsLink, _blank, options)"> -->
-            <div v-on:click="myFunction(newsitem.newsLink)">
-              <q-card class="my-card">
-                <q-img :src="newsitem.imgLink" />
-                <q-card-section>
-                  <div class="cards-headline">
-                    {{ newsitem.headline }} / {{ newsitem.newsId }}
-                  </div>
-                  <div class="text-subtitle2 cards-content">
-                    {{ newsitem.newsContent.substring(0, 15) }}
-                  </div>
-                </q-card-section>
-                <q-card-section class="q-pt-none cards-agency">
-                  {{ newsitem.newsAgency }} / {{ newsitem.newsDate }}
-                </q-card-section>
-              </q-card>
+      <!-- First Card -->
+      <q-card
+        class="main-card q-ma-md row"
+        @click="myFunction(newsFirst.newsLink)"
+      >
+        <q-img :src="newsFirst.imgLink" class="col-8" height="400px">
+          <div class="absolute-bottom text-h6">
+            <div class="first-card-headline">
+              {{ newsFirst.headline }}
             </div>
-            <!-- </div> -->
-            <!-- </a> -->
+            <br />
+            <div class="first-card-agency">
+              {{ newsFirst.newsAgency }} / {{ newsFirst.newsDate }}
+            </div>
           </div>
+        </q-img>
+        <q-card-section class="col-4">
+          {{ newsFirst.newsContent }}
+        </q-card-section>
+      </q-card>
+
+      <!-- Card * 12 -->
+      <div class="sub-news row justify-between">
+        <div v-for="newsitem in newsList" :key="newsitem.newsId">
+          <!-- <a v-bind:href="newsitem.newsLink"> -->
+          <!-- localhost + link -->
+          <!-- <div v-on:click="window.open(newsitem.newsLink, _blank, options)"> -->
+          <div @click="myFunction(newsitem.newsLink)">
+            <q-card class="sub-card q-mb-lg">
+              <q-img
+                class="sub-card-img"
+                :src="newsitem.imgLink"
+                height="200px"
+              />
+              <q-card-section>
+                <div class="cards-headline">
+                  {{ newsitem.headline }} / {{ newsitem.newsId }}
+                </div>
+                <div class="text-subtitle2 cards-content">
+                  {{ newsitem.newsContent.substring(0, 15) }}
+                </div>
+              </q-card-section>
+              <q-card-section class="q-pt-none cards-agency">
+                {{ newsitem.newsAgency }} / {{ newsitem.newsDate }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <!-- </div> -->
+          <!-- </a> -->
         </div>
       </div>
 
@@ -133,25 +138,22 @@
             color="blue"
             active-color="blue"
             active-text-color="white"
-          ></q-pagination>
+          />
         </div>
       </div>
-    </div>
-  </div>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>
-// import { defineComponent } from "vue";
 import { ref } from "vue";
 import { getNewsApi } from "boot/news.js";
-import { defineComponent, reactive, computed } from "vue";
-import { matCalendarMonth } from "@quasar/extras/material-icons";
+import { reactive, computed } from "vue";
 import { getNewsByOptionsApi } from "src/boot/news.js";
 
 export default {
   data() {
     return {
-      sampleData: [],
       max: 1,
       newsAgency: "",
       newsAgencyOptions: [
@@ -217,25 +219,25 @@ export default {
   setup() {
     let date = new Date();
 
-    const fromDate = // 초기날짜설정
-      date.getFullYear() +
-      "-" +
-      date.getMonth().toString().padStart(2, "0") +
-      "-" +
-      date.getDate();
-
     const toDate =
       date.getFullYear() +
-      "-" +
+      "/" +
       (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate();
+      "/" +
+      date.getDate().toString().padStart(2, "0");
+
+    date.setFullYear(date.getFullYear() - 10);
+    const fromDate =
+      date.getFullYear() +
+      "/" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "/" +
+      date.getDate().toString().padStart(2, "0");
 
     const newsFirst = ref({
       newsId: 1,
       headline: "",
       newsContent: "",
-      // newsDate: "",
       selection: [],
       newsAgency: "",
       newsLink: "",
@@ -314,16 +316,11 @@ export default {
         const test = Object.keys(newsAgencyOption).filter(
           (type) => newsAgencyOption[type] === true
         );
-        console.log(test, "test in computed");
         return test;
-        // .join(", ");
       }),
     };
   },
   beforeCreate() {
-    // console.log(this.newsDate, "this.newsDate in beforeCreate");
-    console.log(this.selection, "this.selection in beforeCreate");
-    console.log(typeof this.selection, "typeof this.selection in beforeCreate");
     getNewsApi(
       {
         newsDate:
@@ -334,7 +331,13 @@ export default {
         size: this.size,
       },
       (response) => {
-        this.newsFirst = response.data.data.content[0];
+        let res_data = response.data.data.content;
+        res_data.forEach((item) => {
+          if (item.imgLink.substring(0, 5) == "/asse") {
+            item.imgLink = "src/assets/no-image.png";
+          }
+        });
+        this.newsFirst = res_data[0];
         this.newsFirst.newsLink =
           this.newsFirst.newsLink === ""
             ? "http://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=" +
@@ -342,22 +345,13 @@ export default {
               " " +
               this.newsFirst.headline
             : response.data.data.content[0].newsLink;
-        this.newsList = response.data.data.content.slice(1);
+        this.newsList = res_data.slice(1);
         this.max = response.data.data.totalPages;
-        console.log(response, "getNewsApi 성공!!");
-        console.log(this.size);
       },
-      (error) => console.warn(error, "failed . . . .. . ")
+      () => console.warn("failed...")
     );
   },
-  created() {
-    this.matCalendarMonth = matCalendarMonth;
-    // console.log(this.newsDate, "in Created");
-    console.log(this.selection, "this.selection in created");
-    console.log(typeof this.selection, "typeof this.selection in created");
-  },
-  beforeMount() {},
-  mounted() {},
+  created() {},
   methods: {
     myFunction: function (newsLink) {
       // 주석지우지 말것
@@ -373,38 +367,47 @@ export default {
     },
 
     async getNewsByOptions() {
-      await console.log(this.selection, "this.selection in beforeCreate");
-
       await getNewsByOptionsApi(
         {
           newsDate:
             this.newsDate.from.replaceAll("/", "-") +
             "~" +
             this.newsDate.to.replaceAll("/", "-"),
-          selection: this.selection,
+          selection: this.selection
+            .toString()
+            .replaceAll("[", "")
+            .replaceAll("]", "")
+            .replaceAll('"', ""),
           page: this.page,
           size: this.size,
         },
         (response) => {
-          this.newsFirst = response.data.data.content[0];
-          this.newsList = response.data.data.content.slice(1);
+          let res_data = response.data.data.content;
+          res_data.forEach((item) => {
+            if (item.imgLink.substring(0, 5) == "/asse") {
+              item.imgLink = "src/assets/no-image.png";
+            }
+          });
+          this.newsFirst = res_data[0];
+          this.newsList = res_data.slice(1);
           this.max = response.data.data.totalPages;
-          console.log("getNewsByOptionsApi 성공!!");
         },
         (error) => {
-          console.log("실패!!");
           console.error(error);
         }
       );
     },
   },
+  computed: {
+    press() {
+      return function (length) {
+        if (length == 0) return "전체";
+        return length + "개 언론사";
+      };
+    },
+  },
   watch: {
     page: function () {
-      // console.log(
-      //   this.newsDate,
-      //   this.selection,
-      //   "his.newsDate, this.selection in page click"
-      // );
       this.getNewsByOptions();
     },
     newsList: function () {
@@ -423,13 +426,26 @@ export default {
 </script>
 
 <style scoped>
-.sub-news {
+.news-comp {
   height: 100%;
   width: 1200px;
-  background-color: #ffffff;
   margin-top: 10px;
   margin-bottom: 10px;
   /* text-align: center; */
+}
+
+/* 1 */
+.main-card {
+  height: 400px;
+}
+
+.sub-news {
+  margin: 5px;
+}
+
+.sub-card {
+  height: 340px;
+  width: 260px;
 }
 
 .first-card-headline {
@@ -441,7 +457,6 @@ export default {
   font-size: 20px;
 }
 .first-card-agency {
-  color: gray;
   font-family: "NanumBarunGothic";
   font-size: 16px;
 }
