@@ -41,14 +41,17 @@ const routes = [
         ],
       },
       {
+        name: "company",
         path: "company",
         component: CompanyView,
       },
       {
+        name: "news",
         path: "news",
         component: NewsView,
       },
       {
+        name: "about",
         path: "about",
         component: AboutView,
       },

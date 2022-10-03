@@ -70,7 +70,7 @@ export default {
       },
       () => {
         this.$router.push({ name: "empty_keyword" });
-        window.alert("잘못된 접근입니다.");
+        alert("잘못된 접근입니다.");
       }
     );
     this.period = this.$route.query.period;
