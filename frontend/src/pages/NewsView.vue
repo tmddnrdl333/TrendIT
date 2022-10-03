@@ -1,20 +1,17 @@
 <template>
   <q-page class="flex flex-center">
-    <!-- <main-news /> -->
-    <sub-news />
+    <news-comp />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-// import MainNews from "../components/news/MainNews.vue";
-import SubNews from "../components/news/SubNews.vue";
+import NewsComp from "../components/news/NewsComp.vue";
 
 export default defineComponent({
   name: "NewsView",
   components: {
-    // MainNews,
-    SubNews,
+    NewsComp,
   },
   data() {
     return {
