@@ -1,10 +1,20 @@
 <template>
   <q-card>
     <q-card-section>
-      <div>{{ board.userName }}</div>
-      <div @click="seamless = true">수정 삭제</div>
-      <div>{{ board.createdDate }}</div>
+      <div style="display: flex; flex-direction: row">
+        <div style="color: ">{{ board.userName }}</div>
+        <div style="font-size: 10px; color: rgb(12, 12, 120)">
+          {{ board.createdDate.substr(0, 16) }}
+        </div>
+      </div>
+      <div
+        style="font-size: 12px; cursor: pointer; color: gray"
+        @click="seamless = true"
+      >
+        수정 / 삭제
+      </div>
     </q-card-section>
+    <hr />
     <q-card-section>{{ board.boardContent }}</q-card-section>
   </q-card>
 
@@ -71,6 +81,7 @@ import { BoardUpdateReq } from "src/boot/request/BoardReq";
 export default {
   props: {
     board: Object,
+    idx: Number,
   },
   setup() {
     return {
@@ -91,6 +102,10 @@ export default {
         ),
         (response) => {
           console.log(response);
+          if (true) {
+            // 성공 시
+            this.$emit("updateBoard", this.idx, this.updateContent);
+          }
         },
         () => {
           console.warn();
@@ -103,6 +118,10 @@ export default {
         this.deletePassword,
         (response) => {
           console.log(response);
+          if (true) {
+            // 성공시
+            this.$emit("deleteBoard", this.idx);
+          }
         },
         () => {
           console.warn();

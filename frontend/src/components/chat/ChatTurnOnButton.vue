@@ -49,6 +49,9 @@
               <chat-component
                 v-for="(chat, index) in chats"
                 :key="index"
+                :idx="index"
+                @updateBoard="updateBoardToChats"
+                @deleteBoard="deleteBoardToChats"
                 :board="chat"
               >
               </chat-component>
@@ -86,9 +89,9 @@
 import { ref } from "vue";
 import { postBoard, getBoards } from "src/boot/board.js";
 import ChatComponent from "./ChatComponent.vue";
-import { BoardPostReq } from "src/boot/request/BoardReq";
+import { BoardPostReq } from "src/boot/request/BoardReq.js";
+import { ChatDataRes } from "src/boot/response/ChatDataRes.js";
 import TestComponent from "./TestComponent.vue";
-import $ from "jquery";
 
 export default {
   name: "ChatTurnOnButton",
@@ -128,7 +131,13 @@ export default {
 
         for (let i = data.length - 1; i >= 0; i--) {
           // 첫 인덱스 저장
-          chats.value.push(data[i]);
+          chats.value.push(
+            new ChatDataRes(
+              data[i].createdDate,
+              data[i].userName,
+              data[i].boardContent
+            )
+          );
           // chats 맨 마지막에 data[0]이 와야됨
         }
         console.log("first", chats.value);
@@ -152,7 +161,6 @@ export default {
         //   items.value.splice(0, 0, {}, {}, {}, {}, {}, {}, {});
         //   done();
         // }, 2000);
-        console.log("INFINITY");
         // setTimeout(() => {
 
         // }, 2000);
@@ -165,10 +173,14 @@ export default {
             length = data.length;
             boardId.value = data[data.length - 1].boardId;
             for (let i = 0; i < data.length; i++) {
-              chats.value.unshift(data[i]);
+              chats.value.unshift(
+                new ChatDataRes(
+                  data[i].createdDate,
+                  data[i].userName,
+                  data[i].boardContent
+                )
+              );
             }
-            console.log("nexts", chats.value);
-            console.log(length);
             if (length >= 100) done();
             else done(true);
             // done();
@@ -182,6 +194,12 @@ export default {
     };
   },
   methods: {
+    updateBoardToChats(idx, boardContent) {
+      this.chats[idx].boardContent = boardContent;
+    },
+    deleteBoardToChats(idx) {
+      this.chats.splice(idx, 1);
+    },
     sendMasseage() {
       postBoard(
         new BoardPostReq(
@@ -193,11 +211,18 @@ export default {
         (response) => {
           // 성공일 때
           // 성공 알림 후
+
+          this.chats.push(
+            new ChatDataRes(
+              "2022-10-02 00:00:00:00",
+              this.nickname,
+              this.content
+            )
+          );
+
           this.password = "";
           this.content = "";
-          console.log(this.seamless);
-          $("#chat").load(window.location.href + " #chat");
-          console.log(this.seamless);
+
           // 실패일 때
           // 실패 알림
         },
