@@ -12,7 +12,7 @@ async function getNewsApi(params, success, fail) {
 async function getNewsByOptionsApi(params, success, fail) {
   params = {
     newsDate: params.newsDate,
-    newsAgency: params.selection, // 언론사
+    newsAgencies: params.selection, // 언론사
     page: params.page,
     size: params.size,
   };

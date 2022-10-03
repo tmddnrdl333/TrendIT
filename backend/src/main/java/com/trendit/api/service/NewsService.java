@@ -23,8 +23,8 @@ public class NewsService {
         return data;
     }
 
-    public Page<News> getLatestNews(String newsDate, String newsAgency, Pageable pageable) {
-        Page<News> data = newsRepositorySupport.getLatestNews(newsDate, newsAgency, pageable);
+    public Page<News> getLatestNews(String newsDate, List<String> newsAgencies, Pageable pageable) {
+        Page<News> data = newsRepositorySupport.getLatestNews(newsDate, newsAgencies, pageable);
         return data;
     }
 

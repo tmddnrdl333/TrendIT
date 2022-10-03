@@ -97,9 +97,6 @@
       <!-- Card * 12 -->
       <div class="sub-news row justify-between">
         <div v-for="newsitem in newsList" :key="newsitem.newsId">
-          <!-- <a v-bind:href="newsitem.newsLink"> -->
-          <!-- localhost + link -->
-          <!-- <div v-on:click="window.open(newsitem.newsLink, _blank, options)"> -->
           <div @click="myFunction(newsitem.newsLink)">
             <q-card class="sub-card q-mb-lg">
               <q-img
@@ -109,10 +106,10 @@
               />
               <q-card-section>
                 <div class="cards-headline">
-                  {{ newsitem.headline }} / {{ newsitem.newsId }}
+                  {{ newsitem.headline }}
                 </div>
                 <div class="text-subtitle2 cards-content">
-                  {{ newsitem.newsContent.substring(0, 15) }}
+                  {{ newsitem.newsContent.substring(0, 20) + "..." }}
                 </div>
               </q-card-section>
               <q-card-section class="q-pt-none cards-agency">
@@ -120,8 +117,6 @@
               </q-card-section>
             </q-card>
           </div>
-          <!-- </div> -->
-          <!-- </a> -->
         </div>
       </div>
 
@@ -157,8 +152,6 @@ export default {
       max: 1,
       newsAgency: "",
       newsAgencyOptions: [
-        "언론사A",
-        "언론사B",
         "경향신문",
         "국민일보",
         "내일신문",
@@ -245,8 +238,6 @@ export default {
     });
     const newsList = ref([]);
     const newsAgencyOption = reactive({
-      언론사A: false,
-      언론사B: false,
       경향신문: false,
       국민일보: false,
       내일신문: false,
@@ -383,6 +374,11 @@ export default {
         },
         (response) => {
           let res_data = response.data.data.content;
+          if (res_data.length == 0) {
+            window.alert("해당 조건으로 뉴스를 검색할 수 없습니다.");
+            this.$router.go(); // 새로고침인데... 만약 검색할 때마다 페이지를 리로드하게 고친다면 go(-1)로 수정할 것
+            return;
+          }
           res_data.forEach((item) => {
             if (item.imgLink.substring(0, 5) == "/asse") {
               item.imgLink = "src/assets/no-image.png";
@@ -394,6 +390,7 @@ export default {
         },
         (error) => {
           console.error(error);
+          window.alert("오류가 발생했습니다.");
         }
       );
     },
@@ -407,6 +404,15 @@ export default {
     },
   },
   watch: {
+    newsDate: function () {
+      if (this.newsDate.from == undefined) {
+        let target = this.newsDate;
+        this.newsDate = { from: "", to: "" };
+        this.newsDate.from = target;
+        this.newsDate.to = target;
+      }
+    },
+
     page: function () {
       this.getNewsByOptions();
     },
@@ -431,7 +437,6 @@ export default {
   width: 1200px;
   margin-top: 10px;
   margin-bottom: 10px;
-  /* text-align: center; */
 }
 
 /* 1 */
