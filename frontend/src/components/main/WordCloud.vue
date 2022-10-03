@@ -1,30 +1,44 @@
 <template>
-  <q-card
-    class="wordcloud-container row items-center justify-center q-pa-lg q-my-md"
-  >
-    <!-- WordCloud -->
-    <div id="wordcloud-box">
-      <div id="wordcloud">
-        <div></div>
+  <q-card class="wordcloud-container">
+    <q-card-section>
+      <div class="title">오늘의 트렌드</div>
+    </q-card-section>
+    <q-card-section class="row items-center justify-center q-pa-lg q-my-md">
+      <!-- WordCloud -->
+      <div id="wordcloud-box">
+        <div id="wordcloud">
+          <div></div>
+        </div>
       </div>
-    </div>
-    <!-- WordCloud -->
-    <div class="q-pa-md row items-start q-gutter-md">
-      <q-card class="rank-container text-center">
-        <q-card-section class="rank-container-title">
-          키워드 순위
-        </q-card-section>
-        <q-separator />
-        <template v-for="(item, index) in trendRankData" :key="index">
-          <div class="rank-item row items-center rank-container-content">
-            <div class="col-3">{{ index + 1 }}</div>
-            <div class="col-3">{{ item.keyword }}</div>
-            <div class="col-3">{{ item.count }}건</div>
-          </div>
-          <q-separator inset />
-        </template>
-      </q-card>
-    </div>
+      <!-- WordCloud -->
+      <div class="q-pa-md q-gutter-md">
+        <div class="text-center">
+          <q-btn-toggle
+            v-model="type"
+            toggle-color="primary"
+            :options="[
+              { label: '일별', value: 'day' },
+              { label: '주별', value: 'week' },
+              { label: '월별', value: 'month' },
+              { label: '연도별', value: 'year' },
+            ]"
+          />
+        </div>
+        <q-card class="rank-container text-center">
+          <q-card-section class="rank-container-title">
+            키워드 순위
+          </q-card-section>
+          <q-separator />
+          <template v-for="(item, index) in trendRankData" :key="index">
+            <div class="rank-item row items-center rank-container-content">
+              <div class="col-3">{{ index + 1 }}</div>
+              <div class="col-3">{{ item.keyword }}</div>
+              <div class="col-3">{{ item.count }}건</div>
+            </div>
+            <q-separator inset />
+          </template>
+        </q-card></div
+    ></q-card-section>
   </q-card>
 </template>
 
@@ -42,31 +56,37 @@ export default {
       wordCloudData: ref([]),
       trendRankData: ref([]),
       data: ref([]),
+      type: ref("day"),
     };
   },
 
   async created() {
-    await getWordcloudApi(
-      "day",
-      (response) => {
-        const resData = response.data.data;
-        // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
-        // 이 중 6개는 키워드와 count 는 랭크에
-        // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
-        this.newsData = resData;
-        this.wordCloudData = resData.slice(0, 10);
-        this.trendRankData = resData.slice(0, 7);
-      },
-      () => console.warn("failed to get word cloud")
-    );
+    await this.getData();
   },
   async mounted() {
     await this.genLayout();
   },
 
   methods: {
+    async getData() {
+      await getWordcloudApi(
+        this.type,
+        (response) => {
+          const resData = response.data.data;
+          console.log(response.data);
+          // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
+          // 이 중 6개는 키워드와 count 는 랭크에
+          // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
+          this.newsData = resData;
+          this.wordCloudData = resData.slice(0, 10);
+          this.trendRankData = resData.slice(0, 6);
+        },
+        () => console.warn("failed to get word cloud")
+      );
+    },
     async genLayout() {
       let max_size = 0;
+      this.data = [];
       this.wordCloudData.forEach((item) => {
         max_size = item.count > max_size ? item.count : max_size;
         this.data.push({ text: item.keyword, size: item.count });
@@ -128,6 +148,9 @@ export default {
     },
   },
   watch: {
+    type: async function () {
+      await this.getData();
+    },
     wordCloudData: async function () {
       await this.genLayout();
     },
@@ -138,13 +161,17 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
 
+.title {
+  font-size: 130%;
+}
+
 .wordcloud-container {
   width: 1050px;
   margin: 20px auto;
 }
 .rank-container {
   width: 250px;
-  height: 380px;
+  height: 330px;
 }
 .rank-container-title {
   font-family: "Hanna", fantasy;
