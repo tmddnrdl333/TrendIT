@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     updateBoard() {
+      console.log(this.board);
       updateBoard(
         new BoardUpdateReq(
           this.board.boardId,

@@ -4,9 +4,11 @@ import com.trendit.api.exception.PasswordMisMatchException;
 import com.trendit.api.request.BoardPostReq;
 import com.trendit.api.request.BoardUpdateReq;
 import com.trendit.api.response.BoardGetRes;
+import com.trendit.api.response.BoardPostRes;
 import com.trendit.api.response.data.BoardData;
 import com.trendit.api.service.BoardService;
 import com.trendit.common.model.response.BaseRes;
+import com.trendit.db.entity.Board;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -34,14 +36,15 @@ public class BoardController {
             @ApiResponse(code = 400, message = "입력 내용을 다시 확인해주세요"),
             @ApiResponse(code = 500, message = "오류가 발생했습니다")
     })
-    public ResponseEntity postBoard(@Validated @RequestBody BoardPostReq boardPostReq,
-                                    BindingResult bindingResult) {
+    public ResponseEntity<? extends BaseRes> postBoard(@Validated @RequestBody BoardPostReq boardPostReq,
+                                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));
         }
 
         try {
-            boardService.postBoard(boardPostReq);
+            Board saveBoard = boardService.postBoard(boardPostReq);
+            return ResponseEntity.status(200).body(BoardPostRes.of(200, "글이 등록되었습니다", saveBoard));
         } catch (NoSuchElementException e) {
             e.printStackTrace();
             return ResponseEntity.status(400).body(BaseRes.of(400, "입력 내용을 다시 확인해주세요"));
@@ -49,8 +52,6 @@ public class BoardController {
             e2.printStackTrace();
             return ResponseEntity.status(500).body(BaseRes.of(500, "오류가 발생했습니다"));
         }
-
-        return ResponseEntity.status(200).body(BaseRes.of(200, "글이 등록되었습니다"));
     }
 
     @PutMapping
