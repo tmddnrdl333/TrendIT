@@ -25,10 +25,10 @@ public class BoardService {
     private final KeywordRepository keywordRepository;
     private final BoardRepositorySupport boardRepositorySupport;
 
-    public void postBoard(BoardPostReq boardPostReq) throws NoSuchElementException, NoSuchAlgorithmException {
+    public Board postBoard(BoardPostReq boardPostReq) throws NoSuchElementException, NoSuchAlgorithmException {
         // + 비밀번호 암호화
         boardPostReq.setPassword(new SHA256().getHash(boardPostReq.getPassword()));
-        boardRepository.save(boardPostReq.dtoToEntity(
+        return boardRepository.save(boardPostReq.dtoToEntity(
                 keywordRepository.findById(boardPostReq.getKeywordId()).get()
         ));
     }

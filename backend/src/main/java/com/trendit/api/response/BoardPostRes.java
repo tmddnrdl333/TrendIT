@@ -2,22 +2,21 @@ package com.trendit.api.response;
 
 import com.trendit.api.response.data.BoardData;
 import com.trendit.common.model.response.BaseRes;
+import com.trendit.db.entity.Board;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class BoardGetRes extends BaseRes {
+public class BoardPostRes extends BaseRes {
 
-    List<BoardData> boardData;
+    BoardData data;
 
-    public static BoardGetRes of(int status, String msg, List<BoardData> boardData) {
-        BoardGetRes boardGetRes = new BoardGetRes();
+    public static BoardPostRes of(int status, String msg, Board board) {
+        BoardPostRes boardGetRes = new BoardPostRes();
         boardGetRes.setStatusCode(status);
         boardGetRes.setMessage(msg);
-        boardGetRes.boardData = boardData;
+        boardGetRes.data = board.entityToDto();
 
         return boardGetRes;
     }
