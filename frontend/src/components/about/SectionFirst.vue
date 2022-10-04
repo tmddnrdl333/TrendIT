@@ -3,11 +3,11 @@
     <div class="section1">
       <div class="section1Wrapper wrapper">
         <div class="slogan1">
-          매일 생산되는 IT news 분석을 통해
+          TrendIT 는 매일 누적되는 IT기사를 분석하여
           <br />
-          트랜드를 파악하고 어쩌고 저쩌고
+          쉬운 트랜드 파악을 제공하고,
           <br />
-          <span class="txt-bold">TrendIT</span>
+          <span>IT에 대한 문턱이 낮추는 것이 비전입니다.</span>
         </div>
       </div>
     </div>
