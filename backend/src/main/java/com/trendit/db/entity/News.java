@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "news_date_index", columnList = "newsDate"))
 public class News {
 
     @Id

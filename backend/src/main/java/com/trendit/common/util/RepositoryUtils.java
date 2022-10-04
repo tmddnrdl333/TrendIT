@@ -24,9 +24,9 @@ public class RepositoryUtils {
         queryBuffer.append(targetEntity); // "StatisticsDate"
         queryBuffer.append(" s ");
         queryBuffer.append("join keyword k on s.keyword_id=k.keyword_id ");
-        queryBuffer.append("join (select kn.keyword_id, max(kn.news_id) as recent_news_id from keyword_has_news kn group by keyword_id) recent_news ");
+        queryBuffer.append("join recent_news ");
         queryBuffer.append("on s.keyword_id = recent_news.keyword_id ");
-        queryBuffer.append("join news n on n.news_id = recent_news.recent_news_id ");
+        queryBuffer.append("join news n on n.news_id = recent_news.news_id ");
         queryBuffer.append("where s.target_time = :recentTime ");
         queryBuffer.append("order by s.frequency desc");
 
