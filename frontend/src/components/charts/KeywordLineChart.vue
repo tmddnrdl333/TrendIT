@@ -123,6 +123,8 @@ export default {
         { type: this.type, keyword: this.keyword_id },
         (response) => {
           this.data_list = response.data.data;
+          console.log(this.type, this.keyword_id);
+          console.log(this.data_list);
         },
         () => console.warn("failed")
       );
@@ -151,12 +153,33 @@ export default {
         TODO: labels를 배열로 반환해주는 함수를 따로 만들어야 할듯
       */
       // 여기부터 ~
+      let max = 0;
+      switch (this.type) {
+        case "day":
+          max = 6;
+          break;
+        case "week":
+          max = 4;
+          break;
+        case "month":
+          max = 11;
+          break;
+        case "year":
+          max = 9;
+          break;
+        default:
+          break;
+      }
       let labels = [];
-      for (let i = 7; i >= 1; i--) {
-        let date_val = new Date();
-        date_val.setDate(date_val.getDate() - i);
-        let date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
-        labels.push(date_label);
+      for (let i = max; i >= 0; i--) {
+        let marker = this.getMarker(i);
+        labels.push(marker);
+        // //
+        // let date_val = new Date();
+        // date_val.setDate(date_val.getDate() - i);
+        // let date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
+        // labels.push(date_label);
+        // //
       }
       // ~ 여기까지를 함수화
 
@@ -214,6 +237,36 @@ export default {
         },
       });
       myChart;
+    },
+    getMarker(offset) {
+      var date_val = new Date();
+      var date_label = "";
+      switch (this.type) {
+        case "day":
+          date_val.setDate(date_val.getDate() - offset - 1);
+          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
+          break;
+        case "week":
+          if (date_val.getDay() == 1) date_val.setDate(date_val.getDate() - 1);
+          if (date_val.getDay() == 0) date_val.setDate(date_val.getDate() - 6);
+          else date_val.setDate(date_val.getDate() - (date_val.getDay() - 1));
+          date_val.setDate(date_val.getDate() - offset * 7);
+          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate(); // 매주 월요일이나 일요일을 val로 넣고 label은 x월 x주차 이렇게 해야되나...
+          break;
+        case "month":
+          if (date_val.getDate() == 1) date_val.setDate(date_val.getDate() - 1);
+          date_val.setMonth(date_val.getMonth() - offset);
+          date_label = date_val.getMonth() + 1 + "월";
+          break;
+        case "year":
+          date_val.setFullYear(date_val.getFullYear() - offset);
+          date_label = date_val.getFullYear() + "년";
+          break;
+        default:
+          break;
+        // 아니면 그냥 전부 다 xx전 이렇게 하는게 통일성 있으려나
+      }
+      return date_label;
     },
   },
   watch: {

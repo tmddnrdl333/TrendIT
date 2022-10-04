@@ -189,7 +189,6 @@ export default {
           date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
           break;
         case "week":
-          console.log(date_val.getDay());
           if (date_val.getDay() == 1) date_val.setDate(date_val.getDate() - 1);
           if (date_val.getDay() == 0) date_val.setDate(date_val.getDate() - 6);
           else date_val.setDate(date_val.getDate() - (date_val.getDay() - 1));
