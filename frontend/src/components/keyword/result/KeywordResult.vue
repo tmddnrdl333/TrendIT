@@ -74,9 +74,8 @@ export default {
         this.keyword = response.data.data.keyword;
       },
       () => {
-        // 잠깐주석
-        // this.$router.push({ name: "empty_keyword" });
-        // alert("잘못된 접근입니다.");
+        this.$router.push({ name: "empty_keyword" });
+        alert("잘못된 접근입니다.");
       }
     );
     this.period = this.$route.query.period;
