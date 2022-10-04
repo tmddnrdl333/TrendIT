@@ -35,7 +35,10 @@
         </a>
       </template>
     </div>
-    <chat-turn-on-button :keywordIde="keyword_id"></chat-turn-on-button>
+    <chat-turn-on-button
+      style="position: fixed; top: 80%; right: 1%"
+      :keywordIde="keyword_id"
+    ></chat-turn-on-button>
     <div class="q-pa-lg flex flex-center">
       <q-pagination v-model="page" :max="max_page" input />
     </div>

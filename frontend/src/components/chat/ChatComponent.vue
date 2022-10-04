@@ -1,21 +1,31 @@
 <template>
   <q-card>
-    <q-card-section>
-      <div style="display: flex; flex-direction: row">
-        <div style="color: ">{{ board.userName }}</div>
+    <q-card-section
+      style="height: 70px; border: 1px solid antiquewhite; border-radius: 3px"
+    >
+      <div style="display: flex; flex-direction: row; text-align: center">
+        <div style="width: 65%; color: darkgreen">{{ board.userName }}</div>
         <div style="font-size: 10px; color: rgb(12, 12, 120)">
           {{ board.createdDate.substr(0, 16) }}
         </div>
       </div>
       <div
-        style="font-size: 12px; cursor: pointer; color: gray"
+        style="font-size: 12px; cursor: pointer; color: gray; text-align: right"
         @click="seamless = true"
       >
         수정 / 삭제
       </div>
     </q-card-section>
-    <hr />
-    <q-card-section>{{ board.boardContent }}</q-card-section>
+    <q-card-section
+      style="
+        height: 120px;
+        background-color: antiquewhite;
+        border: 2px solid antiquewhite;
+        border-radius: 3px;
+        text-align: center;
+      "
+      >{{ board.boardContent }}</q-card-section
+    >
   </q-card>
 
   <q-dialog v-model="seamless" seamless>
@@ -94,7 +104,6 @@ export default {
   },
   methods: {
     updateBoard() {
-      console.log(this.board);
       updateBoard(
         new BoardUpdateReq(
           this.board.boardId,
