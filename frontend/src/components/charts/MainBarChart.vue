@@ -129,7 +129,7 @@ export default {
   methods: {
     async loadChartData() {
       await mainChartApi(
-        { type: this.type, val: this.slide },
+        { type: this.type, val: this.slide + 1 },
         (response) => {
           this.response = response.data;
           this.data_list = response.data.data;
@@ -185,14 +185,18 @@ export default {
       var date_label = "";
       switch (this.type) {
         case "day":
-          date_val.setDate(date_val.getDate() - offset);
+          date_val.setDate(date_val.getDate() - offset - 1);
           date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
           break;
         case "week":
+          if (date_val.getDay() == 1) date_val.setDate(date_val.getDate() - 1);
+          if (date_val.getDay() == 0) date_val.setDate(date_val.getDate() - 6);
+          else date_val.setDate(date_val.getDate() - (date_val.getDay() - 1));
           date_val.setDate(date_val.getDate() - offset * 7);
-          date_label = "여긴 다시 생각해보자"; // 매주 월요일이나 일요일을 val로 넣고 label은 x월 x주차 이렇게 해야되나...
+          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate(); // 매주 월요일이나 일요일을 val로 넣고 label은 x월 x주차 이렇게 해야되나...
           break;
         case "month":
+          if (date_val.getDate() == 1) date_val.setDate(date_val.getDate() - 1);
           date_val.setMonth(date_val.getMonth() - offset);
           date_label = date_val.getMonth() + 1 + "월";
           break;
@@ -235,7 +239,7 @@ export default {
 }
 .chart-container {
   padding: 5px;
-  width: 600px;
-  /* test */
+  width: 700px;
+  margin: 20px auto;
 }
 </style>
