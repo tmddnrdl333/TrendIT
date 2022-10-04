@@ -8,6 +8,7 @@ function postBoard(data, success, fail) {
 }
 
 function updateBoard(data, success, fail) {
+  console.log(data);
   api.put("/board", data).then(success).catch(fail);
 }
 
@@ -31,7 +32,7 @@ function getBoards(keywordId, success, fail, boardId) {
       .then(success)
       .catch(fail);
   } else {
-    console.log("boardID XX", boardId);
+    console.log("boardID XX", boardId, keywordId);
     api.get(`/board/keyword/${keywordId}`).then(success).catch(fail);
   }
 }

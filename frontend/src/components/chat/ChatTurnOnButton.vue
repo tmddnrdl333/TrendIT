@@ -99,7 +99,40 @@ export default {
     ChatComponent,
     // TestComponent,
   },
+  props: {
+    keywordIde: Number,
+  },
+  watch: {
+    keywordIde: function () {
+      console.log(this.$props.keywordIde, "WATCH");
+      getBoards(
+        this.$props.keywordIde,
+        (response) => {
+          const data = response.data.boardData;
+          this.boardId = data[data.length - 1].boardId;
+          // 1~100, 101~200 => 200~101 // 100~1
+
+          for (let i = data.length - 1; i >= 0; i--) {
+            // 첫 인덱스 저장
+            this.chats.push(
+              new ChatDataRes(
+                data[i].boardId,
+                data[i].createdDate,
+                data[i].userName,
+                data[i].boardContent
+              )
+            );
+            // chats 맨 마지막에 data[0]이 와야됨
+          }
+        },
+        () => {
+          console.warn();
+        }
+      );
+    },
+  },
   setup() {
+    // console.log(this.keywordIde, "KEYWORD IED");
     function makeNickName() {
       const adj = ["강력한", "웃긴", "귀여운", "멋진", "아름다운"];
       const nouns = ["곰", "사자", "호랑이", "강아지", "고양이"];
@@ -109,6 +142,7 @@ export default {
       console.log(name);
       return name;
     }
+    // console.log(this.keywordIde);
     // const items = ref([{}, {}, {}, {}, {}, {}, {}]);
     const chats = ref([]);
 
@@ -118,37 +152,37 @@ export default {
     const password = ref("");
     const boardId = ref(1);
 
-    const keywordId = 1;
+    // const keywordId = 1;
 
-    getBoards(
-      keywordId,
-      (response) => {
-        console.log(response);
-        const data = response.data.boardData;
-        boardId.value = data[data.length - 1].boardId;
-        console.log(boardId.value);
-        // 1~100, 101~200 => 200~101 // 100~1
+    // getBoards(
+    //   keywordId,
+    //   (response) => {
+    //     console.log(response);
+    //     const data = response.data.boardData;
+    //     boardId.value = data[data.length - 1].boardId;
+    //     console.log(boardId.value);
+    //     // 1~100, 101~200 => 200~101 // 100~1
 
-        for (let i = data.length - 1; i >= 0; i--) {
-          // 첫 인덱스 저장
-          chats.value.push(
-            new ChatDataRes(
-              data[i].createdDate,
-              data[i].userName,
-              data[i].boardContent
-            )
-          );
-          // chats 맨 마지막에 data[0]이 와야됨
-        }
-        console.log("first", chats.value);
-      },
-      () => {
-        console.warn();
-      }
-    );
+    //     for (let i = data.length - 1; i >= 0; i--) {
+    //       // 첫 인덱스 저장
+    //       chats.value.push(
+    //         new ChatDataRes(
+    //           data[i].createdDate,
+    //           data[i].userName,
+    //           data[i].boardContent
+    //         )
+    //       );
+    //       // chats 맨 마지막에 data[0]이 와야됨
+    //     }
+    //     console.log("first", chats.value);
+    //   },
+    //   () => {
+    //     console.warn();
+    //   }
+    // );
 
     return {
-      keywordId,
+      boardId,
       chats,
       seamless: ref(false),
       nickname,
@@ -165,31 +199,31 @@ export default {
 
         // }, 2000);
         let length;
-        getBoards(
-          keywordId,
-          (response) => {
-            console.log(response);
-            const data = response.data.boardData;
-            length = data.length;
-            boardId.value = data[data.length - 1].boardId;
-            for (let i = 0; i < data.length; i++) {
-              chats.value.unshift(
-                new ChatDataRes(
-                  data[i].createdDate,
-                  data[i].userName,
-                  data[i].boardContent
-                )
-              );
-            }
-            if (length >= 100) done();
-            else done(true);
-            // done();
-          },
-          () => {
-            console.warn();
-          },
-          boardId.value
-        );
+        // getBoards(
+        //   this.keywordIde,
+        //   (response) => {
+        //     console.log(response);
+        //     const data = response.data.boardData;
+        //     length = data.length;
+        //     boardId.value = data[data.length - 1].boardId;
+        //     for (let i = 0; i < data.length; i++) {
+        //       chats.value.unshift(
+        //         new ChatDataRes(
+        //           data[i].createdDate,
+        //           data[i].userName,
+        //           data[i].boardContent
+        //         )
+        //       );
+        //     }
+        //     if (length >= 100) done();
+        //     else done(true);
+        //     // done();
+        //   },
+        //   () => {
+        //     console.warn();
+        //   },
+        //   boardId.value
+        // );
       },
     };
   },
@@ -203,7 +237,7 @@ export default {
     sendMasseage() {
       postBoard(
         new BoardPostReq(
-          this.keywordId,
+          this.$props.keywordIde,
           this.nickname,
           this.password,
           this.content
@@ -211,10 +245,10 @@ export default {
         (response) => {
           // 성공일 때
           // 성공 알림 후
-
           this.chats.push(
             new ChatDataRes(
-              "2022-10-02 00:00:00:00",
+              response.data.data.boardId,
+              response.data.data.createdDate,
               this.nickname,
               this.content
             )

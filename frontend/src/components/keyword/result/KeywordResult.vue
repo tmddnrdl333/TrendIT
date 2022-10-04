@@ -35,6 +35,7 @@
         </a>
       </template>
     </div>
+    <chat-turn-on-button :keywordIde="keyword_id"></chat-turn-on-button>
     <div class="q-pa-lg flex flex-center">
       <q-pagination v-model="page" :max="max_page" input />
     </div>
@@ -46,12 +47,13 @@ import { ref } from "vue";
 import KeywordLineChart from "../../charts/KeywordLineChart.vue";
 import { getKeywordApi } from "boot/keyword.js";
 import { searchApi } from "boot/news.js";
+import ChatTurnOnButton from "src/components/chat/ChatTurnOnButton.vue";
 
 export default {
-  components: { KeywordLineChart },
+  components: { KeywordLineChart, ChatTurnOnButton },
   setup() {
     return {
-      keword_id: ref(""),
+      keword_id: ref(0),
       keyword: ref(""),
 
       period: ref(""),
@@ -69,8 +71,9 @@ export default {
         this.keyword = response.data.data.keyword;
       },
       () => {
-        this.$router.push({ name: "empty_keyword" });
-        alert("잘못된 접근입니다.");
+        // 잠깐주석
+        // this.$router.push({ name: "empty_keyword" });
+        // alert("잘못된 접근입니다.");
       }
     );
     this.period = this.$route.query.period;
