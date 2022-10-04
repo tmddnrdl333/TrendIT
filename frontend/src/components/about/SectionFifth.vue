@@ -87,9 +87,10 @@
               <div class="">
                 <q-img :src="CircleSmall" style="width: 200px">
                   <p class="s5_title" style="margin-top: 30px">
-                    여기에는 뭐넣지 <br />
+                    All Time Best 언론사 <br />
                   </p>
-                  <span class="s5_content"> 뭐넣어</span>
+                  <span class="s5_content"> 싸피일보</span>
+                  <span class="s5_content_unit">(123456 건)</span>
                 </q-img>
               </div>
             </div>

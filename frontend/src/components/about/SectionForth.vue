@@ -25,11 +25,9 @@
               </p>
               <img :src="service2" alt="service2" class="m-b-lg" />
               <p style="height: 40px; font-weight: 800; color: #000000">
-                워드클라우드와 어쩌고 저쩌고를 통해
+                WordCloud 를 통해 기간별 트랜드를
                 <br />
-                트랜드를 알기 쉽게 한눈에 파악하고
-                <br />
-                사용자에게 보여줄게
+                알기 쉽게 한 눈에 파악할 수 있습니다.
               </p>
             </div>
           </div>
@@ -47,11 +45,10 @@
               </p>
               <img :src="service3" alt="service3" class="m-b-lg" />
               <p style="height: 40px; font-weight: 800; color: #000000">
-                워드클라우드와 어쩌고 저쩌고를 통해
+                특정 키워드 검색을 통해 트랜드 추이를
                 <br />
-                트랜드를 알기 쉽게 한눈에 파악하고
+                파악하고, 관련 뉴스를 제공합니다.
                 <br />
-                사용자에게 보여줄게
               </p>
             </div>
           </div>
@@ -69,11 +66,10 @@
               </p>
               <img :src="service4" alt="service4" class="m-b-lg" />
               <p style="height: 40px; font-weight: 800; color: #000000">
-                워드클라우드와 어쩌고 저쩌고를 통해
+                기업별 기간별 트랜드를 추이를 확인하고
                 <br />
-                트랜드를 알기 쉽게 한눈에 파악하고
+                700여 개의 기업정보를 제공합니다.
                 <br />
-                사용자에게 보여줄게
               </p>
             </div>
           </div>
@@ -91,11 +87,10 @@
               </p>
               <img :src="service1" alt="service1" class="m-b-lg" />
               <p style="height: 40px; font-weight: 800; color: #000000">
-                워드클라우드와 어쩌고 저쩌고를 통해
+                54개의 언론사와 날짜별 필터링을 통해
                 <br />
-                트랜드를 알기 쉽게 한눈에 파악하고
+                최신 뉴스를 간편하게 조회할 수 있습니다.
                 <br />
-                사용자에게 보여줄게
               </p>
             </div>
           </div>
@@ -136,7 +131,7 @@ export default {
 
 <style scoped>
 section.comments {
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 .gray-section {
   background: #f4f4f4;
@@ -181,8 +176,6 @@ p {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-}
-img {
 }
 .features-block {
   margin-top: 20px;

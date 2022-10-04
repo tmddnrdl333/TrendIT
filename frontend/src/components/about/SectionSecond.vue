@@ -92,7 +92,7 @@ export default {
 .section2 {
   margin: 0px auto;
   width: 100vw;
-  height: 500px;
+  height: 540px;
   display: grid;
   -webkit-box-pack: center;
   -webkit-box-align: center;
