@@ -123,8 +123,6 @@ export default {
         { type: this.type, keyword: this.keyword_id },
         (response) => {
           this.data_list = response.data.data;
-          console.log(this.type, this.keyword_id);
-          console.log(this.data_list);
         },
         () => console.warn("failed")
       );
