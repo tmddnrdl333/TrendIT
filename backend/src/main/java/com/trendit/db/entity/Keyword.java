@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "keyword_index", columnList = "keyword"))
 public class Keyword {
 
     @Id

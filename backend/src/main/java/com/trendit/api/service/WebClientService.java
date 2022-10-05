@@ -15,7 +15,7 @@ public class WebClientService {
     @Autowired
     public WebClientService() {
         this.webClient = WebClient.builder()
-                .baseUrl("http://localhost:9090/internal")
+                .baseUrl("http://j7a301.p.ssafy.io:9090/internal")
                 .build();
     }
 

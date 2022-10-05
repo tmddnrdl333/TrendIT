@@ -23,7 +23,9 @@ public class KeywordRepositorySupport {
                 .from(qKeyword)
                 .where(qKeyword.keyword.like(keyword + "%"))
                 .fetch();
+
         List<KeywordData> ret_list = new ArrayList<>();
+
         for (Keyword k : sql_list) {
             if (k.getCompany() != null)
                 ret_list.add(new KeywordData(k.getKeywordId(), k.getKeyword(), k.getCompany().getCompanyId()));
@@ -38,11 +40,13 @@ public class KeywordRepositorySupport {
                 .from(qKeyword)
                 .where(qKeyword.keywordId.eq(keyword_id))
                 .fetchOne();
+
         KeywordData ret;
         if (data.getCompany() != null)
             ret = new KeywordData(data.getKeywordId(), data.getKeyword(), data.getCompany().getCompanyId());
         else
             ret = new KeywordData(data.getKeywordId(), data.getKeyword(), 0);
+
         return ret;
     }
 

@@ -28,7 +28,7 @@ public class NewsRepositorySupport {
 
 
     public long getTodayNewsCount() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now().minusDays(1);
         long todayNewsCount = jpaQueryFactory
                 .select(qNews)
                 .from(qNews)

@@ -52,8 +52,14 @@ public class CustomRepository {
     public List<Integer> getFrequencyStatsPerKeyword(PeriodEnum type, long keywordId) throws IllegalChartDataException {
         String query = repositoryUtils.buildFrequencyStatsPerKeywordQuery(type);
         int dateNum = type.getDateConstant();
+
+        // 주, 월, 년은 모두 이번 기간 기준인데 일만 어제 기준인 것을 반영
+        if (type != PeriodEnum.day) {
+            dateNum = dateNum - 1;
+        }
         LocalDate startDate = type.getTargetDate(dateNum);
         LocalDate lastDate = type.getRecentTime();
+
         List<Object[]> tupleList = entityManager
                 .createQuery(query)
                 .setParameter("keywordId", keywordId)

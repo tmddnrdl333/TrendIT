@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "s_year_target_time_index", columnList = "targetTime"))
 public class StatisticsYear {
 
     @Id
