@@ -88,7 +88,11 @@ export default {
       this.data = [];
       this.wordCloudData.forEach((item) => {
         max_size = item.count > max_size ? item.count : max_size;
-        this.data.push({ text: item.keyword, size: item.count });
+        this.data.push({
+          text: item.keyword,
+          size: item.count,
+          keywordId: item.keywordId,
+        });
       });
       try {
         const ctx = document.getElementById("wordcloud");
@@ -118,6 +122,7 @@ export default {
     end() {
       const width = 700;
       const height = 400;
+
       d3.select("#wordcloud")
         .append("svg")
         .attr("width", width)
@@ -129,6 +134,7 @@ export default {
         .data(this.data)
         .enter()
         .append("text")
+        .style("cursor", "pointer")
         .style("fill", (d) => {
           if (d.size > 60) return "#EE6C4D";
           return "blue";
@@ -143,7 +149,10 @@ export default {
         .attr("transform", (d) => {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text((d) => d.text);
+        .text((d) => d.text)
+        .on("click", function (d) {
+          location.href = "/keyword/" + d.keywordId;
+        });
     },
   },
   watch: {

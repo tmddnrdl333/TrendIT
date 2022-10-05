@@ -40,11 +40,11 @@
           <!-- <test-component></test-component> -->
           <q-scroll-area style="height: 200px; max-width: 300px">
             <q-infinite-scroll @load="onLoad" reverse>
-              <template v-slot:loading>
+              <!-- <template v-slot:loading>
                 <div class="row justify-center q-my-md">
                   <q-spinner color="primary" name="dots" size="40px" />
                 </div>
-              </template>
+              </template> -->
 
               <chat-component
                 v-for="(chat, index) in chats"
@@ -245,6 +245,7 @@ export default {
         (response) => {
           // 성공일 때
           // 성공 알림 후
+
           this.chats.push(
             new ChatDataRes(
               response.data.data.boardId,
@@ -253,6 +254,7 @@ export default {
               this.content
             )
           );
+          console.log("push2");
 
           this.password = "";
           this.content = "";
