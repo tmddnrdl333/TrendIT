@@ -1,5 +1,6 @@
 package com.trendit.scheduler;
 
+import com.trendit.api.service.RecentNewsService;
 import com.trendit.api.service.WebClientService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class PipelineScheduler {
 
     private final WebClientService webClientService;
+    private final RecentNewsService recentNewsService;
 
     @Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
     public void sendRequestExecutesPipeline() {
@@ -25,5 +27,8 @@ public class PipelineScheduler {
         String formatedTarget = target.format(formatter);
         webClientService.executeDataPipeline(formatedTarget);
         log.info("execute pipeline - {}", formatedTarget);
+
+        recentNewsService.truncateRecentNews();
+        recentNewsService.cacheRecentNews();
     }
 }
