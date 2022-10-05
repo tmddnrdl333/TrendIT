@@ -34,11 +34,11 @@
   </q-card>
 
   <q-dialog v-model="seamless" seamless>
-    <q-card>
-      <q-card-section
-        ><q-btn flat round icon="close" v-close-popup
-      /></q-card-section>
-      <q-card-section>
+    <q-card style="height: 300px; width: 450px;">
+      <q-card-section class="q-pa-xs">
+        <q-btn flat icon="close" v-close-popup/>
+      </q-card-section>
+      <q-card-section class="q-pa-xs">
         <q-tabs
           v-model="tab"
           dense
@@ -55,30 +55,39 @@
         <q-separator />
 
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="update">
+          <q-tab-panel name="update" class="text-center">
             <q-input
-              dense
-              outlined
-              type="password"
-              v-model="updatePassword"
-              label="비밀번호를 입력해주세요"
-            />
-            <q-input
-              outlined
-              autogrow
-              v-model="updateContent"
-              label="수정할 내용을 입력해주세요"
-            />
-            <q-btn color="primary" @click="updateBoard">수정</q-btn>
+            class="q-py-sm"
+            dense
+            filled
+            outlined
+            type="password"
+            v-model="updatePassword"
+            label="비밀번호를 입력해주세요"
+            stack-label
+          />
+          <q-input
+            class="q-py-sm"
+              filled autogrow
+            v-model="updateContent"
+            label="수정할 내용을 입력해주세요"
+            stack-label
+          />
+            
+            <q-btn class="" color="primary" @click="updateBoard">수정</q-btn>
+            
           </q-tab-panel>
 
-          <q-tab-panel name="delete">
+          <q-tab-panel name="delete" class="text-center" >
             <q-input
+              class="q-py-sm"
               dense
+              filled
               outlined
               type="password"
               v-model="deletePassword"
               label="비밀번호를 입력해주세요"
+              stack-label
             />
             <q-btn color="deep-orange" @click="deleteBoard">삭제</q-btn>
           </q-tab-panel>
