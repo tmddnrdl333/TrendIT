@@ -21,8 +21,7 @@
         </div>
         <div class="row justify-center q-col-gutter-x-md">
           <template v-for="item in recommendations" :key="item.id">
-            <!-- router-link to 로 바꾸고 싶은데 item에 keyword_id가 없음. (wordcloudapi 수정하면 좋을 듯) -->
-            <div>{{ item.keyword }}</div>
+            <q-btn @click="toSearch(item.keywordId)">{{ item.keyword }}</q-btn>
           </template>
         </div>
         <q-btn
@@ -285,6 +284,28 @@ export default {
     //     return false;
     //   } else return true;
     // },
+    toSearch(ID) {
+      const date = new Date();
+      const to =
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        date.getDate().toString().padStart(2, "0");
+      date.setDate(date.getDate() - 7).toString();
+      const from =
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        date.getDate().toString().padStart(2, "0");
+
+      this.$router.push({
+        name: "search_keyword",
+        params: { keyword_id: ID },
+        query: { period: from + "~" + to },
+      });
+    },
   },
 
   watch: {
