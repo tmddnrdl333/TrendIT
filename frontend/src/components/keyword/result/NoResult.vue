@@ -207,7 +207,7 @@ export default {
   methods: {
     // 일반 키워드 일때 - 유효성검사
     submitFormNormalKeyword() {
-      if (!this.keyword === "") {
+      if (!(this.keyword === "")) {
         this.createNormalKeyword();
       } else alert("에러");
     },
