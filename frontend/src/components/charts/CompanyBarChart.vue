@@ -1,9 +1,11 @@
 <template>
-  <q-card class="chart-container text-center">
+  <q-card flat bordered class="chart-container text-center bg-grey-1">
     <q-card-section>
       <q-btn-toggle
         v-model="type"
-        toggle-color="primary"
+        toggle-color="deep-orange-3"
+        toggle-text-color="black"
+        square
         :options="[
           { label: '일별', value: 'day' },
           { label: '주별', value: 'week' },

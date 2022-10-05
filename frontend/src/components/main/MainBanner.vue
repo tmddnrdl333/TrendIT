@@ -1,24 +1,5 @@
 <template>
   <div class="main-intro-container row">
-    <!-- <q-img class="intro-img" src="https://cdn.quasar.dev/img/parallax2.jpg" /> -->
-    <!-- <q-img class="intro-img" src="src/assets/visual_data.svg"  />
-    <div class="intro-content">
-      <div class="newscount-info">
-        <template v-if="totalCount == 0">
-          <p>뉴스 수집량을 계산 중입니다...</p>
-        </template>
-        <template v-else>
-          <p>금일 뉴스 수집 : {{ todayCount }} 건</p>
-          <p>전체 뉴스 수집 : {{ totalCount }} 건</p>
-        </template>
-      </div>
-      <div class="title">
-        <p>쉽고 빠른 IT 트렌드 분석 플랫폼</p>
-      </div>
-      <div class="subtitle">
-        <p>트렌드 분석 -></p>
-      </div>
-    </div> -->
     <div class="banner"> 
       <video class="video" autoplay muted>
         <source src="src/assets/banner.mp4" type="video/mp4">
@@ -32,6 +13,12 @@
           <p>전체 뉴스 수집 : {{ totalCount }} 건</p>
         </template>
       </div>
+      <Transition name="fade" appear >
+      <div :style="{ transitionDelay: delay }" v-if="show" class="keyword-direct" transition-show="jump-down" >  
+        <q-btn push color="deep-orange-11" :to="{ name: 'empty_keyword' }">키워드 분석 바로가기<q-icon size="xs" class="q-pl-xs" name="arrow_forward"/></q-btn>
+        </div>
+      </Transition>
+      
     </div>
   </div>
 </template>
@@ -56,6 +43,16 @@ export default {
       () => console.warn("failed to get news count")
     );
   },
+  data() {
+    return {
+      show: false,
+      delay: "0.5s"
+    }
+  },
+  mounted() {
+    this.show = true; // might need this.$nextTick
+  }
+
 };
 </script>
 
@@ -87,6 +84,12 @@ export default {
   display: block;
 }
 
+.keyword-direct{
+  position: absolute;
+  left: 45px;
+  bottom: 120px;
+}
+
 .newscount-info {
   position: absolute;
   right: 10px;
@@ -97,5 +100,12 @@ export default {
 .newscount-info > p {
   margin: 0px auto;
   font-size: 12px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>

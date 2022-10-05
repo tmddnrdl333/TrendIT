@@ -1,8 +1,8 @@
 <template>
   <div>
     <q-card class="keyword-search q-pa-lg">
-      <q-card-section>
-        <div>키워드 검색</div>
+      <q-card-section class="card-title">
+        <div class="title q-mt-xs">키워드 검색</div>
       </q-card-section>
       <q-separator inset />
       <!-- 검색창 -->
@@ -13,6 +13,7 @@
             class="search-bar"
             outlined
             dense
+            color="light-blue-9"
             label="검색"
             v-model="search"
             use-input
@@ -25,7 +26,7 @@
             @keydown.enter="toResult()"
           >
             <template v-slot:after>
-              <q-btn round dense @click="toResult()">
+              <q-btn push unelevated color="deep-orange-4" @click="toResult()">
                 <q-icon name="search" />
               </q-btn>
             </template>
@@ -38,7 +39,8 @@
           </q-select>
         </div>
         <div class="row justify-center q-pt-md">
-          <q-btn dense @click="dialog = true" size="5px">
+          <q-btn square @click="dialog = true" size="13px" text-color="grey-8" >
+            <q-icon size="xs" class="q-pr-sm" name="today" />
             {{ period.from }} ~ {{ period.to }}
           </q-btn>
         </div>
@@ -137,6 +139,17 @@ export default {
 
 <style scoped>
 /* 1 */
+.title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+  margin-top:10px;
+
+}
+
+.search-bar {
+  width: 450px;
+}
+
 .keyword-search {
   width: 1200px;
   margin: 15px 0px;

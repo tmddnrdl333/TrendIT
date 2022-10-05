@@ -3,7 +3,9 @@
     <q-card-section>
       <q-btn-toggle
         v-model="type"
-        toggle-color="primary"
+        toggle-color="deep-orange-3"
+        toggle-text-color="black"
+        square
         :options="[
           { label: '일별', value: 'day' },
           { label: '주별', value: 'week' },
@@ -238,6 +240,7 @@ export default {
   /* test */
 }
 .chart-container {
+  font-family: "NanumBarunGothic";
   padding: 5px;
   width: 700px;
   margin: 20px auto;

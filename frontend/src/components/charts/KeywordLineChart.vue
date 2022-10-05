@@ -1,9 +1,11 @@
 <template>
-  <q-card class="chart-container text-center">
+  <q-card flat bordered class="chart-container text-center bg-grey-1">
     <q-card-section>
       <q-btn-toggle
         v-model="type"
-        toggle-color="primary"
+        toggle-color="deep-orange-3"
+        toggle-text-color="black"
+        square
         :options="[
           { label: '일별', value: 'day' },
           { label: '주별', value: 'week' },
@@ -19,7 +21,8 @@
     </q-card-section>
   </q-card>
   <div class="q-pa-md q-gutter-md">
-    <q-card class="side-card q-pa-sm column justify-evenly">
+    <!-- <q-card flat bordered class="chart-container text-center bg-grey-1"> -->
+    <q-card flat bordered class="side-card q-pa-sm column justify-evenly bg-grey-1">
       <div class="row justify-center">
         <q-icon name="event" size="21px" left />
         <div class="most-news-date-title">
@@ -28,10 +31,10 @@
         </div>
       </div>
       <div class="row justify-center most-news-date-content">
-        {{ side_card.date }}
+        <strong>{{ side_card.date }}</strong>
       </div>
     </q-card>
-    <q-card class="side-card q-pa-sm column justify-evenly">
+    <q-card flat bordered class="side-card q-pa-sm column justify-evenly bg-grey-1">
       <div class="row justify-center">
         <q-icon name="trending_up" size="21px" left />
         <div class="most-news-date-title">
@@ -43,12 +46,12 @@
         <q-icon
           v-if="side_card.percentage > 0"
           name="arrow_drop_up"
-          color="red"
+          color="red-6"
           size="35px"
         />
-        <q-icon v-else name="arrow_drop_down" color="blue" size="35px" />
+        <q-icon v-else name="arrow_drop_down" color="blue-7" size="35px" />
         <div class="rating-content" :style="{ color: updownColor }">
-          {{ Math.abs(side_card.percentage) }}%
+          <strong>{{ Math.abs(side_card.percentage) }}%</strong>
         </div>
       </div>
     </q-card>
@@ -205,9 +208,9 @@ export default {
             10000
         ) / 100;
       if (this.side_card.percentage > 0) {
-        this.updownColor = "red";
+        this.updownColor = "#F44336";
       } else {
-        this.updownColor = "blue";
+        this.updownColor = "#1E88E5";
       }
 
       let data = {
@@ -301,23 +304,23 @@ export default {
 }
 
 .most-news-date-title {
-  font-family: "Hanna", fantasy;
-  font-size: 16px;
+  font-family: "NanumBarunGothic";
+  font-size: 15px;
 }
 .most-news-date-content {
-  font-family: "Hanna", fantasy;
-  font-size: 24px;
+  font-family: "NanumBarunGothic";
+  font-size: 22px;
 }
 .rating-title {
-  font-family: "Hanna", fantasy;
-  font-size: 16px;
+  font-family: "NanumBarunGothic";
+  font-size: 15px;
 }
 .rating-content {
-  font-family: "Hanna", fantasy;
-  font-size: 24px;
+  font-family: "NanumBarunGothic";
+  font-size: 22px;
 }
 .label-option {
-  font-family: "Hanna", fantasy;
+  font-family: "NanumBarunGothic";
   font-size: 21px;
 }
 </style>

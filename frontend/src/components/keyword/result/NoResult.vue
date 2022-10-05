@@ -3,27 +3,35 @@
     <q-card-section class="row">
       <div class="col-5 row justify-center q-pa-md">
         <div class="no-img row justify-center items-center">
-          <q-img src="../../../assets/no-image.png" width="320px" />
+          <video class="video" autoplay muted>
+            <source src="src/assets/keyword_v1.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
       <div class="col-5 column justify-center q-pa-md q-gutter-md">
-        <div class="title">키워드를 입력해 뉴스를 검색해보세요!</div>
-        <div class="subtitle">
+        <div class="center-text title">키워드를 입력해 뉴스를 검색해보세요!</div>
+        <div class="center-text subtitle">
           키워드 분석 및 뉴스 검색 결과를 확인할 수 있습니다.
         </div>
         <q-separator></q-separator>
-        <div class="row justify-center">추천 키워드로 쉽게 시작해보세요!</div>
-        <div class="row justify-center q-gutter-x-md">
+        <div class="center-text row justify-center">추천 키워드로 쉽게 시작해보세요!</div>
+        <div class="row justify-center q-col-gutter-x-md">
           <template v-for="item in recommendations" :key="item.id">
             <!-- router-link to 로 바꾸고 싶은데 item에 keyword_id가 없음. (wordcloudapi 수정하면 좋을 듯) -->
             <div>{{ item.keyword }}</div>
           </template>
         </div>
         <q-btn
+          flat
+          color="white"
+          text-color="light-blue-9"
+          class="new_keyword"
           @click="keywordCreate = true"
-          label="새로운 키워드 등록"
-          color="primary"
-        />
+          align="around"
+          icon="create"
+          label="새로운 키워드 등록하기"
+        >
+        </q-btn>
       </div>
     </q-card-section>
   </q-card>
@@ -295,6 +303,10 @@ export default {
 </script>
 
 <style scoped>
+.center-text{
+  margin-left: auto;
+  margin-right: auto;
+}
 .title {
   font-size: 150%;
 }
@@ -302,10 +314,17 @@ export default {
   color: gray;
 }
 
-.no-img {
-  background-color: rgb(30 53 93);
-  border-radius: 10px;
-  width: 350px;
-  height: 350px;
+.video{
+  width: 300px;
+  height: 300px;
 }
+
+.new_keyword{
+  font-size: 12px;
+  margin-top: 20px;
+  width:180px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
 </style>

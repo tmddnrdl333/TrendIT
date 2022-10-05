@@ -1,7 +1,7 @@
 <template>
   <q-card class="wordcloud-container">
     <q-card-section class="card-title q-ml-lg">
-      <div class="title q-mt-xs" style=" margin-top:10px">오늘의 트렌드</div>
+      <div class="title q-mt-xs">오늘의 트렌드</div>
     </q-card-section>
     <q-card-section class="card-content row items-center justify-center" >
       <!-- WordCloud -->
@@ -15,7 +15,9 @@
         <div class="text-center">
           <q-btn-toggle
             v-model="type"
-            toggle-color="primary"
+            toggle-color="deep-orange-3"
+            toggle-text-color="black"
+            square
             :options="[
               { label: '일별', value: 'day' },
               { label: '주별', value: 'week' },
@@ -105,7 +107,7 @@ export default {
       cloud()
         .size([width, height])
         .words(this.data)
-        .padding(2)
+        .padding(10)
         .rotate(0)
         .font("Impact")
         .text((d) => d.text)
@@ -131,7 +133,7 @@ export default {
         .append("text")
         .style("fill", (d) => {
           if (d.size > 60) return "#EE6C4D";
-          return "blue";
+          return "#3D5A80";
         })
         .style("font-size", (d) => {
           return d.size + "px";
@@ -139,6 +141,7 @@ export default {
         // .style("padding", "100px")
         // .style("margin", "100px")
         // .style("font-family", `"Hanna", fantasy`)
+        
         .style("font-family", "NanumBarunGothicBold")
         .attr("text-anchor", "middle")
         .attr("transform", (d) => {
@@ -164,6 +167,7 @@ export default {
 .title {
   font-family: "NanumBarunGothicBold";
   font-size: 17px;
+  margin-top:10px
 }
 
 .card-title{
@@ -176,6 +180,7 @@ export default {
 
 .wordcloud-container {
   width: 1050px;
+  /* width: 100%; */
   margin: 20px auto;
 }
 .rank-container {
@@ -186,7 +191,7 @@ export default {
   font-family: "NanumBarunGothic";
   /* font-family: "Hanna", fantasy; */
   font-size: 18px;
-  padding: 4px;
+  padding: 12px;
 }
 .rank-container-content {
   font-family: "NanumBarunGothic";

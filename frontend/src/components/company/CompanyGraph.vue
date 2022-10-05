@@ -1,8 +1,8 @@
 <template>
-  <q-card class="company-graph q-pa-lg">
-    <q-card-section>
-      <div>기업별 뉴스분석</div>
-    </q-card-section>
+  <q-card class="company-graph q-pa-md">
+    <q-card-section class="card-title">
+        <div class="title q-mt-xs">기업별 뉴스 분석</div>
+      </q-card-section>
     <q-separator inset />
     <q-card-section class="row justify-center">
       <company-bar-chart />
@@ -19,11 +19,20 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+  /* margin-top:10px; */
+  
+}
 .company-graph {
   /* common */
-  width: 1200px;
+  max-width: 1050px;
+  width: 100%;
   background-color: #ffffff;
   margin-top: 10px;
   margin-bottom: 10px;
+
+  font-family: "NanumBarunGothic";
 }
 </style>
