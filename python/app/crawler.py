@@ -62,7 +62,7 @@ def crawl_data(driver, wait, begin_date, end_date):
                 news_link_exists = info.find_element(by=By.XPATH, value='div').get_attribute("innerHTML").split()
                 news_link = news_link_exists[1].split("\"")[1] if news_link_exists[0] == "<a" else ""
                 print(news_agency, news_link)
-                data.append(tuple([headline, img_link, news_agency, news_content, news_date, news_date]))
+                data.append(tuple([headline, img_link, news_agency, news_content, news_date, news_link]))
             except:
                 continue
 
