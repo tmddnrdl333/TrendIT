@@ -16,6 +16,9 @@ public class StatsService {
     CustomRepository customRepository;
 
     public List<BarChartData> getBarChartData(PeriodEnum type, int val) {
+        if (type != PeriodEnum.day) {
+            val = val - 1;
+        }
         LocalDate targetTime = type.getTargetDate(val);
         return customRepository.getFrequencyStats(type, targetTime, false);
     }

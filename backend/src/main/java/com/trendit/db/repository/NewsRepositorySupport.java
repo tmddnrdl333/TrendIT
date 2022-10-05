@@ -55,7 +55,10 @@ public class NewsRepositorySupport {
                 .limit(pageable.getPageSize())
                 .orderBy(qNews.newsId.desc())
                 .fetchResults();
-        return new PageImpl<>(latestNews.getResults(), pageable, latestNews.getTotal());
+
+        long totalSize = latestNews.getTotal() < 500 ? latestNews.getTotal() : 500;
+
+        return new PageImpl<>(latestNews.getResults(), pageable, totalSize);
     }
 
 

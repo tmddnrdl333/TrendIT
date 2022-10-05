@@ -17,10 +17,6 @@ public enum PeriodEnum {
     private final int dateConstant;
     private final String targetEntity;
 
-//    private int offset(int val) {
-//        return dateConstant - val;
-//    }
-
     public LocalDate getTargetDate(int timeOffset) {
         LocalDate targetTime = LocalDate.now();
         if (this == day) {
