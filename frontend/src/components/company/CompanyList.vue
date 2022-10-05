@@ -1,27 +1,27 @@
 <template>
   <q-card class="company-list q-pa-md">
     <q-card-section class="card-title">
-        <div class="title">기업 리스트</div>
-      </q-card-section>
+      <div class="title">기업 리스트</div>
+    </q-card-section>
 
-      <!-- 검색창 -->
-      <q-card-section class="row justify-center q-py-xs">
-        <q-input
-          class="search-bar"
-          v-model="search"
-          label="검색"
-          outlined
-          dense
-          bottom-slots
-          @keydown.enter="doSearch()"
-        >
-          <template v-slot:after>
-            <q-btn push unelevated color="white" @click="toResult()">
-                <q-icon color="grey" name="search" />
-              </q-btn>
-          </template>
-        </q-input>
-      </q-card-section>
+    <!-- 검색창 -->
+    <q-card-section class="row justify-center q-py-xs">
+      <q-input
+        class="search-bar"
+        v-model="search"
+        label="검색"
+        outlined
+        dense
+        bottom-slots
+        @keydown.enter="doSearch()"
+      >
+        <template v-slot:after>
+          <q-btn push unelevated color="white" @click="doSearch()">
+            <q-icon color="grey" name="search" />
+          </q-btn>
+        </template>
+      </q-input>
+    </q-card-section>
     <q-separator inset />
     <div class="flex q-pa-lg justify-around">
       <template v-for="(item, index) of company_list" :key="index">
@@ -111,7 +111,6 @@ export default {
 .title {
   font-family: "NanumBarunGothicBold";
   font-size: 17px;
-  
 }
 
 .search-bar {
