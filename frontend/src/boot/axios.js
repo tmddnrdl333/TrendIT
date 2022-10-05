@@ -8,7 +8,7 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "http://j7a301.p.ssafy.io:8080/api",
   headers: {
     "Content-type": "application/json",
   },

@@ -11,9 +11,9 @@
     </q-card-section>
   </q-card>
   <q-card class="keyword-analyze-result q-pa-lg">
-   <q-card-section class="card-title">
-        <div class="title q-mt-xs">키워드 분석 결과</div>
-      </q-card-section>
+    <q-card-section class="card-title">
+      <div class="title q-mt-xs">키워드 분석 결과</div>
+    </q-card-section>
     <q-separator inset />
     <div class="flex q-pa-lg justify-around">
       <!-- TODO: img중앙정렬, 글자 폰트 적용 후 위치 조정 -->
@@ -69,6 +69,8 @@ export default {
     };
   },
   async mounted() {
+    console.log(this.$route.query.period);
+
     this.keyword_id = this.$route.params.keyword_id;
     await getKeywordApi(
       this.keyword_id,
@@ -131,7 +133,6 @@ export default {
   font-family: "NanumBarunGothicBold";
   font-size: 17px;
   /* margin-top:10px; */
-  
 }
 .news-card {
   width: 250px;

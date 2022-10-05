@@ -4,21 +4,26 @@
       <div class="col-5 row justify-center q-pa-md">
         <div class="no-img row justify-center items-center">
           <video class="video" autoplay muted>
-            <source src="src/assets/keyword_v1.mp4" type="video/mp4">
+            <source src="src/assets/keyword_v1.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
       <div class="col-5 column justify-center q-pa-md q-gutter-md">
-        <div class="center-text title">키워드를 입력해 뉴스를 검색해보세요!</div>
+        <div class="center-text title">
+          키워드를 입력해 뉴스를 검색해보세요!
+        </div>
         <div class="center-text subtitle">
           키워드 분석 및 뉴스 검색 결과를 확인할 수 있습니다.
         </div>
         <q-separator></q-separator>
-        <div class="center-text row justify-center">추천 키워드로 쉽게 시작해보세요!</div>
+        <div class="center-text row justify-center">
+          추천 키워드로 쉽게 시작해보세요!
+        </div>
         <div class="row justify-center q-col-gutter-x-md">
           <template v-for="item in recommendations" :key="item.id">
-            <!-- router-link to 로 바꾸고 싶은데 item에 keyword_id가 없음. (wordcloudapi 수정하면 좋을 듯) -->
-            <div>{{ item.keyword }}</div>
+            <q-btn flat @click="toSearch(item.keywordId)">{{
+              item.keyword
+            }}</q-btn>
           </template>
         </div>
         <q-btn
@@ -281,6 +286,28 @@ export default {
     //     return false;
     //   } else return true;
     // },
+    toSearch(ID) {
+      const date = new Date();
+      const to =
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        date.getDate().toString().padStart(2, "0");
+      date.setDate(date.getDate() - 7).toString();
+      const from =
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1).toString().padStart(2, "0") +
+        "-" +
+        date.getDate().toString().padStart(2, "0");
+
+      this.$router.push({
+        name: "search_keyword",
+        params: { keyword_id: ID },
+        query: { period: from + "~" + to },
+      });
+    },
   },
 
   watch: {
@@ -303,7 +330,7 @@ export default {
 </script>
 
 <style scoped>
-.center-text{
+.center-text {
   margin-left: auto;
   margin-right: auto;
 }
@@ -314,17 +341,16 @@ export default {
   color: gray;
 }
 
-.video{
+.video {
   width: 300px;
   height: 300px;
 }
 
-.new_keyword{
+.new_keyword {
   font-size: 12px;
   margin-top: 20px;
-  width:180px;
-  margin-left:auto;
-  margin-right:auto;
+  width: 180px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 </style>
