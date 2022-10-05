@@ -56,7 +56,7 @@ public class KeywordNewsRepositorySupport {
             KeywordHasNews keywordHasNews = tuple.get(qKeywordHasNews);
             News news = tuple.get(qNews);
             NewsData newsData = new NewsData(news.getNewsId(), news.getHeadline(), news.getNewsContent(), news.getNewsDate(), news.getNewsAgency(), news.getNewsLink(), news.getImgLink());
-            KeywordNewsData keywordNewsData = new KeywordNewsData(keyword.getKeyword(), statisticsDate.getFrequency(), newsData);
+            KeywordNewsData keywordNewsData = new KeywordNewsData(keyword.getKeyword(), keyword.getKeywordId(), statisticsDate.getFrequency(), newsData);
             data.add(keywordNewsData);
         }
         return data;

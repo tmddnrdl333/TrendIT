@@ -9,6 +9,7 @@ import lombok.Getter;
 @Builder
 public class KeywordNewsData {
  String keyword;
+ Long keywordId;
  int count;
  NewsData newsData;
 }

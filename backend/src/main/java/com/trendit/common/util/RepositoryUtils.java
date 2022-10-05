@@ -18,7 +18,7 @@ public class RepositoryUtils {
     public String buildKeywordNewsQuery(PeriodEnum type) {
         String targetEntity = type.targetEntityToSnakeCase();
 
-        StringBuffer queryBuffer = new StringBuffer("select s.frequency,k.keyword,");
+        StringBuffer queryBuffer = new StringBuffer("select s.frequency,k.keyword,k.keyword_id,");
         queryBuffer.append("n.news_id,n.headline,n.news_content,n.news_date,");
         queryBuffer.append("n.news_agency,n.news_link,n.img_link from ");
         queryBuffer.append(targetEntity); // "StatisticsDate"
@@ -42,16 +42,17 @@ public class RepositoryUtils {
         for (Object[] row : list) {
             int frequency = (int)row[0];
             String keyword = (String)row[1];
-            long newsId = ((BigInteger)row[2]).longValue();
-            String headline = (String)row[3];
-            String newsContent = (String)row[4];
-            LocalDate newsDate = ((Date)row[5]).toLocalDate();
-            String newsAgency = (String)row[6];
-            String newsLink = (String)row[7];
-            String imgLink = (String)row[8];
+            Long keywordId = ((BigInteger)row[2]).longValue();
+            long newsId = ((BigInteger)row[3]).longValue();
+            String headline = (String)row[4];
+            String newsContent = (String)row[5];
+            LocalDate newsDate = ((Date)row[6]).toLocalDate();
+            String newsAgency = (String)row[7];
+            String newsLink = (String)row[8];
+            String imgLink = (String)row[9];
 
             NewsData newsData = new NewsData(newsId, headline, newsContent, newsDate, newsAgency, newsLink, imgLink);
-            KeywordNewsData keywordNewsData = new KeywordNewsData(keyword, frequency, newsData);
+            KeywordNewsData keywordNewsData = new KeywordNewsData(keyword, keywordId, frequency, newsData);
             data.add(keywordNewsData);
         }
 
