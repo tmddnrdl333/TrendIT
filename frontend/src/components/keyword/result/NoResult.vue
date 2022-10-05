@@ -21,7 +21,9 @@
         </div>
         <div class="row justify-center q-col-gutter-x-md">
           <template v-for="item in recommendations" :key="item.id">
-            <q-btn @click="toSearch(item.keywordId)">{{ item.keyword }}</q-btn>
+            <q-btn flat @click="toSearch(item.keywordId)">{{
+              item.keyword
+            }}</q-btn>
           </template>
         </div>
         <q-btn
