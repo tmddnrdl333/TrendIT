@@ -19,10 +19,11 @@ services:
       MYSQL_ROOT_PASSWORD: trendit829
       TZ: "Asia/Seoul"
     privileged: true
-  trendit:
+  spring_backend:
+    image: backend:1
     build:
-      context: ./
-    container_name: trendit
+      context: ./build
+    container_name: spring_backend
     restart: always
     ports:
       - "8080:8080"
@@ -37,7 +38,76 @@ services:
       - app-network
     depends_on:
       - db
-
+  python_backend:
+    build:
+      context: .
+      dockerfile: ../python/Dockerfile
+    container_name: python_backend
+    restart: always
+    ports:
+      - 9090:9090
+    environment:
+      TZ: "Asia/Seoul"
+      TRENDIT_DB_PASSWORD: <TRENDIT_DB_PASSWORD>
+      TRENDIT_DB_HOST: <TRENDIT_DB_HOST>
+    networks:
+      - app-network
+    depends_on:
+      - db
+  certbot:
+    depends_on:
+      - nginx
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./dist:/var/www/html
+    command: renew
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dist:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+    depends_on:
+      - certbot
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: ../frontend/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - "80"
+      - "443"
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+    networks:
+      - app-network
+  jenkins:
+    restart: always
+    image: jenkins/jenkins:lts
+    user: root
+    container_name: jenkins
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - /jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  certbot-etc:
+  dist:
+  nginx-conf:
 networks:
   app-network:
     driver: bridge

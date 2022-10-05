@@ -1,5 +1,6 @@
 class ChatDataRes {
-  constructor(createdDate, userName, boardContent) {
+  constructor(boardId, createdDate, userName, boardContent) {
+    this.boardId = boardId;
     this.createdDate = createdDate;
     this.userName = userName;
     this.boardContent = boardContent;

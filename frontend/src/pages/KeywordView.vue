@@ -8,7 +8,7 @@
 <script>
 import { defineComponent } from "vue";
 import KeywordComp from "../components/keyword/KeywordComp.vue";
-import KeywordCreate from "../components/keyword/KeywordCreate.vue";
+import KeywordCreate from "../components/keyword/result/KeywordCreate.vue";
 
 export default defineComponent({
   name: "KeywordView",

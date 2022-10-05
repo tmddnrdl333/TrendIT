@@ -24,7 +24,7 @@ public class KeywordService {
     private final WebClient webClient;
 
     private final KeywordNewsRepositorySupport keywordNewsRepositorySupport;
-    private  final KeywordRepositorySupport keywordRepositorySupport;
+    private final KeywordRepositorySupport keywordRepositorySupport;
     private final CustomRepository customRepository;
     private final KeywordRepository keywordRepository;
     private final CompanyRepository companyRepository;
@@ -64,7 +64,7 @@ public class KeywordService {
         }
     }
 
-    public Keyword toKeywordEntity (String keyword, Company company) {
+    public Keyword toKeywordEntity(String keyword, Company company) {
         return Keyword.builder()
                 .keyword(keyword)
                 .company(company)
@@ -79,10 +79,13 @@ public class KeywordService {
 
     public List<KeywordData> getKeywordList(String keyword) {
         List<KeywordData> keywordList = keywordRepositorySupport.getKeywordList(keyword);
+        for (KeywordData keywordData : keywordList) {
+            System.out.println(keywordData);
+        }
         return keywordList;
     }
 
-    public KeywordData getKeyword(long keyword_id){
+    public KeywordData getKeyword(long keyword_id) {
         KeywordData keyword = keywordRepositorySupport.getKeyword(keyword_id);
         return keyword;
     }
