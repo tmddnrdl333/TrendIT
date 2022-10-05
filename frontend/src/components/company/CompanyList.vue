@@ -1,10 +1,11 @@
 <template>
-  <q-card class="company-list q-pa-lg">
-    <q-card-section>
-      <div>기업 리스트</div>
+  <q-card class="company-list q-pa-md">
+    <q-card-section class="card-title">
+        <div class="title">기업 리스트</div>
+      </q-card-section>
 
       <!-- 검색창 -->
-      <q-card-section class="row justify-center">
+      <q-card-section class="row justify-center q-py-xs">
         <q-input
           class="search-bar"
           v-model="search"
@@ -15,13 +16,12 @@
           @keydown.enter="doSearch()"
         >
           <template v-slot:after>
-            <q-btn round dense @click="doSearch()">
-              <q-icon name="search" />
-            </q-btn>
+            <q-btn push unelevated color="white" @click="toResult()">
+                <q-icon color="grey" name="search" />
+              </q-btn>
           </template>
         </q-input>
       </q-card-section>
-    </q-card-section>
     <q-separator inset />
     <div class="flex q-pa-lg justify-around">
       <template v-for="(item, index) of company_list" :key="index">
@@ -45,7 +45,7 @@
       </template>
     </div>
     <div class="q-pa-lg flex flex-center">
-      <q-pagination v-model="current" :max="max_page" input />
+      <q-pagination v-model="current" :max="max_page" color="blue-6" input />
     </div>
   </q-card>
   <q-dialog v-model="dialog">
@@ -108,16 +108,23 @@ export default {
 @import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
 @import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
 
+.title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+  
+}
+
 .search-bar {
   width: 500px;
 }
 
 .company-list {
-  height: 1200px;
-  width: 1200px;
+  height: 1000px;
+  max-width: 1050px;
+  width: 100%;
   background-color: #ffffff;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
 }
 .company-card {
   height: 200px;
@@ -126,14 +133,12 @@ export default {
 }
 
 .company-title {
-  /* font-family: "NanumBarunGothicBold"; */
-  font-family: "Hanna", fantasy;
-  font-size: 24px;
+  font-family: "NanumBarunGothicBold";
+  font-size: 20px;
 }
 .company-content {
-  /* font-family: "NanumBarunGothicBold"; */
-  font-family: "Hanna", fantasy;
-  font-size: 16px;
+  font-family: "NanumBarunGothic";
+  font-size: 13px;
 }
 .add-home {
   position: absolute;

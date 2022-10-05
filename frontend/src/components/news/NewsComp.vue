@@ -2,41 +2,26 @@
   <q-card class="news-comp q-pa-lg">
     <q-card-section class="row justify-center">
       <!-- 기간 설정 -->
-      <div>
-        <q-field label="기간 설정" stack-label class="q-mx-md q-mb-md">
-          <template v-slot:control>
-            <div class="self-center full-width no-outline">
-              {{ newsDate.from }} ~ {{ newsDate.to }}
-            </div>
-          </template>
-          <template v-slot:append>
-            <q-btn dense @click="newsDateDialog = true">
-              <q-icon name="calendar_month" />
-            </q-btn>
-          </template>
-        </q-field>
+      <div class="q-gutter-lg">
+        <q-btn square text-color="grey-8" @click="newsDateDialog = true" size="13px">
+          <q-icon size="xs" class="q-pr-sm" name="today" />
+          {{ newsDate.from }} ~ {{ newsDate.to }}
+        </q-btn>
 
-        <q-field label="언론사 설정" stack-label class="q-mx-md q-mb-md">
-          <template v-slot:control>
-            <div class="self-center full-width no-outline">
+        <q-btn square text-color="grey-8" @click="newsAgencyDialog = true">
+          <q-icon size="xs" class="q-pr-sm" name="settings" />
               {{ press(selection.length) }}
-            </div>
-          </template>
-          <template v-slot:append>
-            <q-btn dense @click="newsAgencyDialog = true">
-              <q-icon name="settings" />
-            </q-btn>
-          </template>
-        </q-field>
+        </q-btn>
 
         <!-- 날짜 dialog -->
         <q-dialog v-model="newsDateDialog">
           <q-card>
-            <q-card-section>
-              검색 기간 설정
-              <br />
-              {{ newsDate.from }} ~ {{ newsDate.to }}
-              <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
+            <q-card-section class="q-py-sm">
+              <div class="relative-position container flex flex-center" style="color:grey; font-size:12px;">검색 기간 설정</div>
+              <div class="relative-position container flex flex-center q-mt-sm" style="">
+                {{ newsDate.from }} ~ {{ newsDate.to }}
+                <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
+              </div>
             </q-card-section>
             <q-separator />
             <q-card-section>
@@ -58,7 +43,7 @@
                 >
                   <q-chip
                     v-model:selected="newsAgencyOption[newsAgency]"
-                    color="primary"
+                    color="light-blue-7"
                     text-color="white"
                     :label="newsAgency"
                   >
@@ -70,7 +55,7 @@
         </q-dialog>
 
         <!-- 검색 버튼 -->
-        <q-btn label="검색" color="primary" @click="getNewsByOptions()"></q-btn>
+        <q-btn push label="검색" color="deep-orange-3" text-color="black" @click="getNewsByOptions()" />
       </div>
 
       <!-- First Card -->
@@ -398,7 +383,7 @@ export default {
   computed: {
     press() {
       return function (length) {
-        if (length == 0) return "전체";
+        if (length == 0) return "전체 언론사";
         return length + "개 언론사";
       };
     },
@@ -437,8 +422,8 @@ export default {
   width: 1200px;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-family: "NanumBarunGothic";
 }
-
 /* 1 */
 .main-card {
   height: 400px;
@@ -458,11 +443,9 @@ export default {
   font-size: 28px;
 }
 .first-card-content {
-  font-family: "NanumBarunGothic";
   font-size: 20px;
 }
 .first-card-agency {
-  font-family: "NanumBarunGothic";
   font-size: 16px;
 }
 
@@ -471,12 +454,10 @@ export default {
   font-size: 16px;
 }
 .cards-content {
-  font-family: "NanumBarunGothic";
   font-size: 14px;
 }
 .cards-agency {
   color: gray;
-  font-family: "NanumBarunGothic";
   font-size: 12px;
 }
 </style>

@@ -5,7 +5,7 @@
         <!-- <q-toolbar-title>TRENDIT</q-toolbar-title> -->
         <router-link to="/" > 
         <!-- <q-skeleton type="QBtn" /> -->
-        <q-btn flat><img class="logo" src="src/assets/logo_v1.png" alt=""></q-btn>
+        <q-btn flat><img class="logo" src="~/assets/logo_v1.png" alt=""></q-btn>
         </router-link>
         </q-toolbar>
       
