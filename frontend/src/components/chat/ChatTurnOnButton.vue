@@ -2,43 +2,34 @@
   <div class="q-pa-md q-gutter-sm">
     <q-btn
       round
-      color="primary"
-      size="xl"
-      icon="message"
+      color="btn"
+      size="lg"
+      icon="textsms"
       @click="seamless = true"
     />
 
     <q-dialog id="chat" v-model="seamless" seamless position="right">
       <q-card
-        style="
-          width: 300px;
-          height: 500px;
-          margin-right: 20px;
-          margin-top: 20px;
-          border-radius: 30px;
-        "
+        class="chat-dialog"
+        style="border-radius: 10px;"
       >
         <q-card-section
-          class="row items-center no-wrap"
-          style="
-            background-color: #1a237e !important;
-            color: white;
-            font-size: 23px;
-          "
+          class="chat-title row items-center no-wrap"
+          
         >
           <!-- <p>키워드 채팅</p> -->
-          <div style="flex-basis: 250px; text-align: center">키워드 채팅</div>
+          <div style="margin:auto; text-align: center;">키워드 채팅</div>
           <q-btn
             flat
             round
             icon="close"
             v-close-popup
-            style="flex-basis: 50px"
+            style="position:absolute; right:5px;"
           />
         </q-card-section>
         <q-card-section>
           <!-- <test-component></test-component> -->
-          <q-scroll-area style="height: 200px; max-width: 300px">
+          <q-scroll-area style="height: 270px; max-width: 300px">
             <q-infinite-scroll @load="onLoad" reverse>
               <!-- <template v-slot:loading>
                 <div class="row justify-center q-my-md">
@@ -58,23 +49,23 @@
             </q-infinite-scroll>
           </q-scroll-area>
         </q-card-section>
-        <q-card-section>
-          <div style="display: flex; flex-direction: row; align-items: center">
-            <div style="margin-right: 20px; font-size: 15px; color: gray">
+        <q-card-section class="input-card q-pa-sm">
+          <div class="q-pa-xs" style="display: flex; flex-direction: row; align-items: center">
+            <div style="margin-right: 5px; font-size: 12px; color: gray">
               비밀번호 :
             </div>
             <q-input
-              rounded
               standout
               dense
-              style="width: 100px"
+              style="width: 80px;"
+              class="input-pw"
               color="dark"
               bg-color="grey-3"
               type="password"
               v-model="password"
             />
           </div>
-          <q-input filled autogrow v-model="content" :label="nicknameLabel">
+          <q-input filled autogrow v-model="content" stack-label :label="nicknameLabel">
             <template v-slot:after>
               <q-btn round dense flat icon="send" @click="sendMasseage" />
             </template>
@@ -271,5 +262,39 @@ export default {
 };
 </script>
 
-<style></style>
->
+<style>
+.chat-title {
+  font-family: "NanumBarunGothic";
+  background-color: #3D5A80 !important;
+  color: white;
+  font-size: 20px;
+  height: 55px;
+}
+.chat-dialog {
+  width: 300px;
+  height: 450px;
+  margin-top: 20px;
+  margin-right: 10px;
+  
+}
+.input-card{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-family: "NanumBarunGothic";
+}
+.input-pw .q-field__control {
+  height: 25px;
+}
+
+.q-dialog__inner {
+  position: fixed;
+  top: 180px;
+}
+
+.bg-btn{
+  background : #3D5A80;
+}
+
+</style>
+

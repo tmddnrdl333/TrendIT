@@ -4,7 +4,7 @@
       <div class="col-5 row justify-center q-pa-md">
         <div class="no-img row justify-center items-center">
           <video class="video" autoplay muted>
-            <source src="src/assets/keyword_v1.mp4" type="video/mp4" />
+            <source src="~assets/keyword_v1.mp4" type="video/mp4">
           </video>
         </div>
       </div>
