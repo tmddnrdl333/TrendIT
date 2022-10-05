@@ -3,22 +3,35 @@
     <q-card-section class="row justify-center">
       <!-- 기간 설정 -->
       <div class="q-gutter-lg">
-        <q-btn square text-color="grey-8" @click="newsDateDialog = true" size="13px">
+        <q-btn
+          square
+          text-color="grey-8"
+          @click="newsDateDialog = true"
+          size="13px"
+        >
           <q-icon size="xs" class="q-pr-sm" name="today" />
           {{ newsDate.from }} ~ {{ newsDate.to }}
         </q-btn>
 
         <q-btn square text-color="grey-8" @click="newsAgencyDialog = true">
           <q-icon size="xs" class="q-pr-sm" name="settings" />
-              {{ press(selection.length) }}
+          {{ press(selection.length) }}
         </q-btn>
 
         <!-- 날짜 dialog -->
         <q-dialog v-model="newsDateDialog">
           <q-card>
             <q-card-section class="q-py-sm">
-              <div class="relative-position container flex flex-center" style="color:grey; font-size:12px;">검색 기간 설정</div>
-              <div class="relative-position container flex flex-center q-mt-sm" style="">
+              <div
+                class="relative-position container flex flex-center"
+                style="color: grey; font-size: 12px"
+              >
+                검색 기간 설정
+              </div>
+              <div
+                class="relative-position container flex flex-center q-mt-sm"
+                style=""
+              >
                 {{ newsDate.from }} ~ {{ newsDate.to }}
                 <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
               </div>
@@ -55,7 +68,13 @@
         </q-dialog>
 
         <!-- 검색 버튼 -->
-        <q-btn push label="검색" color="deep-orange-3" text-color="black" @click="getNewsByOptions()" />
+        <q-btn
+          push
+          label="검색"
+          color="deep-orange-3"
+          text-color="black"
+          @click="getNewsByOptions()"
+        />
       </div>
 
       <!-- First Card -->
@@ -204,7 +223,7 @@ export default {
       "/" +
       date.getDate().toString().padStart(2, "0");
 
-    date.setFullYear(date.getFullYear() - 10);
+    date.setDate(date.getDate() - 7);
     const fromDate =
       date.getFullYear() +
       "/" +

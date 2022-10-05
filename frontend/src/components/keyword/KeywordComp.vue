@@ -39,7 +39,7 @@
           </q-select>
         </div>
         <div class="row justify-center q-pt-md">
-          <q-btn square @click="dialog = true" size="13px" text-color="grey-8" >
+          <q-btn square @click="dialog = true" size="13px" text-color="grey-8">
             <q-icon size="xs" class="q-pr-sm" name="today" />
             {{ period.from }} ~ {{ period.to }}
           </q-btn>
@@ -85,7 +85,7 @@ export default {
     let date = new Date();
     let to_date = date.toISOString().substring(0, 10).replaceAll("-", "/");
     this.period.to = to_date;
-    date.setFullYear(date.getFullYear() - 10); // 범위의 초기값
+    date.setDate(date.getDate() - 7); // 범위의 초기값
     let from_date = date.toISOString().substring(0, 10).replaceAll("-", "/");
     this.period.from = from_date;
   },
@@ -142,8 +142,7 @@ export default {
 .title {
   font-family: "NanumBarunGothicBold";
   font-size: 17px;
-  margin-top:10px;
-
+  margin-top: 10px;
 }
 
 .search-bar {
