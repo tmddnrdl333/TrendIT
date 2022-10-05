@@ -1,6 +1,7 @@
 <template>
   <div class="main-intro-container row">
-    <q-img class="intro-img" src="https://cdn.quasar.dev/img/parallax2.jpg" />
+    <!-- <q-img class="intro-img" src="https://cdn.quasar.dev/img/parallax2.jpg" /> -->
+    <!-- <q-img class="intro-img" src="src/assets/visual_data.svg"  />
     <div class="intro-content">
       <div class="newscount-info">
         <template v-if="totalCount == 0">
@@ -17,6 +18,20 @@
       <div class="subtitle">
         <p>트렌드 분석 -></p>
       </div>
+    </div> -->
+    <div class="banner"> 
+      <video class="video" autoplay muted>
+        <source src="src/assets/banner.mp4" type="video/mp4">
+      </video>
+      <div class="newscount-info">
+        <template v-if="totalCount == 0">
+          <p>뉴스 수집량을 계산 중입니다...</p>
+        </template>
+        <template v-else>
+          <p>금일 뉴스 수집 : {{ todayCount }} 건</p>
+          <p>전체 뉴스 수집 : {{ totalCount }} 건</p>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -24,7 +39,6 @@
 <script>
 import { ref } from "vue";
 import { getNewsCountApi } from "boot/stats.js";
-
 export default {
   name: "MainIntro",
   setup() {
@@ -48,8 +62,8 @@ export default {
 <style scoped>
 .main-intro-container {
   width: 100%;
-  height: 300px;
-  background: #88addd;
+  height: 400px;
+  font-family: "NanumBarunGothicBold";
 }
 
 .intro-img {
@@ -59,25 +73,29 @@ export default {
 .intro-content {
   width: 70%;
 }
-.newscount-info {
-  color: aliceblue;
-  height: 40px;
-  text-align: right;
-  margin: 20px 20px 0px 0px;
-}
-.title {
-  height: 50%;
-  text-align: center;
-  font-size: 30px;
-  color: aliceblue;
+
+.banner {
+  max-width: 1050px;
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
   position: relative;
-  left: -100px;
+}
+.video{
+  margin: auto;
+  width: 100%;
+  display: block;
 }
 
-.subtitle {
-  text-align: center;
-  color: white;
-  position: relative;
-  left: -100px;
+.newscount-info {
+  position: absolute;
+  right: 10px;
+  top : 10px;
+  color: #3D5A80;
+  text-align: left;
+}
+.newscount-info > p {
+  margin: 0px auto;
+  font-size: 12px;
 }
 </style>

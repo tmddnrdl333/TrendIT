@@ -1,9 +1,9 @@
 <template>
   <q-card class="wordcloud-container">
-    <q-card-section>
-      <div class="title">오늘의 트렌드</div>
+    <q-card-section class="card-title q-ml-lg">
+      <div class="title q-mt-xs" style=" margin-top:10px">오늘의 트렌드</div>
     </q-card-section>
-    <q-card-section class="row items-center justify-center q-pa-lg q-my-md">
+    <q-card-section class="card-content row items-center justify-center" >
       <!-- WordCloud -->
       <div id="wordcloud-box">
         <div id="wordcloud">
@@ -30,10 +30,10 @@
           </q-card-section>
           <q-separator />
           <template v-for="(item, index) in trendRankData" :key="index">
-            <div class="rank-item row items-center rank-container-content">
-              <div class="col-3">{{ index + 1 }}</div>
-              <div class="col-3">{{ item.keyword }}</div>
-              <div class="col-3">{{ item.count }}건</div>
+            <div class="rank-item row items-center justify-center rank-container-content">
+              <div class="col-2">{{ index + 1 }}</div>
+              <div class="col-5">{{ item.keyword }}</div>
+              <div class="col-2">{{ item.count }}건</div>
             </div>
             <q-separator inset />
           </template>
@@ -138,7 +138,8 @@ export default {
         })
         // .style("padding", "100px")
         // .style("margin", "100px")
-        .style("font-family", `"Hanna", fantasy`)
+        // .style("font-family", `"Hanna", fantasy`)
+        .style("font-family", "NanumBarunGothicBold")
         .attr("text-anchor", "middle")
         .attr("transform", (d) => {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -161,7 +162,16 @@ export default {
 @import url("https://fonts.googleapis.com/earlyaccess/hanna.css");
 
 .title {
-  font-size: 130%;
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+}
+
+.card-title{
+  padding: 10px
+}
+
+.card-content {
+  padding-top: 5px;
 }
 
 .wordcloud-container {
@@ -173,15 +183,21 @@ export default {
   height: 330px;
 }
 .rank-container-title {
-  font-family: "Hanna", fantasy;
-  font-size: 28px;
+  font-family: "NanumBarunGothic";
+  /* font-family: "Hanna", fantasy; */
+  font-size: 18px;
   padding: 4px;
 }
 .rank-container-content {
-  font-family: "Hanna", fantasy;
-  font-size: 18px;
+  font-family: "NanumBarunGothic";
+  /* font-family: "Hanna", fantasy; */
+  font-size: 15px;
 }
 .rank-item {
   height: 45px;
+}
+
+.bg-toggle{
+  background: #ee6c4d;
 }
 </style>
