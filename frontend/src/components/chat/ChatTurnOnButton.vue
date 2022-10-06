@@ -1,7 +1,10 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
     <q-btn
+      class="chat-btn"
       round
+      push
+      fab
       color="btn"
       size="lg"
       icon="textsms"
@@ -277,6 +280,9 @@ export default {
   margin-right: 10px;
   
 }
+.chat-btn{
+
+}
 .input-card{
   position: absolute;
   bottom: 0;
@@ -289,7 +295,7 @@ export default {
 
 .q-dialog__inner {
   position: fixed;
-  top: 180px;
+  bottom: -15%;
 }
 
 .bg-btn{

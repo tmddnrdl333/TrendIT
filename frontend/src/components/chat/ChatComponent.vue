@@ -4,7 +4,7 @@
       class="q-pa-sm"
     >
       <div class="row" >
-        <div class="col-8" style="color: #3D5A80; font-size:12px;">
+        <div class="col-7" style="color: #3D5A80; font-size:12px;">
           <strong>{{ board.userName }}</strong>
         </div>
         <div class="column justify-evenly">
@@ -74,7 +74,7 @@
             stack-label
           />
             
-            <q-btn class="" color="primary" @click="updateBoard">수정</q-btn>
+            <q-btn class="" color="blue-7" @click="updateBoard">수정</q-btn>
             
           </q-tab-panel>
 
@@ -89,7 +89,7 @@
               label="비밀번호를 입력해주세요"
               stack-label
             />
-            <q-btn color="deep-orange" @click="deleteBoard">삭제</q-btn>
+            <q-btn color="red-5" @click="deleteBoard">삭제</q-btn>
           </q-tab-panel>
         </q-tab-panels>
       </q-card-section>
