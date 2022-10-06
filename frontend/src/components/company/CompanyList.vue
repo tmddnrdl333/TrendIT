@@ -1,5 +1,5 @@
 <template>
-  <q-card class="company-list q-pa-md">
+  <q-card class="company-list q-pa-md" style="margin: 20px auto">
     <q-card-section class="card-title">
       <div class="title">기업 리스트</div>
     </q-card-section>
@@ -26,15 +26,13 @@
     <div class="flex q-pa-lg justify-around">
       <template v-for="(item, index) of company_list" :key="index">
         <q-card class="company-card q-my-md">
-          <q-icon
-            name="add_home"
-            size="21px"
-            class="add-home"
-            v-on:click="goToLink(item.companyLink)"
-          ></q-icon>
-
-          <q-card-section class="company-title">
-            {{ item.companyName }}
+          <q-card-section class="company-title row justify-between">
+            <div>{{ item.companyName }}</div>
+            <q-icon
+              name="add_home"
+              class="cursor-pointer"
+              @click="goToLink(item.companyLink)"
+            />
           </q-card-section>
           <q-separator />
           <q-card-section class="company-content">
@@ -143,6 +141,5 @@ export default {
   position: absolute;
   margin-left: 180px;
   margin-top: 20px;
-  z-index: 2;
 }
 </style>
