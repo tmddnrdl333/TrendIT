@@ -59,8 +59,6 @@
     <!-- Dialogs End -->
 
     <router-view />
-
-    <!-- 검색어가 있는 경우 -->
   </div>
 </template>
 
@@ -123,6 +121,19 @@ export default {
     },
 
     async toResult() {
+      if (
+        typeof this.search == "string" &&
+        this.search == this.search_options[0].label
+      ) {
+        location.href =
+          "/keyword/" +
+          this.search_options[0].value +
+          "?period=" +
+          this.period.from.replaceAll("/", "-") +
+          "~" +
+          this.period.to.replaceAll("/", "-");
+      }
+
       if (typeof this.search == "object" && this.search.value) {
         location.href =
           "/keyword/" +
