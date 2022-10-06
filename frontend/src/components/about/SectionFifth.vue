@@ -43,11 +43,13 @@
             <div class="column absolute-center">
               <div class="col-5 flex flex-center">
                 <p class="s5_title">
-                  최대 뉴스 생산 달 <br />
+                  최대 뉴스 생산 달<br />
                 </p>
               </div>
               <div class="col-7">
-                <span class="s5_content">12 </span>
+                <span class="s5_content">2016 </span>
+                <span class="s5_content_unit">년 </span>
+                <span class="s5_content">3 </span>
                 <span class="s5_content_unit">월</span>
               </div>
             </div>
@@ -60,7 +62,7 @@
                 </p>
               </div>
               <div class="col-7">
-                <span class="s5_content">1,234 </span>
+                <span class="s5_content">2,033 </span>
                 <span class="s5_content_unit">건</span>
               </div>
             </div>
@@ -75,8 +77,8 @@
                 </p>
               </div>
               <div class="col-7">
-                <span class="s5_content">SSAFY</span><br />
-                <span class="s5_content_unit">(1234 회)</span>
+                <span class="s5_content">서비스</span><br />
+                <span class="s5_content_unit">(114,801 회)</span>
               </div>
             </div>
           </q-img>
@@ -90,7 +92,7 @@
               </div>
               <div class="col-7">
                 <span class="s5_content">삼성전자</span><br />
-              <span class="s5_content_unit">(1234 회)</span>
+              <span class="s5_content_unit">(44,947 회)</span>
               </div>
             </div>
           </q-img>
@@ -102,8 +104,8 @@
                 </p>
               </div>
               <div class="col-7">
-                <span class="s5_content"> 싸피일보</span>
-                <span class="s5_content_unit">(123456 건)</span>
+                <span class="s5_content">전자신문</span>
+                <span class="s5_content_unit">(189,069 건)</span>
               </div>
             </div>
           </q-img>
@@ -164,7 +166,7 @@ h1 {
   font-weight: bold;
 }
 .s5_big_content {
-  font-size: 45px;
+  font-size: 40px;
   font-weight: bold;
   color: #2885fe;
 }
