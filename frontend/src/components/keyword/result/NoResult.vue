@@ -246,10 +246,10 @@ export default {
       await createNormalKeywordApi(
         new NormalKeywordReq(this.keyword),
         (response) => {
-          console.log(response, this.keyword, "createNormalKeywordApi 성공");
+          // console.log(response, this.keyword, "createNormalKeywordApi 성공");
         },
         (error) => {
-          console.warn(error, this.keyword, "createNormalKeywordApi 실패");
+          // console.warn(error, this.keyword, "createNormalKeywordApi 실패");
         }
       );
     },
@@ -264,11 +264,11 @@ export default {
           this.companyLink
         ),
         (response) => {
-          console.log(
-            response,
-            CompanyKeywordReq,
-            "createCompanyKeywordApi 성공"
-          );
+          // console.log(
+          //   response,
+          //   CompanyKeywordReq,
+          //   "createCompanyKeywordApi 성공"
+          // );
         },
         (error) => {
           console.warn(

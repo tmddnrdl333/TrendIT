@@ -69,7 +69,7 @@ export default {
     };
   },
   async mounted() {
-    console.log(this.$route.query.period);
+    // console.log(this.$route.query.period);
 
     this.keyword_id = this.$route.params.keyword_id;
     await getKeywordApi(

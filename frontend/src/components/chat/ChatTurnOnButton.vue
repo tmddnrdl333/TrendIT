@@ -98,7 +98,6 @@ export default {
   },
   watch: {
     keywordIde: function () {
-      console.log(this.$props.keywordIde, "WATCH");
       getBoards(
         this.$props.keywordIde,
         (response) => {
@@ -133,7 +132,6 @@ export default {
       const name =
         adj[Math.floor(Math.random() * adj.length)] +
         nouns[Math.floor(Math.random() * nouns.length)];
-      console.log(name);
       return name;
     }
     // console.log(this.keywordIde);
@@ -248,7 +246,6 @@ export default {
               this.content
             )
           );
-          console.log("push2");
 
           this.password = "";
           this.content = "";

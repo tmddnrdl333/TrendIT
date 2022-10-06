@@ -152,7 +152,6 @@ export default {
           this.updateContent
         ),
         (response) => {
-          console.log(response);
 
           if (response.status === 200) {
             // 성공 시
@@ -169,7 +168,6 @@ export default {
         this.board.boardId,
         this.deletePassword,
         (response) => {
-          console.log(response);
           if (response.status === 200) {
             // 성공시
             this.$emit("deleteBoard", this.idx);
@@ -181,7 +179,6 @@ export default {
       );
       {
       }
-      console.log(this.deletePassword);
     },
   },
 };
