@@ -70,6 +70,17 @@ export default {
             padding: 3,
             stepSize: 100, // 보조눈금
           },
+          title: {
+            display: true,
+            align: "end",
+            color: "#808080",
+            font: {
+              size: 12,
+              family: "NanumBarunGothic",
+              weight: 300,
+            },
+            text: "(단위: 건)",
+          },
         },
         y: {
           grid: {

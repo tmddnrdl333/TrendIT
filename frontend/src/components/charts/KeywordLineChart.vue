@@ -174,7 +174,7 @@ export default {
           max = 11;
           break;
         case "year":
-          max = 9;
+          max = 7;
           break;
         default:
           break;
@@ -241,6 +241,17 @@ export default {
           scales: {
             y: {
               beginAtZero: true,
+              title: {
+                display: true,
+                align: "end",
+                color: "#808080",
+                font: {
+                  size: 12,
+                  family: "NanumBarunGothic",
+                  weight: 300,
+                },
+                text: "(단위: 건)",
+              },
             },
           },
         },
