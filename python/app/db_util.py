@@ -45,6 +45,7 @@ def execute_update_many(sql, data):
 #         (headline, img_link, news_agency, news_content, news_date, news_link),
 #         (headline, img_link, news_agency, news_content, news_date, news_link)]
 def insert_news(data):
+    print("insert news exec")
     sql = """INSERT INTO `news`(headline, img_link, news_agency, news_content, news_date, news_link) VALUES (%s, %s, %s, %s, %s, %s);"""
     execute_insert_many(sql, data)
 
