@@ -70,7 +70,8 @@ def crawl_data(driver, wait, begin_date, end_date):
         next_page.send_keys(Keys.ENTER)
         cur_page += 1
 
-    return data.reverse()
+    data.reverse()
+    return data
 
 def execute_crawler(date) :
     URL = 'https://www.bigkinds.or.kr/v2/news/index.do'

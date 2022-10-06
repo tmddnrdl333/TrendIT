@@ -9,7 +9,7 @@ services:
     restart: always
     volumes:
       # Mount cotainer drive to real drive
-      - ./db:/docker-entrypoint-initdb.d
+      - /home/ubuntu/trendit/db:/docker-entrypoint-initdb.d
     networks:
       # network inside of a container
       - app-network
@@ -22,7 +22,7 @@ services:
   spring_backend:
     image: backend:1
     build:
-      context: ./build
+      context: ../backend
     container_name: spring_backend
     restart: always
     ports:
@@ -40,8 +40,8 @@ services:
       - db
   python_backend:
     build:
-      context: .
-      dockerfile: ../python/Dockerfile
+      context: ../python
+      dockerfile: Dockerfile
     container_name: python_backend
     restart: always
     ports:
@@ -56,12 +56,12 @@ services:
       - db
   certbot:
     depends_on:
-      - nginx
+      - frontend
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - ./certbot-etc:/etc/letsencrypt
-      - ./dist:/var/www/html
+      - /home/ubuntu/trendit/certbot-etc:/etc/letsencrypt
+      - /home/ubuntu/trendit/dist:/var/www/html
     command: renew
   nginx:
     image: nginx:alpine
@@ -71,18 +71,14 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./dist:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - ./certbot-etc:/etc/letsencrypt
-    networks:
-      - app-network
-    depends_on:
-      - certbot
+      - /home/ubuntu/trendit/dist:/var/www/html
+      - /home/ubuntu/trendit/nginx-conf:/etc/nginx/conf.d
+      - /home/ubuntu/trendit/certbot-etc:/etc/letsencrypt
   frontend:
     container_name: frontend
     build:
-      context: frontend
-      dockerfile: ../frontend/Dockerfile
+      context: ../frontend
+      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
@@ -90,7 +86,7 @@ services:
       - "80"
       - "443"
     volumes:
-      - ./certbot-etc:/etc/letsencrypt
+      - /home/ubuntu/trendit/certbot-etc:/etc/letsencrypt
     networks:
       - app-network
   jenkins:
