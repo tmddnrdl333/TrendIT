@@ -99,7 +99,7 @@
     <q-card-section class="row justify-center">
       <!-- First Card -->
       <q-card
-        class="main-card q-ma-md row"
+        class="main-card q-ma-md row cursor-pointer"
         @click="myFunction(newsFirst.newsLink)"
       >
         <q-img :src="newsFirst.imgLink" class="col-8" height="400px">
@@ -122,7 +122,7 @@
       <div class="sub-news row justify-between">
         <div v-for="newsitem in newsList" :key="newsitem.newsId">
           <div @click="myFunction(newsitem.newsLink)">
-            <q-card class="sub-card q-mb-lg column">
+            <q-card class="sub-card q-mb-lg column cursor-pointer">
               <q-img
                 class="sub-card-img"
                 :src="newsitem.imgLink"
@@ -431,7 +431,7 @@ export default {
     },
     filter_headline() {
       return function (headline) {
-        if (headline.length > 40) return headline.substring(0, 38) + "...";
+        if (headline.length > 37) return headline.substring(0, 34) + "...";
         return headline;
       };
     },

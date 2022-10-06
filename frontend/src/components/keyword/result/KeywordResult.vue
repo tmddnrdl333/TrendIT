@@ -18,8 +18,8 @@
     <div class="flex q-pa-lg justify-around">
       <!-- TODO: img중앙정렬, 글자 폰트 적용 후 위치 조정 -->
       <template v-for="(item, index) of result" :key="index">
-        <a :href="item.newsLink" target="_blank">
-          <q-card class="news-card q-my-md">
+        <q-card class="news-card q-my-md">
+          <a :href="item.newsLink" target="_blank">
             <div style="height: 190px; overflow: hidden; padding: auto">
               <q-img :src="item.imgLink" height="190px" :alt="item.headline" />
             </div>
@@ -34,8 +34,8 @@
                 {{ item.newsAgency }} {{ item.newsDate }}
               </div>
             </q-card-section>
-          </q-card>
-        </a>
+          </a>
+        </q-card>
       </template>
     </div>
     <chat-turn-on-button
