@@ -8,7 +8,7 @@
       color="btn"
       size="lg"
       icon="textsms"
-      @click="seamless = true"
+      @click="seamless = !seamless"
     />
 
     <q-dialog id="chat" v-model="seamless" seamless position="right">
