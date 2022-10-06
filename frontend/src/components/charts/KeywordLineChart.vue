@@ -192,6 +192,10 @@ export default {
       }
       // ~ 여기까지를 함수화
 
+      if (this.type == "year") {
+        this.data_list = this.data_list.slice(2, 10);
+      }
+
       let data_array = [];
       let max_label = null;
       let max_val = 0;
@@ -205,6 +209,7 @@ export default {
         }
       }
 
+      console.warn(this.data_list);
       this.side_card.word1 = this.word1;
       this.side_card.word2 = this.word2;
       this.side_card.date = max_label + " (" + max_val + "건)";
