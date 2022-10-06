@@ -68,7 +68,7 @@ export default {
               return val !== 0 ? val : "";
             },
             padding: 3,
-            stepSize: 100, // 보조눈금
+            stepSize: 100,
           },
           title: {
             display: true,
@@ -123,20 +123,18 @@ export default {
           this.response = response.data;
           this.data_list = response.data.data;
 
-          // 초기화
           this.chartData = {
             labels: [],
             datasets: [
               {
-                label: "기사 수", // 툴팁 표시 이름
-                backgroundColor: "#EE6C4D", // 막대 색상
-                barThickness: "15", // 막대 굵기
+                label: "기사 수",
+                backgroundColor: "#EE6C4D",
+                barThickness: "15",
                 data: [],
               },
             ],
           };
 
-          // forEach push item
           this.data_list.forEach((item) => {
             this.chartData.labels.push(item.keyword);
             this.chartData.datasets[0].data.push(item.frequency);

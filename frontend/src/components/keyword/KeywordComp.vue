@@ -69,7 +69,6 @@ import { getKeywordListApi } from "boot/keyword.js";
 export default {
   setup() {
     return {
-      // 검색
       search: ref(""), // 사용자가 입력하는 내용 v-model
       dialog: ref(false), // 기간선택 모달 표시여부
       period: ref({ from: "", to: "" }),
