@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div class="flex flex-center">
     <main-banner />
     <word-cloud />
     <main-news />
-    <main-bar-chart />
+  <q-card class="company-graph  q-pa-md">
+     <q-card-section class="row justify-center">
+      <main-bar-chart />
+    </q-card-section>
+
+  </q-card>
   </div>
 </template>
 
@@ -20,3 +25,14 @@ export default defineComponent({
   components: { MainBanner, WordCloud, MainNews, MainBarChart },
 });
 </script>
+
+<style scoped>
+.company-graph {
+  /* common */
+  width: 1050px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "NanumBarunGothic";
+}
+</style>

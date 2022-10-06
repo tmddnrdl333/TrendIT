@@ -1,5 +1,5 @@
 <template>
-  <q-card class="chart-container text-center">
+  <q-card flat bordered class="chart-container text-center bg-grey-1">
     <q-card-section>
       <q-btn-toggle
         v-model="type"

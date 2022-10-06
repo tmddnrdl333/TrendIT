@@ -1,7 +1,7 @@
 <template>
-  <q-card>
-    <q-card-section
-      style="height: 70px; border: 1px solid antiquewhite; border-radius: 3px"
+  <q-card flat bordered class="font bg-grey-1 q-my-sm ">
+    <q-card-section 
+      class="q-pa-sm"
     >
       <div style="display: flex; flex-direction: row; text-align: center">
         <div style="width: 65%; color: darkgreen">{{ board.userName }}</div>
@@ -9,10 +9,20 @@
           <div style="font-size: 10px; color: rgb(12, 12, 120)">
             {{ board.createdDate.substr(0, 16) }}
           </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-7" style="color: #3D5A80; font-size:12px;">
+          <strong>{{ board.userName }}</strong>
+        </div>
+        <div class="column justify-evenly">
+          <div class="col-4 text-grey-6" style="font-size: 9px; text-align:right;" >
+            {{ board.createdDate.substr(0, 16) }}
+          </div>
           <div style="display: flex; flex-direction: row">
             <div
               style="
-                font-size: 12px;
+                font-size: 10px;
                 cursor: pointer;
                 color: gray;
                 text-align: right;
@@ -26,7 +36,7 @@
             </div>
             <div
               style="
-                font-size: 12px;
+                font-size: 10px;
                 cursor: pointer;
                 color: gray;
                 text-align: right;
@@ -41,8 +51,11 @@
           </div>
         </div>
       </div>
+      <div>
+        {{ board.boardContent }}
+      </div>
     </q-card-section>
-    <q-card-section
+    <!-- <q-card-section
       style="
         height: 120px;
         background-color: antiquewhite;
@@ -51,15 +64,15 @@
         text-align: center;
       "
       >{{ board.boardContent }}</q-card-section
-    >
+    > -->
   </q-card>
 
   <q-dialog v-model="seamless" seamless>
-    <q-card>
-      <q-card-section
-        ><q-btn flat round icon="close" v-close-popup
-      /></q-card-section>
-      <q-card-section>
+    <q-card style="height: 300px; width: 450px;">
+      <q-card-section class="q-pa-xs">
+        <q-btn flat icon="close" v-close-popup/>
+      </q-card-section>
+      <q-card-section class="q-pa-xs">
         <q-tabs
           v-model="tab"
           dense
@@ -76,32 +89,41 @@
         <q-separator />
 
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="update">
+          <q-tab-panel name="update" class="text-center">
             <q-input
-              dense
-              outlined
-              type="password"
-              v-model="updatePassword"
-              label="비밀번호를 입력해주세요"
-            />
-            <q-input
-              outlined
-              autogrow
-              v-model="updateContent"
-              label="수정할 내용을 입력해주세요"
-            />
-            <q-btn color="primary" @click="updateBoard">수정</q-btn>
+            class="q-py-sm"
+            dense
+            filled
+            outlined
+            type="password"
+            v-model="updatePassword"
+            label="비밀번호를 입력해주세요"
+            stack-label
+          />
+          <q-input
+            class="q-py-sm"
+              filled autogrow
+            v-model="updateContent"
+            label="수정할 내용을 입력해주세요"
+            stack-label
+          />
+            
+            <q-btn class="" color="blue-7" @click="updateBoard">수정</q-btn>
+            
           </q-tab-panel>
 
-          <q-tab-panel name="delete">
+          <q-tab-panel name="delete" class="text-center" >
             <q-input
+              class="q-py-sm"
               dense
+              filled
               outlined
               type="password"
               v-model="deletePassword"
               label="비밀번호를 입력해주세요"
+              stack-label
             />
-            <q-btn color="deep-orange" @click="deleteBoard">삭제</q-btn>
+            <q-btn color="red-5" @click="deleteBoard">삭제</q-btn>
           </q-tab-panel>
         </q-tab-panels>
       </q-card-section>
@@ -172,5 +194,8 @@ export default {
 };
 </script>
 
-<style></style>
->
+<style>
+.font {
+  font-family: "NanumBarunGothic";
+}
+</style>

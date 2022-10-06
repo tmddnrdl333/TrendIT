@@ -209,6 +209,7 @@ export default {
   width: 1050px;
   /* width: 100%; */
   margin: 20px auto;
+  font-family: "NanumBarunGothic";
 }
 .rank-container {
   width: 250px;

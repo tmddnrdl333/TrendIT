@@ -38,7 +38,7 @@
       </template>
     </div>
     <chat-turn-on-button
-      style="position: fixed; top: 80%; right: 1%"
+      class="chat-btn"
       :keywordIde="keyword_id"
     ></chat-turn-on-button>
     <div class="q-pa-lg flex flex-center">
@@ -98,7 +98,7 @@ export default {
           this.result.forEach((item) => {
             // TODO: 이미지가 없는 뉴스는 이렇게 일단 처리함.
             if (item.imgLink.substring(0, 5) == "/asse") {
-              item.imgLink = "src/assets/no-image.png";
+              item.imgLink = "~assets/no-image.png";
             }
             // TODO: 링크가 없는 뉴스는 404로 연결해놓은 상태...
             if (item.newsLink == "") {
@@ -163,5 +163,11 @@ export default {
 a {
   color: black;
   text-decoration: none;
+}
+
+.chat-btn{
+   position: fixed; 
+   bottom: 0%; 
+   right: 1%;
 }
 </style>
