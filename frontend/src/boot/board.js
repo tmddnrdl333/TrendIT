@@ -3,12 +3,10 @@ import { api } from "./axios.js";
 // async?? await?? 붙여야되나?
 
 function postBoard(data, success, fail) {
-  console.log(data);
   api.post("/board", data).then(success).catch(fail);
 }
 
 function updateBoard(data, success, fail) {
-  console.log(data);
   api.put("/board", data).then(success).catch(fail);
 }
 
@@ -26,13 +24,11 @@ function deleteBoard(boardId, password, success, fail) {
 
 function getBoards(keywordId, success, fail, boardId) {
   if (boardId != undefined) {
-    console.log("boardID OO", boardId);
     api
       .get(`/board/keyword/${keywordId}/last-board-id/${boardId}`)
       .then(success)
       .catch(fail);
   } else {
-    console.log("boardID XX", boardId, keywordId);
     api.get(`/board/keyword/${keywordId}`).then(success).catch(fail);
   }
 }

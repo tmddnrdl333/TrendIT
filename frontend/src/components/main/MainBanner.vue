@@ -2,7 +2,7 @@
   <div class="main-intro-container row">
     <div class="banner">
       <video class="video" autoplay muted>
-        <source src="src/assets/banner.mp4" type="video/mp4" />
+        <source src="~/assets/banner.mp4" type="video/mp4">
       </video>
       <div class="newscount-info">
         <template v-if="totalCount == 0">

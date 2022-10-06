@@ -4,7 +4,7 @@
       <div class="col-5 row justify-center q-pa-md">
         <div class="no-img row justify-center items-center">
           <video class="video" autoplay muted>
-            <source src="src/assets/keyword_v1.mp4" type="video/mp4" />
+            <source src="~assets/keyword_v1.mp4" type="video/mp4">
           </video>
         </div>
       </div>
@@ -244,10 +244,10 @@ export default {
       await createNormalKeywordApi(
         new NormalKeywordReq(this.keyword),
         (response) => {
-          console.log(response, this.keyword, "createNormalKeywordApi 성공");
+          // console.log(response, this.keyword, "createNormalKeywordApi 성공");
         },
         (error) => {
-          console.warn(error, this.keyword, "createNormalKeywordApi 실패");
+          // console.warn(error, this.keyword, "createNormalKeywordApi 실패");
         }
       );
     },
@@ -262,11 +262,11 @@ export default {
           this.companyLink
         ),
         (response) => {
-          console.log(
-            response,
-            CompanyKeywordReq,
-            "createCompanyKeywordApi 성공"
-          );
+          // console.log(
+          //   response,
+          //   CompanyKeywordReq,
+          //   "createCompanyKeywordApi 성공"
+          // );
         },
         (error) => {
           console.warn(
