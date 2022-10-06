@@ -1,5 +1,4 @@
 <template>
-
   <q-toolbar class="q-pa-sm bg-grey-2 text-black justify-center">
     <q-btn flat label="키워드 분석" :to="{ name: 'empty_keyword' }" />
     <q-btn flat label="기업 리스트" :to="{ name: 'company' }" />

@@ -6,11 +6,8 @@ import KeywordView from "../pages/KeywordView.vue";
 import CompanyView from "../pages/CompanyView.vue";
 import NewsView from "../pages/NewsView.vue";
 import AboutView from "../pages/AboutView.vue";
-import TestView from "../pages/TestView.vue";
-import TestPageView from "../pages/TestPageView.vue";
 import ChatTurnOnButtonVue from "src/components/chat/ChatTurnOnButton.vue";
 import ChatComponent from "src/components/chat/ChatComponent.vue";
-import TestComponent from "src/components/chat/TestComponent.vue";
 
 import NoResult from "../components/keyword/result/NoResult.vue";
 import KeywordResult from "../components/keyword/result/KeywordResult.vue";
@@ -54,14 +51,6 @@ const routes = [
         name: "about",
         path: "about",
         component: AboutView,
-      },
-      {
-        path: "test",
-        component: TestComponent,
-      },
-      {
-        path: "test2",
-        component: TestPageView,
       },
       {
         path: "dev",

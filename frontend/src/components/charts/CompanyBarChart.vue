@@ -150,11 +150,9 @@ export default {
   width: 550px;
   height: 250px;
   margin: 10px auto;
-  /* test */
 }
 .chart-container {
   padding: 6px;
   width: 600px;
-  /* test */
 }
 </style>

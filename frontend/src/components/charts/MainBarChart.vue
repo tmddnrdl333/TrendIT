@@ -171,7 +171,7 @@ export default {
           this.s_max = 11;
           break;
         case "year":
-          this.s_max = 9;
+          this.s_max = 7;
           break;
         default:
           break;
@@ -237,7 +237,6 @@ export default {
   width: 550px;
   height: 350px;
   margin: 10px auto;
-  /* test */
 }
 .chart-container {
   font-family: "NanumBarunGothic";

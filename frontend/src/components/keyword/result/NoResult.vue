@@ -65,7 +65,6 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>일반 키워드 추가</q-item-label>
-                <q-item-label caption>With description </q-item-label>
               </q-item-section>
             </q-item>
 
@@ -79,7 +78,6 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>기업 키워드 추가</q-item-label>
-                <q-item-label caption>With description </q-item-label>
               </q-item-section>
             </q-item>
           </q-list>

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="width: 1200px; margin: auto">
     <q-card class="keyword-search q-pa-lg">
       <q-card-section class="card-title">
-        <div class="title q-mt-xs">키워드 검색</div>
+        <div class="title">키워드 검색</div>
       </q-card-section>
       <q-separator inset />
       <!-- 검색창 -->
@@ -142,7 +142,6 @@ export default {
 .title {
   font-family: "NanumBarunGothicBold";
   font-size: 17px;
-  margin-top: 10px;
 }
 
 .search-bar {
@@ -151,7 +150,7 @@ export default {
 
 .keyword-search {
   width: 1200px;
-  margin: 15px 0px;
+  margin: 0px 0px 15px;
 }
 .search-bar {
   width: 500px;
