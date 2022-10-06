@@ -37,15 +37,8 @@
           />
         </q-card-section>
         <q-card-section>
-          <!-- <test-component></test-component> -->
           <q-scroll-area style="height: 200px; max-width: 300px">
             <q-infinite-scroll @load="onLoad" reverse>
-              <!-- <template v-slot:loading>
-                <div class="row justify-center q-my-md">
-                  <q-spinner color="primary" name="dots" size="40px" />
-                </div>
-              </template> -->
-
               <chat-component
                 v-for="(chat, index) in chats"
                 :key="index"
@@ -91,13 +84,11 @@ import { postBoard, getBoards } from "src/boot/board.js";
 import ChatComponent from "./ChatComponent.vue";
 import { BoardPostReq } from "src/boot/request/BoardReq.js";
 import { ChatDataRes } from "src/boot/response/ChatDataRes.js";
-import TestComponent from "./TestComponent.vue";
 
 export default {
   name: "ChatTurnOnButton",
   components: {
     ChatComponent,
-    // TestComponent,
   },
   props: {
     keywordIde: Number,

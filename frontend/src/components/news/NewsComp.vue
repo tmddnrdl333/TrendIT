@@ -308,10 +308,10 @@ export default {
       newsAgencyDialog: ref(false),
       newsAgencyOption,
       selection: computed(() => {
-        const test = Object.keys(newsAgencyOption).filter(
+        const sel = Object.keys(newsAgencyOption).filter(
           (type) => newsAgencyOption[type] === true
         );
-        return test;
+        return sel;
       }),
     };
   },
