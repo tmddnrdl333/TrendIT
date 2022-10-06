@@ -237,7 +237,6 @@ export default {
   width: 550px;
   height: 350px;
   margin: 10px auto;
-  /* test */
 }
 .chart-container {
   font-family: "NanumBarunGothic";

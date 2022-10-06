@@ -22,7 +22,11 @@
   </q-card>
   <div class="q-pa-md q-gutter-md">
     <!-- <q-card flat bordered class="chart-container text-center bg-grey-1"> -->
-    <q-card flat bordered class="side-card q-pa-sm column justify-evenly bg-grey-1">
+    <q-card
+      flat
+      bordered
+      class="side-card q-pa-sm column justify-evenly bg-grey-1"
+    >
       <div class="row justify-center">
         <q-icon name="event" size="21px" left />
         <div class="most-news-date-title">
@@ -34,7 +38,11 @@
         <strong>{{ side_card.date }}</strong>
       </div>
     </q-card>
-    <q-card flat bordered class="side-card q-pa-sm column justify-evenly bg-grey-1">
+    <q-card
+      flat
+      bordered
+      class="side-card q-pa-sm column justify-evenly bg-grey-1"
+    >
       <div class="row justify-center">
         <q-icon name="trending_up" size="21px" left />
         <div class="most-news-date-title">
@@ -290,13 +298,10 @@ export default {
 
 .chart {
   margin: 10px auto;
-
-  /* test */
 }
 .chart-container {
   padding: 5px;
   width: 450px;
-  /* test */
 }
 .side-card {
   width: 300px;
