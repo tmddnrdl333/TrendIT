@@ -20,7 +20,7 @@ public class PipelineScheduler {
     private final WebClientService webClientService;
     private final RecentNewsService recentNewsService;
 
-    @Scheduled(cron = "0 10 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 43 0 * * *", zone = "Asia/Seoul")
     public void sendRequestExecutesPipeline() {
         LocalDate target = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(1);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
