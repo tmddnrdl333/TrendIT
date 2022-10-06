@@ -1,22 +1,15 @@
 <template>
-  <q-card flat bordered class="font bg-grey-1 q-my-sm ">
-    <q-card-section 
-      class="q-pa-sm"
-    >
-      <div style="display: flex; flex-direction: row; text-align: center">
-        <div style="width: 65%; color: darkgreen">{{ board.userName }}</div>
-        <div style="display: flex; flex-direction: column">
-          <div style="font-size: 10px; color: rgb(12, 12, 120)">
-            {{ board.createdDate.substr(0, 16) }}
-          </div>
-        </div>
-      </div>
-      <div class="row" >
-        <div class="col-7" style="color: #3D5A80; font-size:12px;">
+  <q-card flat bordered class="font bg-grey-1 q-my-sm">
+    <q-card-section class="q-pa-sm">
+      <div class="row">
+        <div class="col-7" style="color: #3d5a80; font-size: 12px">
           <strong>{{ board.userName }}</strong>
         </div>
         <div class="column justify-evenly">
-          <div class="col-4 text-grey-6" style="font-size: 9px; text-align:right;" >
+          <div
+            class="col-4 text-grey-6"
+            style="font-size: 9px; text-align: right"
+          >
             {{ board.createdDate.substr(0, 16) }}
           </div>
           <div style="display: flex; flex-direction: row">
@@ -68,9 +61,9 @@
   </q-card>
 
   <q-dialog v-model="seamless" seamless>
-    <q-card style="height: 300px; width: 450px;">
+    <q-card style="height: 300px; width: 450px">
       <q-card-section class="q-pa-xs">
-        <q-btn flat icon="close" v-close-popup/>
+        <q-btn flat icon="close" v-close-popup />
       </q-card-section>
       <q-card-section class="q-pa-xs">
         <q-tabs
@@ -91,28 +84,28 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="update" class="text-center">
             <q-input
-            class="q-py-sm"
-            dense
-            filled
-            outlined
-            type="password"
-            v-model="updatePassword"
-            label="비밀번호를 입력해주세요"
-            stack-label
-          />
-          <q-input
-            class="q-py-sm"
-              filled autogrow
-            v-model="updateContent"
-            label="수정할 내용을 입력해주세요"
-            stack-label
-          />
-            
+              class="q-py-sm"
+              dense
+              filled
+              outlined
+              type="password"
+              v-model="updatePassword"
+              label="비밀번호를 입력해주세요"
+              stack-label
+            />
+            <q-input
+              class="q-py-sm"
+              filled
+              autogrow
+              v-model="updateContent"
+              label="수정할 내용을 입력해주세요"
+              stack-label
+            />
+
             <q-btn class="" color="blue-7" @click="updateBoard">수정</q-btn>
-            
           </q-tab-panel>
 
-          <q-tab-panel name="delete" class="text-center" >
+          <q-tab-panel name="delete" class="text-center">
             <q-input
               class="q-py-sm"
               dense
