@@ -74,12 +74,21 @@
                 :key="newsAgency.index"
               >
                 <q-chip
-                  v-model:selected="newsAgencyOption[newsAgency]"
-                  color="light-blue-7"
+                  v-if="newsAgencyOption[newsAgency] == false"
+                  clickable
+                  color="blue-7"
                   text-color="white"
                   :label="newsAgency"
-                >
-                </q-chip>
+                  @click="newsAgencyOption[newsAgency] = true"
+                />
+                <q-chip
+                  v-else
+                  clickable
+                  style="background-color: #ee6c4d"
+                  text-color="white"
+                  :label="newsAgency"
+                  @click="newsAgencyOption[newsAgency] = false"
+                />
               </div>
             </div>
           </div>
