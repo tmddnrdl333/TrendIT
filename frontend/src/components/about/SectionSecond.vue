@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div class="row" style="height: 150px">
-      <div class="col-lg-6 text-center">
+  <div class="container column">
+    <div class="col text-center">
         <div class="navy-line"></div>
         <h4 style="font-weight: 600; margin-bottom: 24px">Background</h4>
         <p>Background of the birth of TrendIT</p>
-      </div>
     </div>
-    <div class="section2">
+    <div class="col-9 section2">
       <div class="s2_box">
-        <q-img :src="Circle1" style="width: 340px">
+        <q-img :src="Circle1">
           <p class="s2_content">
             2030 세대 70%
             <br />
@@ -25,7 +23,7 @@
         </div>
       </div>
       <div class="s2_box">
-        <q-img :src="Circle2" style="width: 340px">
+        <q-img :src="Circle2">
           <p class="s2_content">
             검색 및 뉴스 수집 플랫폼
             <br />
@@ -41,7 +39,7 @@
         </div>
       </div>
       <div class="s2_box">
-        <q-img :src="Circle3" style="width: 340px">
+        <q-img :src="Circle3">
           <p class="s2_content">
             관심분야 뉴스 서비스 이용 이유
             <br />
@@ -89,22 +87,26 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  font-family: "NanumBarunGothic";
+  width: 1050px;
+  height: 600px;
+  margin: auto;
+  background-color: #f4f4f4;
+}
 .section2 {
-  margin: 0px auto;
-  width: 100vw;
-  height: 540px;
   display: grid;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   align-items: center;
   grid-template-columns: repeat(3, 340px);
-  column-gap: 58px;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: #f4f4f4;
 }
 .s2_box {
-  width: 340px;
+  width: 280px;
   text-align: center;
+  margin: auto;
 }
 .s2_title {
   white-space: pre-line;
@@ -118,14 +120,12 @@ export default {
   font-size: 20px;
   font-weight: 800;
   line-height: 1.47;
-  margin-top: 120px;
+  margin-top: 100px;
   color: #ffffff;
 }
 .row {
-  margin-right: -80px;
-  margin-left: -80px;
+  height: 150px;
   justify-content: center;
-
   background-color: #ffffff;
 }
 .text-center {

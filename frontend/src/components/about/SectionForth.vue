@@ -1,102 +1,68 @@
 <template>
-  <div>
-    <section class="comments gray-section" id="service">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="navy-line"></div>
-            <h1 style="font-weight: 600">Services</h1>
-            <p>Services provided by TrendIT</p>
-          </div>
-        </div>
+  <div class="container column">
+    <div class="col text-center">
+      <div class="navy-line"></div>
+      <h1 style="font-weight: 600">Services</h1>
+      <p>Services provided by TrendIT</p>
+    </div>
 
-        <div class="row features-block">
-          <div class="col-lg-3" style="visibility: visible">
-            <div class="text-center">
-              <p
-                style="
-                  height: 40px;
-                  font-size: 20px;
-                  font-weight: 800;
-                  color: #000000;
-                "
-              >
-                트랜드 분석
-              </p>
-              <img :src="service2" alt="service2" class="m-b-lg" />
-              <p style="height: 40px; font-weight: 800; color: #000000">
-                WordCloud 를 통해 기간별 트랜드를
-                <br />
-                알기 쉽게 한 눈에 파악할 수 있습니다.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-3" style="visibility: visible">
-            <div class="text-center">
-              <p
-                style="
-                  height: 40px;
-                  font-size: 20px;
-                  font-weight: 800;
-                  color: #000000;
-                "
-              >
-                키워드 분석
-              </p>
-              <img :src="service3" alt="service3" class="m-b-lg" />
-              <p style="height: 40px; font-weight: 800; color: #000000">
-                특정 키워드 검색을 통해 트랜드 추이를
-                <br />
-                파악하고, 관련 뉴스를 제공합니다.
-                <br />
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-3" style="visibility: visible">
-            <div class="text-center">
-              <p
-                style="
-                  height: 40px;
-                  font-size: 20px;
-                  font-weight: 800;
-                  color: #000000;
-                "
-              >
-                기업 리스트
-              </p>
-              <img :src="service4" alt="service4" class="m-b-lg" />
-              <p style="height: 40px; font-weight: 800; color: #000000">
-                기업별 기간별 트랜드를 추이를 확인하고
-                <br />
-                700여 개의 기업정보를 제공합니다.
-                <br />
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-3" style="visibility: visible">
-            <div class="text-center">
-              <p
-                style="
-                  height: 40px;
-                  font-size: 20px;
-                  font-weight: 800;
-                  color: #000000;
-                "
-              >
-                최신뉴스
-              </p>
-              <img :src="service1" alt="service1" class="m-b-lg" />
-              <p style="height: 40px; font-weight: 800; color: #000000">
-                54개의 언론사와 날짜별 필터링을 통해
-                <br />
-                최신 뉴스를 간편하게 조회할 수 있습니다.
-                <br />
-              </p>
-            </div>
-          </div>
+    <div class="col-8 row">
+      <div class="col-lg-3" style="visibility: visible">
+        <div class="text-center">
+          <p class="title text-center">
+            트렌드 분석
+          </p>
+          <img :src="service2" alt="service2" class="m-b-lg" />
+          <p style="height: 40px; font-weight: 800; color: #000000">
+            WordCloud 를 통해 기간별 트렌드를
+            <br />
+            알기 쉽게 한 눈에 파악할 수 있습니다.
+          </p>
         </div>
       </div>
-    </section>
+      <div class="col-lg-3" style="visibility: visible">
+        <div class="text-center">
+          <p class="title">
+            키워드 분석
+          </p>
+          <img :src="service3" alt="service3" class="m-b-lg" />
+          <p style="height: 40px; font-weight: 800; color: #000000">
+            특정 키워드 검색을 통해 트렌드 추이를
+            <br />
+            파악하고, 관련 뉴스를 제공합니다.
+            <br />
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3" style="visibility: visible">
+        <div class="text-center">
+          <p class="title">
+            기업 리스트
+          </p>
+          <img :src="service4" alt="service4" class="m-b-lg" />
+          <p style="height: 40px; font-weight: 800; color: #000000">
+            기업별 기간별 트렌드를 추이를 확인하고
+            <br />
+            700여 개의 기업정보를 제공합니다.
+            <br />
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-3" style="visibility: visible">
+        <div class="text-center">
+          <p class="title">
+            최신뉴스
+          </p>
+          <img :src="service1" alt="service1" class="m-b-lg" />
+          <p style="height: 40px; font-weight: 800; color: #000000">
+            54개의 언론사와 날짜별 필터링을 통해
+            <br />
+            최신 뉴스를 간편하게 조회할 수 있습니다.
+            <br />
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -130,23 +96,13 @@ export default {
 </script>
 
 <style scoped>
-section.comments {
-  padding-bottom: 100px;
-}
-.gray-section {
-  background: #f4f4f4;
-  margin-top: 60px;
-}
 .container {
-  width: 1170px;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-.row {
-  margin-right: -80px;
-  margin-left: -80px;
+  font-family: "NanumBarunGothic";
+  width: 1050px;
+  height: 600px;
+  margin: auto;
+  background-color: #f4f4f4;
+  margin-top: 60px;
 }
 .col-lg-12 {
   width: 100%;
@@ -177,10 +133,13 @@ p {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
-.features-block {
-  margin-top: 20px;
+.title {
+  height: 40px;
+  font-size: 20px;
+  font-weight: 800;
 }
 img {
   vertical-align: middle;
+  width: 200px;
 }
 </style>
