@@ -171,7 +171,7 @@ export default {
           this.s_max = 11;
           break;
         case "year":
-          this.s_max = 9;
+          this.s_max = 7;
           break;
         default:
           break;
