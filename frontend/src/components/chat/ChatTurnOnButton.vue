@@ -5,7 +5,7 @@
       color="primary"
       size="xl"
       icon="message"
-      @click="seamless = true"
+      @click="seamless = !seamless"
     />
 
     <q-dialog id="chat" v-model="seamless" seamless position="right">

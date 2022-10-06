@@ -5,15 +5,41 @@
     >
       <div style="display: flex; flex-direction: row; text-align: center">
         <div style="width: 65%; color: darkgreen">{{ board.userName }}</div>
-        <div style="font-size: 10px; color: rgb(12, 12, 120)">
-          {{ board.createdDate.substr(0, 16) }}
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 10px; color: rgb(12, 12, 120)">
+            {{ board.createdDate.substr(0, 16) }}
+          </div>
+          <div style="display: flex; flex-direction: row">
+            <div
+              style="
+                font-size: 12px;
+                cursor: pointer;
+                color: gray;
+                text-align: right;
+              "
+              @click="
+                seamless = true;
+                tab = 'update';
+              "
+            >
+              수정
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                cursor: pointer;
+                color: gray;
+                text-align: right;
+              "
+              @click="
+                seamless = true;
+                tab = 'delete';
+              "
+            >
+              / 삭제
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        style="font-size: 12px; cursor: pointer; color: gray; text-align: right"
-        @click="seamless = true"
-      >
-        수정 / 삭제
       </div>
     </q-card-section>
     <q-card-section
@@ -112,13 +138,14 @@ export default {
         ),
         (response) => {
           console.log(response);
-          if (true) {
+
+          if (response.status === 200) {
             // 성공 시
             this.$emit("updateBoard", this.idx, this.updateContent);
           }
         },
         () => {
-          console.warn();
+          alert("입력정보를 확인해주세요");
         }
       );
     },
@@ -128,13 +155,13 @@ export default {
         this.deletePassword,
         (response) => {
           console.log(response);
-          if (true) {
+          if (response.status === 200) {
             // 성공시
             this.$emit("deleteBoard", this.idx);
           }
         },
         () => {
-          console.warn();
+          alert("입력정보를 확인해주세요");
         }
       );
       {
