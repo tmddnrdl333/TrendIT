@@ -1,8 +1,8 @@
 {
-  "name": "frontend",
+  "name": "TrendIT",
   "version": "0.0.1",
-  "description": "frontend pjt",
-  "productName": "frontend",
+  "description": "TrendIT pjt",
+  "productName": "TrendIT",
   "author": "정승욱 <tmddnrdl333@naver.com>",
   "private": true,
   "scripts": {

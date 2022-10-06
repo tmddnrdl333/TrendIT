@@ -36,8 +36,8 @@
           </q-card-section>
           <q-separator />
           <q-card-section class="company-content">
-            <div>업종: {{ item.companyCategory }}</div>
-            <div>대표자: {{ item.companyRepresentative }}</div>
+            <div>업종: {{ content_filter(item.companyCategory) }}</div>
+            <div>대표자: {{ content_filter(item.companyRepresentative) }}</div>
           </q-card-section>
         </q-card>
       </template>
@@ -98,6 +98,14 @@ export default {
       this.loadCompanyList();
     },
   },
+  computed: {
+    content_filter() {
+      return function (content) {
+        if (content.length <= 15) return content;
+        return content.substring(0, 12) + "...";
+      };
+    },
+  },
 };
 </script>
 
@@ -136,6 +144,7 @@ export default {
 .company-content {
   font-family: "NanumBarunGothic";
   font-size: 13px;
+  line-height: 250%;
 }
 .add-home {
   position: absolute;
