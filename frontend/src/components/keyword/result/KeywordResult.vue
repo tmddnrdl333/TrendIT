@@ -20,9 +20,8 @@
       <template v-for="(item, index) of result" :key="index">
         <a :href="item.newsLink" target="_blank">
           <q-card class="news-card q-my-md">
-            <div style="height: 150px; overflow: hidden; padding: auto">
-              <!-- q-img에 fit이 있던데 잘 안된다... -->
-              <q-img :src="item.imgLink" :alt="item.headline" />
+            <div style="height: 190px; overflow: hidden; padding: auto">
+              <q-img :src="item.imgLink" height="190px" :alt="item.headline" />
             </div>
             <q-card-section class="flex column">
               <div class="headline-part">
@@ -31,7 +30,9 @@
               <div class="content-part">
                 {{ contentfilter(item.newsContent) }}
               </div>
-              <div>{{ item.newsAgency }} {{ item.newsDate }}</div>
+              <div class="cards-agency">
+                {{ item.newsAgency }} {{ item.newsDate }}
+              </div>
             </q-card-section>
           </q-card>
         </a>
@@ -114,7 +115,7 @@ export default {
   computed: {
     contentfilter() {
       return function (text) {
-        if (text.length > 40) return text.substring(0, 35) + "...";
+        if (text.length > 38) return text.substring(0, 33) + "...";
         else return text;
       };
     },
@@ -136,14 +137,14 @@ export default {
 }
 .news-card {
   width: 250px;
-  height: 330px;
+  height: 345px;
 }
 
 .headline-part {
   height: 50px;
 }
 .content-part {
-  height: 80px;
+  height: 60px;
 }
 
 /* 2 */
@@ -160,14 +161,19 @@ export default {
   margin: 15px 0px;
 }
 
+.cards-agency {
+  color: gray;
+  font-size: 12px;
+}
+
 a {
   color: black;
   text-decoration: none;
 }
 
-.chat-btn{
-   position: fixed; 
-   bottom: 0%; 
-   right: 1%;
+.chat-btn {
+  position: fixed;
+  bottom: 0%;
+  right: 1%;
 }
 </style>

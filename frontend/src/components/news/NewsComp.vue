@@ -113,7 +113,7 @@
             </div>
           </div>
         </q-img>
-        <q-card-section class="col-4">
+        <q-card-section class="col-4 first-card-content">
           {{ newsFirst.newsContent }}
         </q-card-section>
       </q-card>
@@ -122,21 +122,24 @@
       <div class="sub-news row justify-between">
         <div v-for="newsitem in newsList" :key="newsitem.newsId">
           <div @click="myFunction(newsitem.newsLink)">
-            <q-card class="sub-card q-mb-lg">
+            <q-card class="sub-card q-mb-lg column">
               <q-img
                 class="sub-card-img"
                 :src="newsitem.imgLink"
                 height="200px"
               />
-              <q-card-section>
+              <q-card-section class="col self-start">
                 <div class="cards-headline">
-                  {{ newsitem.headline }}
+                  {{ filter_headline(newsitem.headline) }}
                 </div>
                 <div class="text-subtitle2 cards-content">
-                  {{ newsitem.newsContent.substring(0, 20) + "..." }}
+                  {{ newsitem.newsContent.substring(0, 38) + "..." }}
                 </div>
               </q-card-section>
-              <q-card-section class="q-pt-none cards-agency">
+              <q-card-section
+                class="q-pt-none cards-agency"
+                style="position: absolute; bottom: -7px"
+              >
                 {{ newsitem.newsAgency }} / {{ newsitem.newsDate }}
               </q-card-section>
             </q-card>
@@ -426,6 +429,12 @@ export default {
         return length + "개 언론사";
       };
     },
+    filter_headline() {
+      return function (headline) {
+        if (headline.length > 40) return headline.substring(0, 38) + "...";
+        return headline;
+      };
+    },
   },
   watch: {
     newsDate: function () {
@@ -476,11 +485,11 @@ export default {
 }
 
 .sub-news {
-  margin: 5px;
+  margin: 30px 10px;
 }
 
 .sub-card {
-  height: 340px;
+  height: 350px;
   width: 260px;
 }
 
@@ -489,7 +498,8 @@ export default {
   font-size: 28px;
 }
 .first-card-content {
-  font-size: 20px;
+  font-size: 19px;
+  line-height: 180%;
 }
 .first-card-agency {
   font-size: 16px;
