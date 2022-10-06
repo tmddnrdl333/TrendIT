@@ -7,10 +7,10 @@
         toggle-text-color="black"
         square
         :options="[
-          { label: '일별', value: 'day' },
-          { label: '주별', value: 'week' },
-          { label: '월별', value: 'month' },
-          { label: '연도별', value: 'year' },
+          { label: '일간', value: 'day' },
+          { label: '주간', value: 'week' },
+          { label: '월간', value: 'month' },
+          { label: '연간', value: 'year' },
         ]"
       />
       <!-- CHART -->
