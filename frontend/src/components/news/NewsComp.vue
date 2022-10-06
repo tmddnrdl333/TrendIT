@@ -1,6 +1,11 @@
 <template>
   <q-card class="news-comp q-pa-lg">
     <q-card-section class="row justify-center">
+      <div class="filter-title row q-mx-md">
+        <div class="filter-title-content">
+          <q-icon name="tune" size="25px" /> 검색조건
+        </div>
+      </div>
       <!-- 기간 설정 -->
       <div class="q-gutter-lg">
         <q-btn
@@ -13,59 +18,15 @@
           {{ newsDate.from }} ~ {{ newsDate.to }}
         </q-btn>
 
-        <q-btn square text-color="grey-8" @click="newsAgencyDialog = true">
+        <q-btn
+          square
+          text-color="grey-8"
+          @click="newsAgencyDialog = true"
+          style="width: 135px"
+        >
           <q-icon size="xs" class="q-pr-sm" name="settings" />
           {{ press(selection.length) }}
         </q-btn>
-
-        <!-- 날짜 dialog -->
-        <q-dialog v-model="newsDateDialog">
-          <q-card>
-            <q-card-section class="q-py-sm">
-              <div
-                class="relative-position container flex flex-center"
-                style="color: grey; font-size: 12px"
-              >
-                검색 기간 설정
-              </div>
-              <div
-                class="relative-position container flex flex-center q-mt-sm"
-                style=""
-              >
-                {{ newsDate.from }} ~ {{ newsDate.to }}
-                <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
-              </div>
-            </q-card-section>
-            <q-separator />
-            <q-card-section>
-              <div class="q-pa-md">
-                <q-date v-model="newsDate" minimal range />
-              </div>
-            </q-card-section>
-          </q-card>
-        </q-dialog>
-
-        <!-- 언론사 dialog -->
-        <q-dialog v-model="newsAgencyDialog">
-          <q-card style="width: 700px; max-width: 80vw">
-            <div class="q-pa-md">
-              <div class="q-gutter-xs flex content-start">
-                <div
-                  v-for="newsAgency in newsAgencyOptions"
-                  :key="newsAgency.index"
-                >
-                  <q-chip
-                    v-model:selected="newsAgencyOption[newsAgency]"
-                    color="light-blue-7"
-                    text-color="white"
-                    :label="newsAgency"
-                  >
-                  </q-chip>
-                </div>
-              </div>
-            </div>
-          </q-card>
-        </q-dialog>
 
         <!-- 검색 버튼 -->
         <q-btn
@@ -76,7 +37,57 @@
           @click="getNewsByOptions()"
         />
       </div>
+      <!-- 날짜 dialog -->
+      <q-dialog v-model="newsDateDialog">
+        <q-card>
+          <q-card-section class="q-py-sm">
+            <div
+              class="relative-position container flex flex-center"
+              style="color: grey; font-size: 12px"
+            >
+              검색 기간 설정
+            </div>
+            <div
+              class="relative-position container flex flex-center q-mt-sm"
+              style=""
+            >
+              {{ newsDate.from }} ~ {{ newsDate.to }}
+              <q-btn flat label="OK" color="primary" v-close-popup></q-btn>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+            <div class="q-pa-md">
+              <q-date v-model="newsDate" minimal range />
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
 
+      <!-- 언론사 dialog -->
+      <q-dialog v-model="newsAgencyDialog">
+        <q-card style="width: 700px; max-width: 80vw">
+          <div class="q-pa-md">
+            <div class="q-gutter-xs flex content-start">
+              <div
+                v-for="newsAgency in newsAgencyOptions"
+                :key="newsAgency.index"
+              >
+                <q-chip
+                  v-model:selected="newsAgencyOption[newsAgency]"
+                  color="light-blue-7"
+                  text-color="white"
+                  :label="newsAgency"
+                >
+                </q-chip>
+              </div>
+            </div>
+          </div>
+        </q-card>
+      </q-dialog>
+    </q-card-section>
+
+    <q-card-section class="row justify-center">
       <!-- First Card -->
       <q-card
         class="main-card q-ma-md row"
@@ -436,11 +447,18 @@ export default {
 </script>
 
 <style scoped>
+.filter-title {
+  width: 100px;
+}
+
+.filter-title-content {
+  margin: auto;
+}
+
 .news-comp {
   height: 100%;
   width: 1200px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 0px auto 20px;
   font-family: "NanumBarunGothic";
 }
 /* 1 */
