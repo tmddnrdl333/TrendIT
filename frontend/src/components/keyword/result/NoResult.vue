@@ -4,7 +4,7 @@
       <div class="col-5 row justify-center q-pa-md">
         <div class="no-img row justify-center items-center">
           <video class="video" autoplay muted>
-            <source src="~assets/keyword_v1.mp4" type="video/mp4">
+            <source src="~assets/keyword_v1.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -21,9 +21,13 @@
         </div>
         <div class="row justify-center q-col-gutter-x-md">
           <template v-for="item in recommendations" :key="item.id">
-            <q-btn flat @click="toSearch(item.keywordId)">{{
-              item.keyword
-            }}</q-btn>
+            <q-btn
+              flat
+              @click="toSearch(item.keywordId)"
+              style="color: #3d5a80"
+            >
+              {{ item.keyword }}
+            </q-btn>
           </template>
         </div>
         <q-btn

@@ -207,7 +207,6 @@ export default {
 
 .wordcloud-container {
   width: 1050px;
-  /* width: 100%; */
   margin: 20px auto;
   font-family: "NanumBarunGothic";
 }

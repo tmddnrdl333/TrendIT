@@ -7,6 +7,7 @@
       <main-bar-chart />
     </q-card-section>
   </q-card>
+  <br />
 </template>
 
 <script>

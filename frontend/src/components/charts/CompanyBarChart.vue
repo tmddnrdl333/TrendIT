@@ -19,7 +19,7 @@
         :chart-data="chartData"
         :chart-options="chartOptions"
         :width="550"
-        :height="250"
+        :height="300"
         class="chart"
       />
       <div v-else class="chart" style="border: 1px red solid">
@@ -159,7 +159,7 @@ export default {
 <style scoped>
 .chart {
   width: 550px;
-  height: 250px;
+  height: 280px;
   margin: 10px auto;
 }
 .chart-container {
