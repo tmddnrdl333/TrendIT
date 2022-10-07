@@ -11,10 +11,10 @@
           :src="newsData[0].newsData.imgLink"
         />
         <div class="main-news-title">
-          <strong>{{ newsData[0].newsData.headline }}</strong>
+          <strong>{{ headline_filter(newsData[0].newsData.headline) }}</strong>
         </div>
         <div class="main-news-content">
-          {{ contentfilter(newsData[0].newsData.newsContent) }}
+          {{ newsData[0].newsData.newsContent.substring(0, 75) + "..." }}
         </div>
         <div class="main-news-agency">
           {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,13 +30,16 @@
             class="col side-news-img shadow-1 q-mr-md"
             :src="item.newsData.imgLink"
           />
-
           <div class="col q-gutter-sm">
             <div class="side-news-title">
-              <strong>{{ item.newsData.headline }}</strong>
+              <strong>{{ headline_filter(item.newsData.headline) }}</strong>
             </div>
             <div class="side-news-content">
-              {{ contentfilter(item.newsData.newsContent) }}
+              {{ item.newsData.newsContent.substring(0, 45) + "..." }}
+            </div>
+            <div class="main-news-agency">
+              {{ item.newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+              {{ item.newsData.newsDate }}
             </div>
           </div>
         </div>
@@ -74,14 +77,14 @@ export default {
           this.newsData.push(item);
         });
         // this.newsData = resData;
-        this.wordCloudData = this.newsData.slice(0, 10);
+        this.wordCloudData = this.nwsData.slice(0, 10);
         this.trendRankData = this.newsData.slice(1, 6);
       },
       () => console.warn("WARN")
     );
   },
   computed: {
-    contentfilter() {
+    headline_filter() {
       return function (text) {
         if (text.length > 50) return text.substring(0, 45) + "...";
         else return text;

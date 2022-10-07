@@ -1,15 +1,13 @@
 <template>
-  <div class="flex flex-center">
-    <main-banner />
-    <word-cloud />
-    <main-news />
-  <q-card class="company-graph  q-pa-md">
-     <q-card-section class="row justify-center">
+  <main-banner />
+  <word-cloud />
+  <main-news />
+  <q-card class="company-graph q-pa-md" style="margin: auto">
+    <q-card-section class="row justify-center">
       <main-bar-chart />
     </q-card-section>
-
   </q-card>
-  </div>
+  <br />
 </template>
 
 <script>

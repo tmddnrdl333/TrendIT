@@ -155,7 +155,7 @@ export default {
         .append("text")
         .style("cursor", "pointer")
         .style("fill", (d) => {
-          if (d.size > 40) return "#EE6C4D";
+          if (d.size > 45) return "#EE6C4D";
           return "#3D5A80";
         })
         .style("font-size", (d) => {
@@ -207,7 +207,6 @@ export default {
 
 .wordcloud-container {
   width: 1050px;
-  /* width: 100%; */
   margin: 20px auto;
   font-family: "NanumBarunGothic";
 }
