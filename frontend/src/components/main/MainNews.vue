@@ -135,6 +135,7 @@ export default {
   align-items: center;
   max-width: 1050px;
   width: 100%;
+  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }
