@@ -36,30 +36,50 @@
 	- IT 기업별 뉴스 리스트와 키워드 분석
 	- 키워드 별 뉴스 리스트 제공
 
-
 ## 기술 스택
 
 - FE
     - HTML5, CSS3, Javascript, Node.js, Vue3, Vuex, Quasar
 - BE
-    - Java, SpringBoot, Swagger, JPA, QueryDSL, Hadoop, Python, KoNLPy, KOMORAN
+    - Java, SpringBoot, Swagger, JPA, QueryDSL, Hadoop, Python, FastAPI, KoNLPy, KOMORAN
 - Infra
-    - MySQL, Ubuntu, AWS EC2, Nginx, Docker, Jenkins, (Kubernetes, Kafka, S3)
+    - MySQL, Ubuntu, AWS EC2, Nginx, Docker, Jenkins
 
 ## 역할 분담
 
 💡 전체 풀스택.프론트가 부족한 관계로 모두 풀스택 기반, 각자 중점을 두는 파트 존재
 
-- 데이터 및 Hadoop 중점
-    - 우시은, 권덕주, 김하연
-- Backend 중점
-    - 유경훈, 김혜준
-- Frontend 중점
-    - 정승욱
-- Infra 중점
-    - 김혜준
-- UCC
-    - 미정
+- 우시은 - 팀장, BE(Spring Boot, FastAPI), 데이터(Hadoop), 배포
+- 권덕주 - BE(Spring Boot, FastAPI)
+- 김하연 - FE 디자인, 데이터(Selenium), 배포
+- 김혜준 - FE, BE(Spring Boot), 발표
+- 유경훈 - FE, BE(Spring Boot), 발표
+- 정승욱 - FE, BE(Spring Boot), UCC
+
+PPT 및 QA등의 산출물 공통
+
+## 서비스 특이점
+
+
+![SystemArchitecture](./output/TrendIT%20System%20Architecture.png)
+
+![DataPipeline](./output/TrendIT%20Data%20Pipeline.png)
+
+- 2015년부터의 IT 뉴스 데이터 220만건 이상의 전체 키워드 분석
+- 데이터 분석 파이프라인 설계 및 특정 시각에 자동 분석
+- 사용자 사전 추가를 통한 정확도 향상
+
+## 서비스 특장점
+
+- 2015년부터의 IT 뉴스 데이터 220만건 이상 사용
+- 사용자 사전을 추가해 키워드 판별의 정확도를 높이고, 유저가 원하는 키워드 검출 가능
+- 매일 새벽 4시에 전 날의 뉴스를 크롤링하고 구축한 데이터파이프라인을 이용해 하둡 처리까지 완료하여 자동으로 분석
+- 크롤링 및 데이터 처리, Hadoop, 웹 BE API를 처리하는 서버를 각각 분리하고, 좀 더 적절한 기술 스택을 사용
+- 또한, 프론트엔드, MySQL, Jenkins 등도 모두 별도의 컨테이너로 처리하였으며, master 브랜치에 hook 걸어 자동 배포
+- 일, 주, 월, 년 별 통계 데이터를 따로 저장하여 관련 부분 속도 및 성능 향상하였으며 그래프로 시각화
+- Index 및 별도 캐싱 테이블 생성하여 200만여개 1억개 정도의 row를 가진 여러 테이블과 관련된 쿼리가 2분 30초 이상 걸렸으나 0.015초로 단축
+  - (별도 캐싱 테이블 생성에 매일 60여초 소요되며 이는 스케줄링된 작업에 포함)
+- 이외 다른 쿼리도 2초에서 0.016초 정도로 전반적 속도 개선
 
 # Jira와 Git 컨벤션
 

@@ -5,8 +5,8 @@
     </q-card-section>
     <q-card-section class="card-content row items-center justify-center">
       <div
-        class="main-news-container col-6 q-gutter-md"
-        v-on:click="goToLink(newsData[0])"
+        class="main-news-container col-6 q-gutter-md cursor-pointer"
+        @click="goToLink(newsData[0])"
       >
         <template v-if="newsData[0]">
           <q-img
@@ -30,7 +30,10 @@
       <!-- SIDE -->
       <div class="side-news-container col-6">
         <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
-          <div class="side-news row q-ma-xs" v-on:click="goToLink(item)">
+          <div
+            class="side-news row q-ma-xs cursor-pointer"
+            @click="goToLink(item)"
+          >
             <q-img
               class="col side-news-img shadow-1 q-mr-md"
               :src="item.newsData.imgLink"
