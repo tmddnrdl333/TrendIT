@@ -48,8 +48,8 @@ services:
       - 9090:9090
     environment:
       TZ: "Asia/Seoul"
-      TRENDIT_DB_PASSWORD: <TRENDIT_DB_PASSWORD>
-      TRENDIT_DB_HOST: <TRENDIT_DB_HOST>
+      TRENDIT_DB_PASSWORD: ${TRENDIT_DB_PASSWORD}
+      TRENDIT_DB_HOST: ${TRENDIT_DB_HOST}
     networks:
       - app-network
     depends_on:
