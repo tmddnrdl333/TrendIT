@@ -372,16 +372,7 @@ export default {
   created() {},
   methods: {
     myFunction: function (newsLink) {
-      // 주석지우지 말것
-      window.open(newsLink); // -> 샘플데이터가 아니고 실제 크롤링 데이터로 할땐 이거 사용
-      // window.open("http://" + newsLink);
-
-      // window.open(newsLink); // localhost + 링크 // blank 가 default
-      // window.open(newsLink.href);                // 빈창             // blank 가 default
-      // window.open(newsLink, "_parent"); // localhost + 링크
-      // window.open(newsLink.href, "_parent");      // 빈창
-      // window.open(newsLink, "_self");            // localhost + 링크 + 기존탭
-      // window.open(newsLink.href, "_self");       // 안됨
+      window.open(newsLink);
     },
 
     async getNewsByOptions() {
@@ -403,7 +394,7 @@ export default {
           let res_data = response.data.data.content;
           if (res_data.length == 0) {
             window.alert("해당 조건으로 뉴스를 검색할 수 없습니다.");
-            this.$router.go(); // 새로고침인데... 만약 검색할 때마다 페이지를 리로드하게 고친다면 go(-1)로 수정할 것
+            this.$router.go();
             return;
           }
           res_data.forEach((item) => {

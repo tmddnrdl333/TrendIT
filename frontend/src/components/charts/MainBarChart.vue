@@ -148,7 +148,6 @@ export default {
           this.response = response.data;
           this.data_list = response.data.data;
 
-          // 초기화
           this.chartData = {
             labels: [],
             datasets: [
@@ -161,7 +160,6 @@ export default {
             ],
           };
 
-          // forEach push item
           this.data_list.forEach((item) => {
             this.chartData.labels.push(item.keyword);
             this.chartData.datasets[0].data.push(item.frequency);
@@ -207,7 +205,7 @@ export default {
           if (date_val.getDay() == 0) date_val.setDate(date_val.getDate() - 6);
           else date_val.setDate(date_val.getDate() - (date_val.getDay() - 1));
           date_val.setDate(date_val.getDate() - offset * 7);
-          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate(); // 매주 월요일이나 일요일을 val로 넣고 label은 x월 x주차 이렇게 해야되나...
+          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
           break;
         case "month":
           if (date_val.getDate() == 1) date_val.setDate(date_val.getDate() - 1);
@@ -220,7 +218,6 @@ export default {
           break;
         default:
           break;
-        // 아니면 그냥 전부 다 xx전 이렇게 하는게 통일성 있으려나
       }
       return date_label;
     },
@@ -228,8 +225,6 @@ export default {
   watch: {
     type: function () {
       this.slide = 0;
-      // min max도 수정해줘야 함.
-      // 그리고 reverse slide 해야 할듯?
       this.resetSlide();
       this.loadChartData();
     },
