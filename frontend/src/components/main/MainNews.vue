@@ -81,7 +81,7 @@ export default {
           this.newsData.push(item);
         });
         // this.newsData = resData;
-        this.wordCloudData = this.nwsData.slice(0, 10);
+        this.wordCloudData = this.newsData.slice(0, 10);
         this.trendRankData = this.newsData.slice(1, 6);
       },
       () => console.warn("WARN")
