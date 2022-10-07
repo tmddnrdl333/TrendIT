@@ -1,8 +1,11 @@
 <template>
-  <q-card class="news-container row q-pa-lg">
-    <!-- MAIN -->
+  <q-card class="news-container">
+    <q-card-section class="card-title q-ml-lg">
+      <div class="title q-mt-xs">오늘의 트렌드 뉴스</div>
+    </q-card-section>
+    <q-card-section class="card-content row items-center justify-center">
     <div
-      class="main-news-container col-6 q-gutter-md"
+      class="main-news-container col-6 q-gutter-md "
       v-on:click="goToLink(newsData[0])"
     >
       <template v-if="newsData[0]">
@@ -45,6 +48,7 @@
         </div>
       </template>
     </div>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -110,14 +114,27 @@ export default {
 /* 네이버 나눔 바른 고딕*/
 @import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
 
+.title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.card-title {
+  padding: 10px;
+}
+
+.card-content {
+  padding-top: 5px;
+  justify-content: center;
+  margin: auto;
+}
 .news-container {
   /* display: flex; */
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   max-width: 1050px;
   width: 100%;
-  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }
