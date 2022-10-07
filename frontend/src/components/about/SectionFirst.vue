@@ -1,5 +1,5 @@
 <template>
-  <div class="section1 ">
+  <div class="section1">
     <div class="section1Wrapper wrapper">
       <div class="slogan1">
         TrendIT 은 매일 누적되는 IT기사를 분석하여
@@ -58,7 +58,6 @@ export default {
 }
 .section1Wrapper {
   height: 100%;
-  width: 1366px;
   margin: 0px auto;
   position: relative;
   display: flex;
