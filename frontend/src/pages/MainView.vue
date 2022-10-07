@@ -1,18 +1,16 @@
 <template>
-  <div class="flex flex-center">
-    <main-banner />
-    <word-cloud />
-    <main-news />
-  <q-card class="company-graph  q-pa-md">
+  <main-banner />
+  <word-cloud />
+  <main-news />
+  <q-card class="company-graph  q-pa-md" style="margin: auto">
     <q-card-section class="card-title q-ml-lg">
       <div class="title q-mt-xs">기간별 트렌드 분석</div>
     </q-card-section>
      <q-card-section class="row justify-center">
       <main-bar-chart />
     </q-card-section>
-
   </q-card>
-  </div>
+  <br />
 </template>
 
 <script>
