@@ -142,9 +142,7 @@ export default {
       try {
         const ctx = document.getElementById("myChart");
         ctx.parentNode.removeChild(ctx);
-      } catch (e) {
-        // console.warn(e);
-      }
+      } catch (e) {}
       const parent = document.getElementById("chartbox");
       const canvas = document.createElement("canvas");
       canvas.setAttribute("id", "myChart");
@@ -155,13 +153,8 @@ export default {
 
       const ctx = document.getElementById("myChart");
 
-      // this.data_list에 response를 채워줌
       await this.loadChartData();
 
-      /*
-        TODO: labels를 배열로 반환해주는 함수를 따로 만들어야 할듯
-      */
-      // 여기부터 ~
       let max = 0;
       switch (this.type) {
         case "day":
@@ -183,14 +176,11 @@ export default {
       for (let i = max; i >= 0; i--) {
         let marker = this.getMarker(i);
         labels.push(marker);
-        // //
-        // let date_val = new Date();
-        // date_val.setDate(date_val.getDate() - i);
-        // let date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
-        // labels.push(date_label);
-        // //
       }
-      // ~ 여기까지를 함수화
+
+      if (this.type == "year") {
+        this.data_list = this.data_list.slice(2, 10);
+      }
 
       let data_array = [];
       let max_label = null;
@@ -205,6 +195,7 @@ export default {
         }
       }
 
+      console.warn(this.data_list);
       this.side_card.word1 = this.word1;
       this.side_card.word2 = this.word2;
       this.side_card.date = max_label + " (" + max_val + "건)";
@@ -271,7 +262,7 @@ export default {
           if (date_val.getDay() == 0) date_val.setDate(date_val.getDate() - 6);
           else date_val.setDate(date_val.getDate() - (date_val.getDay() - 1));
           date_val.setDate(date_val.getDate() - offset * 7);
-          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate(); // 매주 월요일이나 일요일을 val로 넣고 label은 x월 x주차 이렇게 해야되나...
+          date_label = date_val.getMonth() + 1 + "/" + date_val.getDate();
           break;
         case "month":
           if (date_val.getDate() == 1) date_val.setDate(date_val.getDate() - 1);
@@ -284,7 +275,6 @@ export default {
           break;
         default:
           break;
-        // 아니면 그냥 전부 다 xx전 이렇게 하는게 통일성 있으려나
       }
       return date_label;
     },

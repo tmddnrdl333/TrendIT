@@ -4,50 +4,52 @@
       <div class="title q-mt-xs">오늘의 트렌드 뉴스</div>
     </q-card-section>
     <q-card-section class="card-content row items-center justify-center">
-    <div
-      class="main-news-container col-6 q-gutter-md "
-      v-on:click="goToLink(newsData[0])"
-    >
-      <template v-if="newsData[0]">
-        <q-img
-          class="main-news-img shadow-1"
-          :src="newsData[0].newsData.imgLink"
-        />
-        <div class="main-news-title">
-          <strong>{{ headline_filter(newsData[0].newsData.headline) }}</strong>
-        </div>
-        <div class="main-news-content">
-          {{ newsData[0].newsData.newsContent.substring(0, 75) + "..." }}
-        </div>
-        <div class="main-news-agency">
-          {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
-          {{ newsData[0].newsData.newsDate }}
-        </div>
-      </template>
-    </div>
-    <!-- SIDE -->
-    <div class="side-news-container col-6">
-      <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
-        <div class="side-news row q-ma-xs" v-on:click="goToLink(item)">
+      <div
+        class="main-news-container col-6 q-gutter-md"
+        v-on:click="goToLink(newsData[0])"
+      >
+        <template v-if="newsData[0]">
           <q-img
-            class="col side-news-img shadow-1 q-mr-md"
-            :src="item.newsData.imgLink"
+            class="main-news-img shadow-1"
+            :src="newsData[0].newsData.imgLink"
           />
-          <div class="col q-gutter-sm">
-            <div class="side-news-title">
-              <strong>{{ headline_filter(item.newsData.headline) }}</strong>
-            </div>
-            <div class="side-news-content">
-              {{ item.newsData.newsContent.substring(0, 45) + "..." }}
-            </div>
-            <div class="main-news-agency">
-              {{ item.newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
-              {{ item.newsData.newsDate }}
+          <div class="main-news-title">
+            <strong>{{
+              headline_filter(newsData[0].newsData.headline)
+            }}</strong>
+          </div>
+          <div class="main-news-content">
+            {{ newsData[0].newsData.newsContent.substring(0, 75) + "..." }}
+          </div>
+          <div class="main-news-agency">
+            {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+            {{ newsData[0].newsData.newsDate }}
+          </div>
+        </template>
+      </div>
+      <!-- SIDE -->
+      <div class="side-news-container col-6">
+        <template v-for="(item, index) in newsData.slice(1, 5)" :key="index">
+          <div class="side-news row q-ma-xs" v-on:click="goToLink(item)">
+            <q-img
+              class="col side-news-img shadow-1 q-mr-md"
+              :src="item.newsData.imgLink"
+            />
+            <div class="col q-gutter-sm">
+              <div class="side-news-title">
+                <strong>{{ headline_filter(item.newsData.headline) }}</strong>
+              </div>
+              <div class="side-news-content">
+                {{ item.newsData.newsContent.substring(0, 45) + "..." }}
+              </div>
+              <div class="main-news-agency">
+                {{ item.newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+                {{ item.newsData.newsDate }}
+              </div>
             </div>
           </div>
-        </div>
-      </template>
-    </div>
+        </template>
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -70,9 +72,6 @@ export default {
       "day",
       (response) => {
         const resData = response.data.data;
-        // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
-        // 이 중 6개는 키워드와 count 는 랭크에
-        // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
         this.newsData = [];
         resData.forEach((item) => {
           if (item.newsData.imgLink.substring(0, 5) == "/asse") {

@@ -220,19 +220,13 @@ export default {
     };
   },
   methods: {
-    // 일반 키워드 일때 - 유효성검사
     submitFormNormalKeyword() {
       if (!(this.keyword === "")) {
         this.createNormalKeyword();
       } else alert("에러");
     },
 
-    // 회사 키워드 일때 - 유효성검사
     submitForm() {
-      // this.$refs.companyName.validate();
-      // this.$refs.companyCategory.validate();
-      // this.$refs.companyRepresentative.validate();
-      // this.$refs.companyLink.validate();
       if (
         !this.$refs.companyName.hasError &
         !this.$refs.companyCategory.hasError &
@@ -243,16 +237,11 @@ export default {
       } else alert("에러");
     },
 
-    // 일반 키워드 일때 - API
     async createNormalKeyword() {
       await createNormalKeywordApi(
         new NormalKeywordReq(this.keyword),
-        (response) => {
-          // console.log(response, this.keyword, "createNormalKeywordApi 성공");
-        },
-        (error) => {
-          // console.warn(error, this.keyword, "createNormalKeywordApi 실패");
-        }
+        (response) => {},
+        (error) => {}
       );
     },
 
@@ -265,13 +254,7 @@ export default {
           this.companyRepresentative,
           this.companyLink
         ),
-        (response) => {
-          // console.log(
-          //   response,
-          //   CompanyKeywordReq,
-          //   "createCompanyKeywordApi 성공"
-          // );
-        },
+        (response) => {},
         (error) => {
           console.warn(
             error,

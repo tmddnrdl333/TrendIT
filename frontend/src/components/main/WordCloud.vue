@@ -77,9 +77,6 @@ export default {
         this.type,
         (response) => {
           const resData = response.data.data;
-          // 이 중 30개 키워드와 count + isCompany? or 분류 는 워드 클라우드에
-          // 이 중 6개는 키워드와 count 는 랭크에
-          // 이 중 5개는 뉴스는 오늘의 뉴스에 넣어줘야됨
           this.newsData = resData;
           this.wordCloudData = resData.slice(0, 20);
           this.trendRankData = resData.slice(0, 6);
@@ -119,7 +116,6 @@ export default {
         .text((d) => d.text)
         .fontSize((d) => (d.size / max_size) * 80)
         .on("end", this.end)
-        // .spiral("archimedean")
         .start()
         .stop();
     },

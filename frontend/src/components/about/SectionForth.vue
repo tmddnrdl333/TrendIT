@@ -6,12 +6,10 @@
       <p>Services provided by TrendIT</p>
     </div>
 
-    <div class="col-8 row q-gutter-lg" style="margin: auto;">
+    <div class="col-8 row" style="margin: auto">
       <div class="col-lg-3">
         <div class="text-center">
-          <p class="title text-center">
-            트렌드 분석
-          </p>
+          <p class="title text-center">트렌드 분석</p>
           <img :src="service2" alt="service2" class="m-b-lg" />
           <p style="height: 40px; font-weight: 800; color: #000000">
             WordCloud 를 통해 기간별 트렌드를
@@ -22,9 +20,7 @@
       </div>
       <div class="col-lg-3">
         <div class="text-center">
-          <p class="title">
-            키워드 분석
-          </p>
+          <p class="title">키워드 분석</p>
           <img :src="service3" alt="service3" class="m-b-lg" />
           <p style="height: 40px; font-weight: 800; color: #000000">
             특정 키워드 검색을 통해 트렌드 추이를
@@ -36,9 +32,7 @@
       </div>
       <div class="col-lg-3">
         <div class="text-center">
-          <p class="title">
-            기업 리스트
-          </p>
+          <p class="title">기업 리스트</p>
           <img :src="service4" alt="service4" class="m-b-lg" />
           <p style="height: 40px; font-weight: 800; color: #000000">
             기업별 기간별 트렌드를 추이를 확인하고
@@ -50,9 +44,7 @@
       </div>
       <div class="col-lg-3">
         <div class="text-center">
-          <p class="title">
-            최신뉴스
-          </p>
+          <p class="title">최신뉴스</p>
           <img :src="service1" alt="service1" class="m-b-lg" />
           <p style="height: 40px; font-weight: 800; color: #000000">
             54개의 언론사와 날짜별 필터링을 통해
