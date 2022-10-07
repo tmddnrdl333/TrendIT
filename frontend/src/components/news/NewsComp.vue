@@ -352,7 +352,7 @@ export default {
         let res_data = response.data.data.content;
         res_data.forEach((item) => {
           if (item.imgLink.substring(0, 5) == "/asse") {
-            item.imgLink = "assets/no-image.png";
+            item.imgLink = "/src/assets/no-image.png";
           }
         });
         this.newsFirst = res_data[0];
@@ -408,7 +408,7 @@ export default {
           }
           res_data.forEach((item) => {
             if (item.imgLink.substring(0, 5) == "/asse") {
-              item.imgLink = "assets/no-image.png";
+              item.imgLink = "~/assets/no-image.png";
             }
           });
           this.newsFirst = res_data[0];

@@ -99,7 +99,7 @@ export default {
           this.result.forEach((item) => {
             // TODO: 이미지가 없는 뉴스는 이렇게 일단 처리함.
             if (item.imgLink.substring(0, 5) == "/asse") {
-              item.imgLink = "~assets/no-image.png";
+              item.imgLink = "/src/assets/no-image.png";
             }
             // TODO: 링크가 없는 뉴스는 404로 연결해놓은 상태...
             if (item.newsLink == "") {
