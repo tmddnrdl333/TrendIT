@@ -1,8 +1,11 @@
 <template>
-  <q-card class="news-container row q-pa-lg">
-    <!-- MAIN -->
+  <q-card class="news-container">
+    <q-card-section class="card-title q-ml-lg">
+      <div class="title q-mt-xs">오늘의 트렌드 뉴스</div>
+    </q-card-section>
+    <q-card-section class="card-content row items-center justify-center">
     <div
-      class="main-news-container col-6 q-gutter-md"
+      class="main-news-container col-6 q-gutter-md "
       v-on:click="goToLink(newsData[0])"
     >
       <template v-if="newsData[0]">
@@ -11,10 +14,10 @@
           :src="newsData[0].newsData.imgLink"
         />
         <div class="main-news-title">
-          <strong>{{ newsData[0].newsData.headline }}</strong>
+          <strong>{{ headline_filter(newsData[0].newsData.headline) }}</strong>
         </div>
         <div class="main-news-content">
-          {{ contentfilter(newsData[0].newsData.newsContent) }}
+          {{ newsData[0].newsData.newsContent.substring(0, 75) + "..." }}
         </div>
         <div class="main-news-agency">
           {{ newsData[0].newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
@@ -30,18 +33,22 @@
             class="col side-news-img shadow-1 q-mr-md"
             :src="item.newsData.imgLink"
           />
-
           <div class="col q-gutter-sm">
             <div class="side-news-title">
-              <strong>{{ item.newsData.headline }}</strong>
+              <strong>{{ headline_filter(item.newsData.headline) }}</strong>
             </div>
             <div class="side-news-content">
-              {{ contentfilter(item.newsData.newsContent) }}
+              {{ item.newsData.newsContent.substring(0, 45) + "..." }}
+            </div>
+            <div class="main-news-agency">
+              {{ item.newsData.newsAgency }} &nbsp;&nbsp;&nbsp;&nbsp;
+              {{ item.newsData.newsDate }}
             </div>
           </div>
         </div>
       </template>
     </div>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -69,19 +76,19 @@ export default {
         this.newsData = [];
         resData.forEach((item) => {
           if (item.newsData.imgLink.substring(0, 5) == "/asse") {
-            item.newsData.imgLink = "src/assets/no-image.png";
+            item.newsData.imgLink = "~assets/no-image.png";
           }
           this.newsData.push(item);
         });
         // this.newsData = resData;
-        this.wordCloudData = this.newsData.slice(0, 10);
+        this.wordCloudData = this.nwsData.slice(0, 10);
         this.trendRankData = this.newsData.slice(1, 6);
       },
       () => console.warn("WARN")
     );
   },
   computed: {
-    contentfilter() {
+    headline_filter() {
       return function (text) {
         if (text.length > 50) return text.substring(0, 45) + "...";
         else return text;
@@ -107,14 +114,27 @@ export default {
 /* 네이버 나눔 바른 고딕*/
 @import url("https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css");
 
+.title {
+  font-family: "NanumBarunGothicBold";
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.card-title {
+  padding: 10px;
+}
+
+.card-content {
+  padding-top: 5px;
+  justify-content: center;
+  margin: auto;
+}
 .news-container {
   /* display: flex; */
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   max-width: 1050px;
   width: 100%;
-  margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }

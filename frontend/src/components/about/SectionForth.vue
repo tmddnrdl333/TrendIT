@@ -6,8 +6,8 @@
       <p>Services provided by TrendIT</p>
     </div>
 
-    <div class="col-8 row">
-      <div class="col-lg-3" style="visibility: visible">
+    <div class="col-8 row q-gutter-lg" style="margin: auto;">
+      <div class="col-lg-3">
         <div class="text-center">
           <p class="title text-center">
             트렌드 분석
@@ -20,7 +20,7 @@
           </p>
         </div>
       </div>
-      <div class="col-lg-3" style="visibility: visible">
+      <div class="col-lg-3">
         <div class="text-center">
           <p class="title">
             키워드 분석
@@ -34,7 +34,7 @@
           </p>
         </div>
       </div>
-      <div class="col-lg-3" style="visibility: visible">
+      <div class="col-lg-3">
         <div class="text-center">
           <p class="title">
             기업 리스트
@@ -48,7 +48,7 @@
           </p>
         </div>
       </div>
-      <div class="col-lg-3" style="visibility: visible">
+      <div class="col-lg-3">
         <div class="text-center">
           <p class="title">
             최신뉴스
@@ -100,9 +100,8 @@ export default {
   font-family: "NanumBarunGothic";
   width: 1050px;
   height: 600px;
-  margin: auto;
+  margin: 0px auto;
   background-color: #f4f4f4;
-  margin-top: 60px;
 }
 .col-lg-12 {
   width: 100%;
